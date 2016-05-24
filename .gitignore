@@ -1,10 +1,4 @@
 # 忽略bin目录
 */bin
 #忽略obj目录
-*/obj
-#忽略包目录
-packages
-#忽略日志目录
-/Web/log
-#忽略上传目录
-/Web/Upload
+*/*/*/obj
