@@ -1,0 +1,118 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{EB833DEE-6EC5-4863-B251-DF438DA94DF0}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>OA.DAL</RootNamespace>
+    <AssemblyName>OA.DAL</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="GentleUtil, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Accessories\AccessoriesDAL.cs" />
+    <Compile Include="BaseSet\BillTypeDAL.cs" />
+    <Compile Include="BaseSet\DeptDAL.cs" />
+    <Compile Include="BaseSet\PayTypeDAL.cs" />
+    <Compile Include="BuyManage\BuyApplyBill\BOAReaderDAL.cs" />
+    <Compile Include="BuyManage\BuyApplyBill\BOASecondCheckDAL.cs" />
+    <Compile Include="BuyManage\BuyApplyBill\BuyApplyBillDAL.cs" />
+    <Compile Include="BuyManage\BuyApplyBill\BuyApplyBillItemDAL.cs" />
+    <Compile Include="BuyManage\BuyBill\BuyBillDAL.cs" />
+    <Compile Include="BuyManage\BuyBill\BuyBillItemDAL.cs" />
+    <Compile Include="BuyManage\BuyBill\BOSecondCheckDAL.cs" />
+    <Compile Include="BuyManage\BuyBill\BOReaderDAL.cs" />
+    <Compile Include="BuyManage\ReachGoodsBill\ReachGoodsBillDAL.cs" />
+    <Compile Include="BuyManage\ReachGoodsBill\ReachGoodsBillItemDAL.cs" />
+    <Compile Include="BuyManage\SupplierMg\SupplierDAL.cs" />
+    <Compile Include="DB.cs" />
+    <Compile Include="HR\EmpleeManage\EmpChangeDAL.cs" />
+    <Compile Include="HR\EmpleeManage\EmpleeDAL.cs" />
+    <Compile Include="HR\OrgManage\PostDAL.cs" />
+    <Compile Include="OA\DailyWork\ApplyPublicPowerDAL.cs" />
+    <Compile Include="OA\DailyWork\ApplyPublicPowerItemDAL.cs" />
+    <Compile Include="OA\News\NewsDAL.cs" />
+    <Compile Include="OA\WorkFlow\OfficeDocDAL.cs" />
+    <Compile Include="OA\WorkFlow\OfficeDocItemDAL.cs" />
+    <Compile Include="SaleManage\AskPrice\APReaderDAL.cs" />
+    <Compile Include="SaleManage\AskPrice\APSecondCheckDAL.cs" />
+    <Compile Include="SaleManage\AskPrice\AskPriceDAL.cs" />
+    <Compile Include="SaleManage\AskPrice\AskPriceItemDAL.cs" />
+    <Compile Include="SaleManage\BaseData\ClientDAL.cs" />
+    <Compile Include="SaleManage\SaleOrder\SaleOrderDAL.cs" />
+    <Compile Include="SaleManage\SaleOrder\SaleOrderItemDAL.cs" />
+    <Compile Include="SaleManage\SaleOrder\SOReaderDAL.cs" />
+    <Compile Include="SaleManage\SaleOrder\SOSecondCheckDAL.cs" />
+    <Compile Include="SysManage\FunctionDAL.cs" />
+    <Compile Include="SysManage\RFRelationDAL.cs" />
+    <Compile Include="SysManage\RoleManageDAL.cs" />
+    <Compile Include="SysManage\URrelationDAL.cs" />
+    <Compile Include="SysManage\UserInfoDAL.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WareHouseMg\BaseData\MaterialClassDAL.cs" />
+    <Compile Include="WareHouseMg\BaseData\MaterialsDAL.cs" />
+    <Compile Include="WareHouseMg\BaseData\MaterialTypeDAL.cs" />
+    <Compile Include="WareHouseMg\BaseData\MeasureUnitsDAL.cs" />
+    <Compile Include="WareHouseMg\GoodsMovement\GMReaderDAL.cs" />
+    <Compile Include="WareHouseMg\GoodsMovement\GMSecondCheckDAL.cs" />
+    <Compile Include="WareHouseMg\GoodsMovement\GoodsMovementDAL.cs" />
+    <Compile Include="WareHouseMg\GoodsMovement\GoodsMovementItemDAL.cs" />
+    <Compile Include="WareHouseMg\InvBalRealAccountDAL.cs" />
+    <Compile Include="WareHouseMg\BaseData\WareHouseDAL.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\IDAL\IDAL.csproj">
+      <Project>{E05CC2CF-996A-4DA9-8C80-39994BF04CB6}</Project>
+      <Name>IDAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Model\Model.csproj">
+      <Project>{4FADDC97-CF7C-48E6-9F43-C6CEC9108458}</Project>
+      <Name>Model</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

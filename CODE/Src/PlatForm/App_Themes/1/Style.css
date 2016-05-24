@@ -1,0 +1,1405 @@
+﻿/* ---------- 文字链接 － 链接的普通状态 ---------- */
+A:link { 
+color: #347672; 
+TEXT-DECORATION: none;}           
+
+/* ---------- 文字链接 － 已被访问链接 ---------- */
+A:visited { 
+COLOR: #347672; 
+TEXT-DECORATION: none}       
+
+/* ---------- 文字链接 － 处于活动状态链接 ---------- */
+A:active { 
+COLOR: #347672; 
+TEXT-DECORATION: none}        
+
+/* ---------- 文字链接 － 指针在链接上 ---------- */
+A:hover { 
+COLOR: #549777; 
+text-decoration: underline;}   
+
+/* ---------- 页面样式定义 ---------- */
+body { 
+	padding:0; 
+	margin:0; 
+font-size: 9pt;                              /* 字体大小                  */
+font-family:Verdana;                         /* 字体名称                  */
+scrollbar-face-color: #D2CAC6;               /* 滚动条凸出部分的颜色      */
+scrollbar-highlight-color: #E6E6E6;          /* 滚动条空白部分的颜色      */ 
+scrollbar-shadow-color: #D2CAC6;             /* 立体滚动条阴影的颜色      */
+scrollbar-3dlight-color: #D1D7DC;            /* 滚动条亮边的颜色          */
+scrollbar-arrow-color: #993300;              /* 上下按钮上三角箭头的颜色  */
+scrollbar-track-color: #D8D8D8;              /* 滚动条的背景颜色          */
+scrollbar-darkshadow-color: #98AAB1;}        /* 动条强阴影的颜色          */
+
+/* ---------- 文本框选中样式 ---------- */
+.colorfocus {
+	border: 1px #86a1ba double;
+	background-color: #dff2ec;
+}
+/* ---------- 文本框样式 ---------- */
+.colorblur {
+	border: 1px #86a1ba double;
+	background-color: #ffffff;
+}
+/*默认按钮*/
+.button{border:0px #93b9dc solid;background-color:#e7effc;padding:0px 0px; height:20px; width:60px; cursor:pointer; margin-top:0px; margin-bottom:0px;}
+.buttonMouseOver{border:0px #93b9dc solid;background-color:#ffedbf;padding:0px 0px; height:20px; width:60px; cursor:pointer; margin-top:0px; margin-bottom:0px;}
+.buttonWithBorder{border:0px #93b9dc solid;background-color:#e7effc;padding:0px 0px; height:20px; width:60px; cursor:pointer; margin-top:0px; margin-bottom:0px;}
+/*确定按钮*/
+.OKButton{border:0px #93b9dc solid;background-image:url("Images/queding.jpg");padding:0px 0px; height:21px; width:58px; cursor:pointer; margin-top:0px; margin-bottom:0px;}
+.OKButtonMouseOver{border:0px #93b9dc solid;background-image:url("Images/queding.jpg");padding:0px 0px; height:21px; width:58px; cursor:pointer; margin-top:0px; margin-bottom:0px;}
+/*取消按钮*/
+.CancelButton{border:0px #93b9dc solid;background-image:url("Images/quxiao.jpg");padding:0px 0px; height:21px; width:58px; cursor:pointer; margin-top:0px; margin-bottom:0px;}
+.CancelButtonMouseOver{border:0px #93b9dc solid;background-image:url("Images/quxiao.jpg");padding:0px 0px; height:21px; width:58px; cursor:pointer; margin-top:0px; margin-bottom:0px;}
+/*返回按钮*/
+.ReturnButton{border:0px #93b9dc solid;background-image:url("Images/fanhu.jpg");padding:0px 0px; height:21px; width:58px; cursor:pointer; margin-top:0px; margin-bottom:0px;}
+.ReturnButtonMouseOver{border:0px #93b9dc solid; background-color:Blue; height:21px; width:58px; cursor:pointer; margin-top:0px; margin-bottom:0px;}
+
+/*确定按钮*/
+.DrawButton{border:0px #93b9dc solid;background-image:url("Images/tiqu.gif");padding:0px 0px; height:21px; width:58px; cursor:pointer; margin-top:0px; margin-bottom:0px;}
+.DrawButtonMouseOver{border:0px #93b9dc solid;background-image:url("Images/tiqu.gif");padding:0px 0px; height:21px; width:58px; cursor:pointer; margin-top:0px; margin-bottom:0px;}
+
+/*新增按钮*/
+.AddButton{border:0px #93b9dc solid;background-image:url("Images/xinzeng.jpg");padding:0px 0px; height:21px; width:58px; cursor:pointer; margin-top:0px; margin-bottom:0px;}
+.AddButtonMouseOver{border:0px #93b9dc solid;background-image:url("Images/xinzeng.jpg");padding:0px 0px; height:21px; width:58px; cursor:pointer; margin-top:0px; margin-bottom:0px;}
+
+/*修改按钮*/
+.EditButton{border:0px #93b9dc solid;background-image:url("Images/xiugai.jpg");padding:0px 0px; height:21px; width:58px; cursor:pointer; margin-top:0px;} 
+.EditButtonMouseOver{border:0px #93b9dc solid;background-image:url("Images/xiugai.jpg");padding:0px 0px; height:21px; width:58px; cursor:pointer; margin-top:0px; margin-bottom:0px;}
+
+/*确认阅读*/
+.ReadButton{border:0px #93b9dc solid;background-image:url("Images/qryd.jpg");padding:0px 0px; height:21px; width:70px; cursor:pointer; margin-top:0px;} 
+.ReadButtonMouseOver{border:0px #93b9dc solid;background-image:url("Images/qryd.jpg");padding:0px 0px; height:21px; width:70px; cursor:pointer; margin-top:0px; margin-bottom:0px;}
+
+/*关闭按钮*/
+.CloseButton{border:0px #93b9dc solid;background-image:url("Images/4.jpg");padding:0px 0px; height:21px; width:120px; cursor:pointer; margin-top:0px; margin-bottom:0px;}
+.CloseButtonMouseOver{border:0px #93b9dc solid;background-image:url("Images/4.jpg");padding:0px 0px; height:21px; width:120px; cursor:pointer; margin-top:0px; margin-bottom:0px;}
+/*登录按钮*/
+.LoginButton{BORDER-RIGHT: #7b9ebd 1px solid; PADDING-RIGHT: 2px; BORDER-TOP: #7b9ebd 1px solid; PADDING-LEFT: 2px; FONT-SIZE: 12px; FILTER: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr=#ffffff, EndColorStr=#c6d3f7); BORDER-LEFT: #7b9ebd 1px solid; CURSOR: hand; COLOR: black; PADDING-TOP: 2px; BORDER-BOTTOM: #7b9ebd 1px solid}
+.LoginButtonMouseOver{BORDER-RIGHT: #7b9ebd 1px solid; PADDING-RIGHT: 2px; BORDER-TOP: #7b9ebd 1px solid; PADDING-LEFT: 2px; FONT-SIZE: 12px; FILTER: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr=#ffffff, EndColorStr=#c6d3f7); BORDER-LEFT: #7b9ebd 1px solid; CURSOR: hand; COLOR: black; PADDING-TOP: 2px; BORDER-BOTTOM: #7b9ebd 1px solid}
+/*登录重填按钮*/
+.ReWriteButton{BORDER-RIGHT: #7b9ebd 1px solid; PADDING-RIGHT: 2px; BORDER-TOP: #7b9ebd 1px solid; PADDING-LEFT: 2px; FONT-SIZE: 12px; FILTER: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr=#ffffff, EndColorStr=#c6d3f7); BORDER-LEFT: #7b9ebd 1px solid; CURSOR: hand; COLOR: black; PADDING-TOP: 2px; BORDER-BOTTOM: #7b9ebd 1px solid}
+.ReWriteButtonMouseOver{BORDER-RIGHT: #7b9ebd 1px solid; PADDING-RIGHT: 2px; BORDER-TOP: #7b9ebd 1px solid; PADDING-LEFT: 2px; FONT-SIZE: 12px; FILTER: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr=#ffffff, EndColorStr=#c6d3f7); BORDER-LEFT: #7b9ebd 1px solid; CURSOR: hand; COLOR: black; PADDING-TOP: 2px; BORDER-BOTTOM: #7b9ebd 1px solid}
+/*选择按钮*/
+.SelectButton{border:0px #93b9dc solid;background-image:url("Images/xuanze.jpg");padding:0px 0px; height:21px; width:58px; cursor:pointer; margin-top:0px; margin-bottom:0px;}
+.SelectButtonMouseOver{{border:0px #93b9dc solid;background-image:url("Images/xuanze.jpg");padding:0px 0px; height:21px; width:58px; cursor:pointer; margin-top:0px; margin-bottom:0px;}
+/*重置按钮*/
+.ResetButton{border:0px #93b9dc solid;background-image:url("Images/chongzhi.jpg");padding:0px 0px; height:21px; width:58px; cursor:pointer; margin-top:0px; margin-bottom:0px;}
+.ResetButtonMouseOver{border:0px #93b9dc solid;background-image:url("Images/chongzhi.jpg");padding:0px 0px; height:21px; width:58px; cursor:pointer; margin-top:0px; margin-bottom:0px;}
+
+/*查询按钮*/
+.QueryButton{border:0px #93b9dc solid;background-image:url("Images/chaxun.jpg");padding:0px 0px; height:21px; width:58px; cursor:pointer; margin-top:0px; margin-bottom:0px;}
+.QueryButtonMouseOver{border:0px #93b9dc solid;background-image:url("Images/chaxun.jpg");padding:0px 0px; height:21px; width:58px; cursor:pointer; margin-top:0px; margin-bottom:0px;}
+/*删除按钮*/
+.DeleteButton{border:0px #93b9dc solid;background-image:url("Images/shanchu.jpg");padding:0px 0px; height:23px; width:60px; cursor:pointer; margin-top:0px; margin-bottom:0px;}
+.DeleteButtonMouseOver{border:0px #93b9dc solid;background-image:url("Images/shanchu.jpg");padding:0px 0px; height:23px; width:60px; cursor:pointer; margin-top:0px; margin-bottom:0px}
+/*保存按钮*/
+.SaveButton{border:0px #93b9dc solid;background-image:url("Images/save.jpg");padding:0px 0px; height:21px; width:58px; cursor:pointer; margin-top:0px; margin-bottom:0px;}
+.SaveButtonMouseOver{border:0px #93b9dc solid;background-image:url("Images/save.jpg");padding:0px 0px; height:21px; width:58px; cursor:pointer; margin-top:0px; margin-bottom:0px;}
+/*发送按钮*/
+.SendButton{border:0px #93b9dc solid;background-image:url("Images/fasong.jpg");padding:0px 0px; height:21px; width:58px; cursor:pointer; margin-top:0px; margin-bottom:0px;}
+.SendButtonMouseOver{border:0px #93b9dc solid;background-image:url("Images/fasong.jpg");padding:0px 0px; height:21px; width:58px; cursor:pointer; margin-top:0px; margin-bottom:0px;}
+
+/*转发按钮*/
+.TransmitButton{border:0px #93b9dc solid;background-image:url("Images/zhuanfa.jpg");padding:0px 0px; height:21px; width:58px; cursor:pointer; margin-top:0px; margin-bottom:0px;}
+.TransmitButtonMouseOver{border:0px #93b9dc solid;background-image:url("Images/zhuanfa.jpg");padding:0px 0px; height:21px; width:58px; cursor:pointer; margin-top:0px; margin-bottom:0px;}
+
+/*扫描PDF按钮*/
+.ScanpdfButton{border:0px #93b9dc solid;background-image:url("Images/pdf.bmp");padding:0px 0px; height:21px; width:65px; cursor:pointer; margin-top:0px; margin-bottom:0px;}
+.ScanpdfButtonMouseOver{border:0px #93b9dc solid;background-image:url("Images/pdf.bmp");padding:0px 0px; height:21px; width:65px; cursor:pointer; margin-top:0px; margin-bottom:0px;}
+
+/*转流转按钮*/
+.ToWorkflowButton{border:0px #93b9dc solid;background-image:url("Images/4.jpg");padding:0px 0px; height:21px; width:65px; cursor:pointer; margin-top:0px; margin-bottom:0px;}
+.ToWorkflowButtonMouseOver{border:0px #93b9dc solid;background-image:url("Images/4.jpg");padding:0px 0px; height:21px; width:65px; cursor:pointer; margin-top:0px; margin-bottom:0px;}
+
+
+
+/*回复按钮*/
+.WritebackButton{border:0px #93b9dc solid;background-image:url("Images/huifu.jpg");padding:0px 0px; height:21px; width:58px; cursor:pointer; margin-top:0px; margin-bottom:0px;}
+.WritebackButtonMouseOver{border:0px #93b9dc solid;background-image:url("Images/huifu.jpg");padding:0px 0px; height:21px; width:58px; cursor:pointer; margin-top:0px; margin-bottom:0px;}
+/*导入按钮*/
+.transmitButton{border:0px #93b9dc solid;background-image:url("Images/daoru.jpg");padding:0px 0px; height:21px; width:58px; cursor:pointer; margin-top:0px; margin-bottom:0px;}
+.transmitButtonMouseOver{border:0px #93b9dc solid;background-image:url("Images/daoru.jpg");padding:0px 0px; height:21px; width:58px; cursor:pointer; margin-top:0px; margin-bottom:0px;}
+/*彻底删除按钮*/
+.DeletekillButton{border:0px #93b9dc solid;background-image:url("Images/cdsc.jpg");padding:0px 0px; height:21px; width:58px; cursor:pointer; margin-top:0px; margin-bottom:0px;}
+.DeletekillButtonMouseOver{border:0px #93b9dc solid;background-image:url("Images/cdsc.jpg");padding:0px 0px; height:21px; width:58px; cursor:pointer; margin-top:0px; margin-bottom:0px;}
+/*申请按钮*/
+.ApplyButton{border:0px #93b9dc solid;background-image:url("Images/shenqing.jpg");padding:0px 0px; height:21px; width:58px; cursor:pointer; margin-top:0px; margin-bottom:0px;}
+.ApplyButtonMouseOver{border:0px #93b9dc solid;background-image:url("Images/shenqing.jpg");padding:0px 0px; height:21px; width:58px; cursor:pointer; margin-top:0px; margin-bottom:0px;}
+
+/*提交按钮*/
+.ReferButton{border:0px #93b9dc solid;background-image:url("Images/tijiao.jpg");padding:0px 0px; height:21px; width:58px; cursor:pointer; margin-top:0px; margin-bottom:0px;}
+.ReferButtonMouseOver{border:0px #93b9dc solid;background-image:url("Images/tijiao.jpg");padding:0px 0px; height:21px; width:58px; cursor:pointer; margin-top:0px; margin-bottom:0px;}
+/*补发按钮*/
+.SupplyButton{border:0px #93b9dc solid;background-image:url("Images/bufa.jpg");padding:0px 0px; height:21px; width:58px; cursor:pointer; margin-top:0px; margin-bottom:0px;}
+.SupplyButtonMouseOver{border:0px #93b9dc solid;background-image:url("Images/bufa.jpg");padding:0px 0px; height:21px; width:58px; cursor:pointer; margin-top:0px; margin-bottom:0px;}
+/*审核按钮*/
+.AuditButton{border:0px #93b9dc solid;background-image:url("Images/shenhe.jpg");padding:0px 0px; height:21px; width:58px; cursor:pointer; margin-top:0px; margin-bottom:0px;}
+.AuditButtonMouseOver{border:0px #93b9dc solid;background-image:url("Images/shenhe.jpg");padding:0px 0px; height:21px; width:58px; cursor:pointer; margin-top:0px; margin-bottom:0px;}
+/*移动按钮*/
+.RemoveButton{border:0px #93b9dc solid;background-image:url("Images/yidong.jpg");padding:0px 0px; height:21px; width:58px; cursor:pointer; margin-top:0px; margin-bottom:0px;}
+.RemoveButtonMouseOver{border:0px #93b9dc solid;background-image:url("Images/yidong.jpg");padding:0px 0px; height:21px; width:58px; cursor:pointer; margin-top:0px; margin-bottom:0px;}
+/*项管理按钮*/
+.btn_QueItemManage{BORDER-RIGHT: #7b9ebd 1px solid; PADDING-RIGHT: 2px; BORDER-TOP: #7b9ebd 1px solid; PADDING-LEFT: 2px; FONT-SIZE: 12px; FILTER: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr=#ffffff, EndColorStr=#c6d3f7); BORDER-LEFT: #7b9ebd 1px solid; CURSOR: hand; COLOR: black; PADDING-TOP: 2px; BORDER-BOTTOM: #7b9ebd 1px solid}
+.btn_QueItemManageMouseOver{BORDER-RIGHT: #7b9ebd 1px solid; PADDING-RIGHT: 2px; BORDER-TOP: #7b9ebd 1px solid; PADDING-LEFT: 2px; FONT-SIZE: 12px; FILTER: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr=#ffffff, EndColorStr=#c6d3f7); BORDER-LEFT: #7b9ebd 1px solid; CURSOR: hand; COLOR: black; PADDING-TOP: 2px; BORDER-BOTTOM: #7b9ebd 1px solid}
+/*详细项管理按钮*/
+.btn_DeatailItemManage{BORDER-RIGHT: #7b9ebd 1px solid; PADDING-RIGHT: 2px; BORDER-TOP: #7b9ebd 1px solid; PADDING-LEFT: 2px; FONT-SIZE: 12px; FILTER: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr=#ffffff, EndColorStr=#c6d3f7); BORDER-LEFT: #7b9ebd 1px solid; CURSOR: hand; COLOR: black; PADDING-TOP: 2px; BORDER-BOTTOM: #7b9ebd 1px solid}
+.btn_DeatailItemManageMouseOver{BORDER-RIGHT: #7b9ebd 1px solid; PADDING-RIGHT: 2px; BORDER-TOP: #7b9ebd 1px solid; PADDING-LEFT: 2px; FONT-SIZE: 12px; FILTER: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr=#ffffff, EndColorStr=#c6d3f7); BORDER-LEFT: #7b9ebd 1px solid; CURSOR: hand; COLOR: black; PADDING-TOP: 2px; BORDER-BOTTOM: #7b9ebd 1px solid}
+/*查看记录按钮*/
+.examineButton{border:0px #93b9dc solid;background-image:url("Images/ckjl.jpg");padding:0px 0px; height:21px; width:58px; cursor:pointer; margin-top:0px; margin-bottom:0px;}
+.examineButtonMouseOver{border:0px #93b9dc solid;background-image:url("Images/ckjl.jpg");padding:0px 0px; height:21px; width:58px; cursor:pointer; margin-top:0px; margin-bottom:0px;}7b9ebd 1px solid; CURSOR: hand; COLOR: black; PADDING-TOP: 2px; BORDER-BOTTOM: #7b9ebd 1px solid}
+
+/*查看详情按钮*/
+.checkeButton{border:0px #93b9dc solid;background-image:url("Images/ckxq.jpg");padding:0px 0px; height:21px; width:58px; cursor:pointer; margin-top:0px; margin-bottom:0px;}
+.checkeButtonMouseOver{border:0px #93b9dc solid;background-image:url("Images/ckxq.jpg");padding:0px 0px; height:21px; width:58px; cursor:pointer; margin-top:0px; margin-bottom:0px;}7b9ebd 1px solid; CURSOR: hand; COLOR: black; PADDING-TOP: 2px; BORDER-BOTTOM: #7b9ebd 1px solid}
+/*共享按钮*/
+.ShareButton{border:0px #93b9dc solid;background-image:url("Images/gongxiang.jpg");padding:0px 0px; height:21px; width:58px; cursor:pointer; margin-top:0px; margin-bottom:0px;}
+.ShareButtonMouseOver{border:0px #93b9dc solid;background-image:url("Images/gongxiang.jpg");padding:0px 0px; height:21px; width:58px; cursor:pointer; margin-top:0px; margin-bottom:0px;}
+
+/*登录按钮*/
+.LoginButton{border:0px #93b9dc solid;background-image:url("Images/buttonZhong.jpg");padding:0px 0px; height:30px; width:80px; cursor:pointer; margin-top:0px; margin-bottom:0px;}
+.LoginButtonMouseOver{border:0px #93b9dc solid;background-image:url("Images/buttonZhong+.jpg");padding:0px 0px; height:30px; width:80px; cursor:pointer; margin-top:0px; margin-bottom:0px;}
+/*导出按钮*/
+.ToExcelButton{border:0px #93b9dc solid;background-image:url("Images/daochu.jpg");padding:0px 0px; height:21px; width:58px; cursor:pointer; margin-top:0px; margin-bottom:0px;}
+.ToExcelButtonMouseOver{border:0px #93b9dc solid;background-image:url("Images/daochu.jpg");padding:0px 0px; height:21px; width:58px; cursor:pointer; margin-top:0px; margin-bottom:0px;}
+
+/*新建日程按钮*/
+.AddCalendarButton{border:0px #93b9dc solid;background-image:url("Images/xjrc.jpg");padding:0px 0px; height:21px; width:58px; cursor:pointer; margin-top:0px; margin-bottom:0px;}
+.AddCalendarButtonMouseOver{border:0px #93b9dc solid;background-image:url("Images/xjrc.jpg");padding:0px 0px; height:21px; width:58px; cursor:pointer; margin-top:0px; margin-bottom:0px;}
+/*今天按钮*/
+.TodayButton{border:0px #93b9dc solid;background-image:url("Images/jintian.jpg");padding:0px 0px; height:21px; width:58px; cursor:pointer; margin-top:0px; margin-bottom:0px;}
+.TodayButtonMouseOver{border:0px #93b9dc solid;background-image:url("Images/jintian.jpg");padding:0px 0px; height:21px; width:58px; cursor:pointer; margin-top:0px; margin-bottom:0px;}
+
+
+/*存待发稿按钮*/
+.WaitSendButton{border:0px #93b9dc solid;background-image:url("Images/cdfg.jpg");padding:0px 0px; height:21px; width:58px; cursor:pointer; margin-top:0px; margin-bottom:0px;}
+.WaitSendButtonMouseOver{border:0px #93b9dc solid;background-image:url("Images/cdfg.jpg");padding:0px 0px; height:21px; width:58px; cursor:pointer; margin-top:0px; margin-bottom:0px;}
+/*撤销删除按钮*/
+.UnDeleteButton{border:0px #93b9dc solid;background-image:url("Images/cxsc.jpg");padding:0px 0px; height:21px; width:58px; cursor:pointer; margin-top:0px; margin-bottom:0px;}
+.UnDeleteButtonMouseOver{border:0px #93b9dc solid;background-image:url("Images/cxsc.jpg");padding:0px 0px; height:21px; width:58px; cursor:pointer; margin-top:0px; margin-bottom:0px;}
+/*签收公文按钮*/
+.AcceptButton{border:0px #93b9dc solid;background-image:url("Images/qsgw.jpg");padding:0px 0px; height:21px; width:58px; cursor:pointer; margin-top:0px; margin-bottom:0px;}
+.AcceptButtonMouseOver{border:0px #93b9dc solid;background-image:url("Images/qsgw.jpg");padding:0px 0px; height:21px; width:58px; cursor:pointer; margin-top:0px; margin-bottom:0px;}
+/*打印按钮*/
+.PrintButton{border:0px #93b9dc solid;background-image:url("Images/dayin.jpg");padding:0px 0px; height:21px; width:58px; cursor:pointer; margin-top:0px; margin-bottom:0px;}
+.PrintButtonMouseOver{border:0px #93b9dc solid;background-image:url("Images/dayin.jpg");padding:0px 0px; height:21px; width:58px; cursor:pointer; margin-top:0px; margin-bottom:0px;}
+/*归档按钮*/
+.ToRecordButton{border:0px #93b9dc solid;background-image:url("Images/guidang.jpg");padding:0px 0px; height:21px; width:58px; cursor:pointer; margin-top:0px; margin-bottom:0px;}
+.ToRecordButtonMouseOver{border:0px #93b9dc solid;background-image:url("Images/guidang.jpg");padding:0px 0px; height:21px; width:58px; cursor:pointer; margin-top:0px; margin-bottom:0px;}
+
+/*统计按钮*/
+.StatButton{BORDER-RIGHT: #7b9ebd 1px solid; PADDING-RIGHT: 2px; BORDER-TOP: #7b9ebd 1px solid; PADDING-LEFT: 2px; FONT-SIZE: 12px; FILTER: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr=#ffffff, EndColorStr=#c6d3f7); BORDER-LEFT: #7b9ebd 1px solid; CURSOR: hand; COLOR: black; PADDING-TOP: 2px; BORDER-BOTTOM: #7b9ebd 1px solid}
+.StatButtonMouseOver{BORDER-RIGHT: #7b9ebd 1px solid; PADDING-RIGHT: 2px; BORDER-TOP: #7b9ebd 1px solid; PADDING-LEFT: 2px; FONT-SIZE: 12px; FILTER: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr=#ffffff, EndColorStr=#c6d3f7); BORDER-LEFT: #7b9ebd 1px solid; CURSOR: hand; COLOR: black; PADDING-TOP: 2px; BORDER-BOTTOM: #7b9ebd 1px solid}
+/*收回按钮*/
+.GetBackButton{border:0px #93b9dc solid;background-image:url("Images/shouhui.jpg");padding:0px 0px; height:21px; width:58px; cursor:pointer; margin-top:0px; margin-bottom:0px;}
+.GetBackButtonMouseOver{{border:0px #93b9dc solid;background-image:url("Images/shouhui.jpg");padding:0px 0px; height:21px; width:58px; cursor:pointer; margin-top:0px; margin-bottom:0px;}
+
+/*重发按钮*/
+.ReSendButton{border:0px #93b9dc solid;background-image:url("Images/chongfa.jpg");padding:0px 0px; height:21px; width:58px; cursor:pointer; margin-top:0px; margin-bottom:0px;}
+.ReSendButtonMouseOver{border:0px #93b9dc solid;background-image:url("Images/chongfa.jpg");padding:0px 0px; height:21px; width:58px; cursor:pointer; margin-top:0px; margin-bottom:0px;}
+
+
+/*套红头按钮*/
+.SignButton{border:0px #93b9dc solid;background-image:url("Images/tht.jpg");padding:0px 0px; height:21px; width:58px; cursor:pointer; margin-top:0px; margin-bottom:0px;}
+.SignButtonMouseOver{border:0px #93b9dc solid;background-image:url("Images/tht.jpg");padding:0px 0px; height:21px; width:58px; cursor:pointer; margin-top:0px; margin-bottom:0px;}
+
+/*出库按钮*/
+.OutStorageButton{border:0px #93b9dc solid;background-image:url("Images/chuku.jpg");padding:0px 0px; height:21px; width:58px; cursor:pointer; margin-top:0px; margin-bottom:0px;}
+.OutStorageButtonMouseOver{border:0px #93b9dc solid;background-image:url("Images/chuku.jpg");padding:0px 0px; height:21px; width:58px; cursor:pointer; margin-top:0px; margin-bottom:0px;}
+
+/*出库按钮*/
+.InStorageButton{border:0px #93b9dc solid;background-image:url("Images/chuku.jpg");padding:0px 0px; height:21px; width:58px; cursor:pointer; margin-top:0px; margin-bottom:0px;}
+.InStorageButtonMouseOver{border:0px #93b9dc solid;background-image:url("Images/chuku.jpg");padding:0px 0px; height:21px; width:58px; cursor:pointer; margin-top:0px; margin-bottom:0px;}
+
+
+
+/*清空密码按钮*/
+.ClearPasswordButton{border:0px #93b9dc solid;background-image:url("Images/qkmm.jpg");padding:0px 0px; height:21px; width:58px; cursor:pointer; margin-top:0px; margin-bottom:0px;}
+.ClearPasswordButtonMouseOver{border:0px #93b9dc solid;background-image:url("Images/qkmm.jpg");padding:0px 0px; height:21px; width:58px; cursor:pointer; margin-top:0px; margin-bottom:0px;}
+
+
+/*保存人员角色按钮*/
+.SavePersonRoleButton{BORDER-RIGHT: #7b9ebd 1px solid; PADDING-RIGHT: 2px; BORDER-TOP: #7b9ebd 1px solid; PADDING-LEFT: 2px; FONT-SIZE: 12px; FILTER: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr=#ffffff, EndColorStr=#c6d3f7); BORDER-LEFT: #7b9ebd 1px solid; CURSOR: hand; COLOR: black; PADDING-TOP: 2px; BORDER-BOTTOM: #7b9ebd 1px solid}
+.SavePersonRoleButtonMouseOver{BORDER-RIGHT: #7b9ebd 1px solid; PADDING-RIGHT: 2px; BORDER-TOP: #7b9ebd 1px solid; PADDING-LEFT: 2px; FONT-SIZE: 12px; FILTER: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr=#ffffff, EndColorStr=#c6d3f7); BORDER-LEFT: #7b9ebd 1px solid; CURSOR: hand; COLOR: black; PADDING-TOP: 2px; BORDER-BOTTOM: #7b9ebd 1px solid}
+/*取消人员角色按钮*/
+.CancelPersonRoleButton{BORDER-RIGHT: #7b9ebd 1px solid; PADDING-RIGHT: 2px; BORDER-TOP: #7b9ebd 1px solid; PADDING-LEFT: 2px; FONT-SIZE: 12px; FILTER: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr=#ffffff, EndColorStr=#c6d3f7); BORDER-LEFT: #7b9ebd 1px solid; CURSOR: hand; COLOR: black; PADDING-TOP: 2px; BORDER-BOTTOM: #7b9ebd 1px solid}
+.CancelPersonRoleButtonMouseOver{BORDER-RIGHT: #7b9ebd 1px solid; PADDING-RIGHT: 2px; BORDER-TOP: #7b9ebd 1px solid; PADDING-LEFT: 2px; FONT-SIZE: 12px; FILTER: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr=#ffffff, EndColorStr=#c6d3f7); BORDER-LEFT: #7b9ebd 1px solid; CURSOR: hand; COLOR: black; PADDING-TOP: 2px; BORDER-BOTTOM: #7b9ebd 1px solid}
+
+
+/*保存群组人员按钮*/
+.SaveGroupPersonButton{BORDER-RIGHT: #7b9ebd 1px solid; PADDING-RIGHT: 2px; BORDER-TOP: #7b9ebd 1px solid; PADDING-LEFT: 2px; FONT-SIZE: 12px; FILTER: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr=#ffffff, EndColorStr=#c6d3f7); BORDER-LEFT: #7b9ebd 1px solid; CURSOR: hand; COLOR: black; PADDING-TOP: 2px; BORDER-BOTTOM: #7b9ebd 1px solid}
+.SaveGroupPersonButtonMouseOver{BORDER-RIGHT: #7b9ebd 1px solid; PADDING-RIGHT: 2px; BORDER-TOP: #7b9ebd 1px solid; PADDING-LEFT: 2px; FONT-SIZE: 12px; FILTER: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr=#ffffff, EndColorStr=#c6d3f7); BORDER-LEFT: #7b9ebd 1px solid; CURSOR: hand; COLOR: black; PADDING-TOP: 2px; BORDER-BOTTOM: #7b9ebd 1px solid}
+/*取消群组人员按钮*/
+.CancelGroupPersonButton{BORDER-RIGHT: #7b9ebd 1px solid; PADDING-RIGHT: 2px; BORDER-TOP: #7b9ebd 1px solid; PADDING-LEFT: 2px; FONT-SIZE: 12px; FILTER: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr=#ffffff, EndColorStr=#c6d3f7); BORDER-LEFT: #7b9ebd 1px solid; CURSOR: hand; COLOR: black; PADDING-TOP: 2px; BORDER-BOTTOM: #7b9ebd 1px solid}
+.CancelGroupPersonButtonMouseOver{BORDER-RIGHT: #7b9ebd 1px solid; PADDING-RIGHT: 2px; BORDER-TOP: #7b9ebd 1px solid; PADDING-LEFT: 2px; FONT-SIZE: 12px; FILTER: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr=#ffffff, EndColorStr=#c6d3f7); BORDER-LEFT: #7b9ebd 1px solid; CURSOR: hand; COLOR: black; PADDING-TOP: 2px; BORDER-BOTTOM: #7b9ebd 1px solid}
+
+/*保存角色权限按钮*/
+.SaveRolePowerButton{BORDER-RIGHT: #7b9ebd 1px solid; PADDING-RIGHT: 2px; BORDER-TOP: #7b9ebd 1px solid; PADDING-LEFT: 2px; FONT-SIZE: 12px; FILTER: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr=#ffffff, EndColorStr=#c6d3f7); BORDER-LEFT: #7b9ebd 1px solid; CURSOR: hand; COLOR: black; PADDING-TOP: 2px; BORDER-BOTTOM: #7b9ebd 1px solid}
+.SaveRolePowerButtonMouseOver{BORDER-RIGHT: #7b9ebd 1px solid; PADDING-RIGHT: 2px; BORDER-TOP: #7b9ebd 1px solid; PADDING-LEFT: 2px; FONT-SIZE: 12px; FILTER: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr=#ffffff, EndColorStr=#c6d3f7); BORDER-LEFT: #7b9ebd 1px solid; CURSOR: hand; COLOR: black; PADDING-TOP: 2px; BORDER-BOTTOM: #7b9ebd 1px solid}
+/*取消角色权限按钮*/
+.CancelRolePowerButton{BORDER-RIGHT: #7b9ebd 1px solid; PADDING-RIGHT: 2px; BORDER-TOP: #7b9ebd 1px solid; PADDING-LEFT: 2px; FONT-SIZE: 12px; FILTER: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr=#ffffff, EndColorStr=#c6d3f7); BORDER-LEFT: #7b9ebd 1px solid; CURSOR: hand; COLOR: black; PADDING-TOP: 2px; BORDER-BOTTOM: #7b9ebd 1px solid}
+.CancelRolePowerButtonMouseOver{BORDER-RIGHT: #7b9ebd 1px solid; PADDING-RIGHT: 2px; BORDER-TOP: #7b9ebd 1px solid; PADDING-LEFT: 2px; FONT-SIZE: 12px; FILTER: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr=#ffffff, EndColorStr=#c6d3f7); BORDER-LEFT: #7b9ebd 1px solid; CURSOR: hand; COLOR: black; PADDING-TOP: 2px; BORDER-BOTTOM: #7b9ebd 1px solid}
+
+/*审核通过按钮*/
+.CheckButton{border:0px #93b9dc solid;background-image:url("Images/shtg.jpg");padding:0px 0px; height:21px; width:58px; cursor:pointer; margin-top:0px; margin-bottom:0px;}
+.CheckButtonMouseOver{border:0px #93b9dc solid;background-image:url("Images/shtg.jpg");padding:0px 0px; height:21px; width:58px; cursor:pointer; margin-top:0px; margin-bottom:0px;}
+
+/*审核不通过按钮*/
+.NoAuditButton{border:0px #93b9dc solid;background-image:url("Images/shbtg.jpg");padding:0px 0px; height:21px; width:58px; cursor:pointer; margin-top:0px; margin-bottom:0px;}
+.NoAuditButtonMouseOver{border:0px #93b9dc solid;background-image:url("Images/shbtg.jpg");padding:0px 0px; height:21px; width:58px; cursor:pointer; margin-top:0px; margin-bottom:0px;}
+
+/*正文标准化按钮*/
+.TextButton{border:0px #93b9dc solid;background-image:url("Images/bzh.gif");padding:0px 0px; height:21px; width:58px; cursor:pointer; margin-top:0px; margin-bottom:0px;}
+.TextButtonMouseOver{border:0px #93b9dc solid;background-image:url("Images/bzh.gif");padding:0px 0px; height:21px; width:58px; cursor:pointer; margin-top:0px; margin-bottom:0px;}
+
+
+/*拟稿按钮*/
+.NiGaoButton{border:0px #93b9dc solid;background-image:url("Images/nigao.jpg");padding:0px 0px; height:21px; width:58px; cursor:pointer; margin-top:0px; margin-bottom:0px;}
+.NiGaoButtonMouseOver{border:0px #93b9dc solid;background-image:url("Images/nigao.jpg");padding:0px 0px; height:21px; width:58px; cursor:pointer; margin-top:0px; margin-bottom:0px;}
+
+/*办理按钮*/
+.TransactButton{border:0px #93b9dc solid;background-image:url("Images/banli.jpg");padding:0px 0px; height:21px; width:58px; cursor:pointer; margin-top:0px; margin-bottom:0px;}
+.TransactButtonMouseOver{border:0px #93b9dc solid;background-image:url("Images/banli.jpg");padding:0px 0px; height:21px; width:58px; cursor:pointer; margin-top:0px; margin-bottom:0px;}
+
+/*暂存按钮*/
+.TempButton{border:0px #93b9dc solid;background-image:url("Images/zancun.jpg");padding:0px 0px; height:21px; width:58px; cursor:pointer; margin-top:0px; margin-bottom:0px;}
+.TempButtonMouseOver{border:0px #93b9dc solid;background-image:url("Images/zancun.jpg");padding:0px 0px; height:21px; width:58px; cursor:pointer; margin-top:0px; margin-bottom:0px;}
+
+/*退回按钮*/
+.UntreadButton{border:0px #93b9dc solid;background-image:url("Images/tuihui.jpg");padding:0px 0px; height:21px; width:58px; cursor:pointer; margin-top:0px; margin-bottom:0px;}
+.UntreadButtonMouseOver{border:0px #93b9dc solid;background-image:url("Images/tuihui.jpg");padding:0px 0px; height:21px; width:58px; cursor:pointer; margin-top:0px; margin-bottom:0px;}
+
+/*添加活动按钮*/
+
+.ActiveButton{border:0px #93b9dc solid;background-image:url("Images/tianjiahuodong.jpg");padding:0px 0px; height:21px; width:58px; cursor:pointer; margin-top:0px; margin-bottom:0px;}
+.ActiveButtonMouseOver{border:0px #93b9dc solid;background-image:url("Images/tianjiahuodong.jpg");padding:0px 0px; height:21px; width:58px; cursor:pointer; margin-top:0px; margin-bottom:0px;}
+
+
+/*转传输按钮*/
+.ChangeTransmitButton{border:0px #93b9dc solid;background-image:url("Images/zhuanchuanshu.jpg");padding:0px 0px; height:21px; width:58px; cursor:pointer; margin-top:0px; margin-bottom:0px;}
+.ChangeTransmitButtonMouseOver{border:0px #93b9dc solid;background-image:url("Images/zhuanchuanshu.jpg");padding:0px 0px; height:21px; width:58px; cursor:pointer; margin-top:0px; margin-bottom:0px;}
+
+/*分发按钮*/
+.DispensePepleButton{border:0px #93b9dc solid;background-image:url("Images/fenfa.jpg");padding:0px 0px; height:21px; width:58px; cursor:pointer; margin-top:0px; margin-bottom:0px;}
+.DispensePepleButtonMouseOver{border:0px #93b9dc solid;background-image:url("Images/fenfa.jpg");padding:0px 0px; height:21px; width:58px; cursor:pointer; margin-top:0px; margin-bottom:0px;}
+
+
+/*办结按钮*/
+.FinishButton{border:0px #93b9dc solid;background-image:url("Images/banjie.jpg");padding:0px 0px; height:21px; width:58px; cursor:pointer; margin-top:0px; margin-bottom:0px;}
+.FinishButtonMouseOver{border:0px #93b9dc solid;background-image:url("Images/banjie.jpg");padding:0px 0px; height:21px; width:58px; cursor:pointer; margin-top:0px; margin-bottom:0px;}
+
+/*中止按钮*/
+.BreakButton{border:0px #93b9dc solid;background-image:url("Images/zhongzhi.jpg");padding:0px 0px; height:21px; width:58px; cursor:pointer; margin-top:0px; margin-bottom:0px;}
+.BreakButtonMouseOver{border:0px #93b9dc solid;background-image:url("Images/zhongzhi.jpg");padding:0px 0px; height:21px; width:58px; cursor:pointer; margin-top:0px; margin-bottom:0px;}
+
+/*收文按钮*/
+.CollectionButton{border:0px #93b9dc solid;background-image:url("Images/shouwen.jpg");padding:0px 0px; height:21px; width:58px; cursor:pointer; margin-top:0px; margin-bottom:0px;}
+.CollectionButtonMouseOver{border:0px #93b9dc solid;background-image:url("Images/shouwen.jpg");padding:0px 0px; height:21px; width:58px; cursor:pointer; margin-top:0px; margin-bottom:0px;}
+
+
+/*委托按钮*/
+.ConsignButton{border:0px #93b9dc solid;background-image:url("Images/weituo.jpg");padding:0px 0px; height:21px; width:58px; cursor:pointer; margin-top:0px; margin-bottom:0px;}
+.ConsignButtonMouseOver{border:0px #93b9dc solid;background-image:url("Images/weituo.jpg");padding:0px 0px; height:21px; width:58px; cursor:pointer; margin-top:0px; margin-bottom:0px;}
+
+
+/*分发按钮*/
+.DispensePeple{border:0px #93b9dc solid;background-image:url("Images/fenfa.jpg");padding:0px 0px; height:21px; width:58px; cursor:pointer; margin-top:0px; margin-bottom:0px;}
+.DispensePepleMouseOver{border:0px #93b9dc solid;background-image:url("Images/fenfa.jpg");padding:0px 0px; height:21px; width:58px; cursor:pointer; margin-top:0px; margin-bottom:0px;}
+
+
+/*完成按钮*/
+.OverButton{border:0px #93b9dc solid;background-image:url("Images/wancheng.jpg");padding:0px 0px; height:21px; width:58px; cursor:pointer; margin-top:0px; margin-bottom:0px;}
+.OverButtonMouseOver{border:0px #93b9dc solid;background-image:url("Images/wancheng.jpg");padding:0px 0px; height:21px; width:58px; cursor:pointer; margin-top:0px; margin-bottom:0px;}
+
+/*转办理按钮*/
+.TurnToHandleButton{border:0px #93b9dc solid;background-image:url("Images/zhuanbanli.jpg");padding:0px 0px; height:21px; width:58px; cursor:pointer; margin-top:0px; margin-bottom:0px;}
+.TurnToHandleButtonMouseOver{border:0px #93b9dc solid;background-image:url("Images/zhuanbanli.jpg");padding:0px 0px; height:21px; width:58px; cursor:pointer; margin-top:0px; margin-bottom:0px;}
+
+
+/*编辑正文按钮*/
+.EditContentButton{border:0px #93b9dc solid;background-image:url("Images/bjzw.jpg");padding:0px 0px; height:21px; width:58px; cursor:pointer; margin-top:0px; margin-bottom:0px;}
+.EditContentButtonMouseOver{border:0px #93b9dc solid;background-image:url("Images/bjzw.jpg");padding:0px 0px; height:21px; width:58px; cursor:pointer; margin-top:0px; margin-bottom:0px;}
+
+
+/*催办按钮*/
+.UrgeButton{border:0px #93b9dc solid;background-image:url("Images/cuiban.jpg");padding:0px 0px; height:21px; width:58px; cursor:pointer; margin-top:0px; margin-bottom:0px;}
+.UrgeButtonMouseOver{border:0px #93b9dc solid;background-image:url("Images/cuiban.jpg");padding:0px 0px; height:21px; width:58px; cursor:pointer; margin-top:0px; margin-bottom:0px;}
+
+
+/*会签人按钮*/
+.SignersButton{border:0px #93b9dc solid;background-image:url("Images/huiqianren.jpg");padding:0px 0px; height:21px; width:58px; cursor:pointer; margin-top:0px; margin-bottom:0px;}
+.SignersButtonMouseOver{border:0px #93b9dc solid;background-image:url("Images/huiqianren.jpg");padding:0px 0px; height:21px; width:58px; cursor:pointer; margin-top:0px; margin-bottom:0px;}
+/*会签办理按钮*/
+.UnionSignButton{border:0px #93b9dc solid;background-image:url("Images/hqbl.jpg");padding:0px 0px; height:21px; width:58px; cursor:pointer; margin-top:0px; margin-bottom:0px;}
+.UnionSignButtonMouseOver{border:0px #93b9dc solid;background-image:url("Images/hqbl.jpg");padding:0px 0px; height:21px; width:58px; cursor:pointer; margin-top:0px; margin-bottom:0px;}
+
+
+
+/*子流程按钮*/
+.OpenChildButton{border:0px #93b9dc solid;background-image:url("Images/zlc.jpg");padding:0px 0px; height:21px; width:58px; cursor:pointer; margin-top:0px; margin-bottom:0px;}
+.OpenChildButtonMouseOver{border:0px #93b9dc solid;background-image:url("Images/zlc.jpg");padding:0px 0px; height:21px; width:58px; cursor:pointer; margin-top:0px; margin-bottom:0px;}
+
+
+/*启动按钮*/
+.ChildFlowButton{border:0px #93b9dc solid;background-image:url("Images/qidong.jpg");padding:0px 0px; height:21px; width:58px; cursor:pointer; margin-top:0px; margin-bottom:0px;}
+.ChildFlowButtonMouseOver{border:0px #93b9dc solid;background-image:url("Images/qidong.jpg");padding:0px 0px; height:21px; width:58px; cursor:pointer; margin-top:0px; margin-bottom:0px;}
+
+/*查看正文按钮*/
+.ViewDocumentButton{border:0px #93b9dc solid;background-image:url("Images/ckzw.jpg");padding:0px 0px; height:21px; width:58px; cursor:pointer; margin-top:0px; margin-bottom:0px;}
+.ViewDocumentButtonMouseOver{border:0px #93b9dc solid;background-image:url("Images/ckzw.jpg");padding:0px 0px; height:21px; width:58px; cursor:pointer; margin-top:0px; margin-bottom:0px;}
+
+/*预览按钮*/
+.ReViewButton{border:0px #93b9dc solid;background-image:url("Images/yulan.jpg");padding:0px 0px; height:21px; width:58px; cursor:pointer; margin-top:0px; margin-bottom:0px;}
+.ReViewButtonMouseOver{border:0px #93b9dc solid;background-image:url("Images/yulan.jpg");padding:0px 0px; height:21px; width:58px; cursor:pointer; margin-top:0px; margin-bottom:0px;}
+/*调序按钮*/
+.suitwellButton{border:0px #93b9dc solid;background-image:url("Images/tiaoxu.jpg");padding:0px 0px; height:21px; width:58px; cursor:pointer; margin-top:0px; margin-bottom:0px;}
+.suitwellButtonMouseOver{border:0px #93b9dc solid;background-image:url("Images/tiaoxu.jpg");padding:0px 0px; height:21px; width:58px; cursor:pointer; margin-top:0px; margin-bottom:0px;}
+/*设置活动模板库按钮*/
+.FlagButton{border:0px #93b9dc solid;background-image:url("Images/szhdmbk.jpg");padding:0px 0px; height:21px; width:58px; cursor:pointer; margin-top:0px; margin-bottom:0px;}
+.FlagButtonMouseOver{border:0px #93b9dc solid;background-image:url("Images/szhdmbk.jpg");padding:0px 0px; height:21px; width:58px; cursor:pointer; margin-top:0px; margin-bottom:0px;}
+/*生成静态界面按钮*/
+.CreatButton{border:0px #93b9dc solid;background-image:url("Images/scjtjm.jpg");padding:0px 0px; height:21px; width:58px; cursor:pointer; margin-top:0px; margin-bottom:0px;}
+.CreatButtonMouseOver{border:0px #93b9dc solid;background-image:url("Images/scjtjm.jpg");padding:0px 0px; height:21px; width:58px; cursor:pointer; margin-top:0px; margin-bottom:0px;}
+
+
+/*反馈按钮*/
+.ResultButton{border:0px #93b9dc solid;background-image:url("Images/fanhui.jpg");padding:0px 0px; height:21px; width:58px; cursor:pointer; margin-top:0px; margin-bottom:0px;}
+.ResultButtonMouseOver{border:0px #93b9dc solid;background-image:url("Images/fanhui.jpg");padding:0px 0px; height:21px; width:58px; cursor:pointer; margin-top:0px; margin-bottom:0px;}
+
+/*存草稿按钮*/
+.SavedraftButton{border:0px #93b9dc solid;background-image:url("Images/cuncaogao.jpg");padding:0px 0px; height:21px; width:58px; cursor:pointer; margin-top:0px; margin-bottom:0px;}
+.SavedraftButtonMouseOver{border:0px #93b9dc solid;background-image:url("Images/cuncaogao.jpg");padding:0px 0px; height:21px; width:58px; cursor:pointer; margin-top:0px; margin-bottom:0px;}
+
+/*两字按钮*/
+.TwoButton{background-image: url(2.jpg);background-repeat: no-repeat;text-align: center;height: 21px;font-family: "宋体";font-size: 12px;color: #265d87;padding-top: 0px;padding-right: 0px;padding-bottom: 12px;padding-left: 0px;}
+.TwoButtonMouseOver{background-image: url(2.jpg);background-repeat: no-repeat;text-align: center;height: 21px;font-family: "宋体";font-size: 12px;color: #265d87;padding-top: 0px;padding-right: 0px;padding-bottom: 12px;padding-left: 0px;}
+
+/*四字按钮*/
+.FourButton{background-image: url(4.jpg);background-repeat: no-repeat;text-align: center;height: 21px;width: 71px;font-family: "宋体";font-size: 12px;color: #265d87;padding-top: 0px;padding-right: 0px;padding-bottom: 12px;padding-left: 0px;}
+.FourButtonMouseOver{background-image: url(4.jpg);background-repeat: no-repeat;text-align: center;height: 21px;width: 71px;font-family: "宋体";font-size: 12px;color: #265d87;padding-top: 0px;padding-right: 0px;padding-bottom: 12px;padding-left: 0px;}
+
+/*清空按钮*/
+.ClearButton{background-image: url(qingkong.jpg); Tbackground-repeat: no-repeat;text-align: center;height: 21px;font-family: "宋体";font-size: 12px;color: #265d87;padding-top: 0px;padding-right: 0px;padding-bottom: 12px;padding-left: 0px;}
+.ClearButtonMouseOver{background-image: url(qingkong.jpg);background-repeat: no-repeat;text-align: center;height: 21px;font-family: "宋体";font-size: 12px;color: #265d87;padding-top: 0px;padding-right: 0px;padding-bottom: 12px;padding-left: 0px;}
+
+
+
+/*loading图片*/
+.divLoading
+{
+	background-image:url(Images/loading.gif);		
+	width:16px;
+	height:16px;
+}
+/* ---------- 登录页body ---------- */
+.loginbody
+{
+	background-color:#dff2ec;	
+}
+.loginbodyWeb
+{
+	background-color:#FF8080;	
+}
+/* ---------- 登录页表格 ---------- */
+.loginbacktable1
+{
+	 height:100%;
+}
+/* ---------- 登录背景表格 ---------- */
+.loginbacktable
+{
+	background-image: url(images/logo.jpg); 
+	width:575px;
+	height:315px;
+} 
+.loginbacktableWeb
+{
+	background-image: url(images/logoWeb.jpg); 
+	width:494px;
+	height:315px;
+} 
+/* ---------- 填写登录信息表格上面的表格 ---------- */
+.logintoptable
+{
+	height:45px;
+}
+/* ---------- 填写登录信息表格左边的表格 ---------- */
+.loginlefttable
+{
+	width:120px;
+}
+/* ---------- 填写登录信息的表格 ---------- */
+.logintable
+{
+	width:258px;
+	height:123px;
+	font-size: 9pt; 
+}  
+/* ---------- 登录按钮 ---------- */
+.buttonlogin
+{
+	border:0px #93b9dc solid;padding:0px 0px; height:30px; width:80px; cursor:pointer; margin-top:0px; margin-bottom:0px;
+	width:66px;
+	height:26px;
+	background-image:url(images/button_03.gif);
+}
+/* ---------- 重置按钮 ---------- */
+.buttonreset
+{
+	border:0px #93b9dc solid;padding:0px 0px; height:30px; width:80px; cursor:pointer; margin-top:0px; margin-bottom:0px;
+	background-image:url(images/button_05.gif);
+	width:66px;
+	height:26px;
+}
+/* ---------- 登录错误提示信息 ---------- */
+.logininfo
+{
+	color:#ff0000;
+	font-weight:bolder;	
+	font-size: 9pt; 
+}
+/* ---------- 框架头部页面导航 ---------- */
+.topline
+{
+	/*background-image:url(images/toplinebg.gif);*/
+	background-image:url(images/topbg.jpg);
+}
+/* ---------- 框架头部页面导航 ---------- */
+.toplineFont 
+{ 
+	font: 12px/24px "宋体"; 
+	color:#e0f1ff;
+}
+/* ---------- 框架头部页面导航 ---------- */
+.toplinePicbg 
+{
+	background: url(images/toplinepic.gif) no-repeat left;
+}
+
+/* ---------- 框架头部页面body ---------- */
+.topbody
+{
+	
+}
+/* ---------- 框架头部页面 ---------- */
+.topright 
+{ 
+	background: url(images/syspic.gif) no-repeat right;
+}
+/* ---------- 框架头部页面表格 ---------- */
+.toptable
+{
+	background-image:url(images/sysbg.gif);
+}
+/* ---------- 框架头部底部表格 ---------- */
+.topbottom
+{
+	background-color:#eaf7ff;
+	height:5px;
+	border:0px;
+	cellspacing:0px;
+	cellpadding:0px; 
+}
+/* ---------- 主菜单 ---------- */
+.menuFontOn
+{ 
+	font: bold 14px "宋体"; 
+	color:#054273;
+}
+.menuFontOff
+{ 
+	font: bold 14px "宋体"; 
+	color:#236da8;
+}
+
+/* ---------- 超链接上面的空格 ---------- */
+.linktop
+{
+	height:10px;
+}
+/* ---------- 首页超链接 ---------- */
+.linkfirst
+{
+	background-image:url(images/b_01.gif);
+	width:64px;
+	height:26px;
+}
+.linkfristMove
+{
+	background-image:url(images/b_01+.gif);
+	width:64px;
+	height:26px;
+	cursor:pointer;
+	
+}
+/* ---------- 帮助超链接 ---------- */
+.linkhelper
+{
+	background-image:url(images/b_02.gif);
+	width:45px;
+	height:26px;
+}
+.linkhelperMove
+{
+	background-image:url(images/b_02+.gif);
+	width:45px;
+	height:26px;
+	cursor:pointer;
+}
+/* ---------- 注销超链接 ---------- */
+.linklogout
+{
+	background-image:url(images/b_03.gif);
+	width:47px;
+	height:26px;
+}
+.linklogoutMove
+{
+ background-image:url(images/b_03+.gif);
+	width:47px;
+	height:26px;
+	cursor:pointer;	
+	
+}
+/* ---------- 超链接右面的空格 ---------- */
+.linkright
+{
+	width:50px;
+}
+/* ---------- 欢迎信息页面body ---------- */
+.welcomebody
+{
+	background-image:url(images/p_01.jpg);
+	height:80%
+}
+/* ---------- 欢迎信息表格 ---------- */
+.welcometable
+{
+	width:100%;
+	height:100%
+}
+.welcominfo
+{
+	 vertical-align:middle;
+	text-align:center;
+
+}
+/*--用户登陆单位显示样式---*/
+.welcomeUnit
+{
+	color:#347872;
+
+	
+}
+/*--登陆人姓名显示-*/
+.name
+{
+	 color:#3c9eb9;
+	 font-weight:bold;
+	 font-size:12pt;
+	 font-family:华文行楷,楷体,仿宋,宋体;
+	
+}
+/* ---------- 选中菜单样式 ---------- */
+.menuselect
+{
+	background-color:#eeeeee;
+}
+/* ---------- 没选中菜单样式 ---------- */
+.menunoselect
+{
+}
+/* ---------- 菜单样式 ---------- */
+.menu
+{
+	color:#000000;
+	font-family:楷体,华文行楷,隶书,仿宋,宋体;
+	font-size:12pt; 
+    font-weight:200;
+}
+.menu a:link 
+{ 
+color: #000000; 
+TEXT-DECORATION: none;
+}
+.menu a:visited 
+{ 
+COLOR: #000000; 
+TEXT-DECORATION: none
+}
+.menu a:active 
+{ 
+COLOR: #000000; 
+TEXT-DECORATION: none
+}
+.menu a:hover 
+{ 
+COLOR: #000000; 
+text-decoration: none;
+background-color:#eeeeee;
+}  
+/* ---------- 办公菜单body ---------- */
+.menuoabody
+{
+	height:100%;
+	background-image:url(images/p_07.jpg);
+	margin:0;
+}
+/* ---------- 办公菜单表格 ---------- */
+.menuoatable
+{
+	background-position:bottom left;
+	background-repeat:no-repeat;
+	background-image:url(images/p_06.jpg);
+	height:100%;
+	width:100%;
+	font-size: 9pt;    
+} 
+/* ---------- 菜单左侧页面body ---------- */
+.leftsidebody
+{
+	height:100%;
+	padding:0; 
+	margin:0; 	
+}
+/* ---------- 菜单左侧页面表格 ---------- */
+.leftsidetable
+{
+	height:100%;
+	width:10px;
+	border:0px;
+}
+/* ---------- 菜单左侧页面上部表格 ---------- */
+.leftsidetop
+{
+	vertical-align:top;
+	height:2000px;
+	background-image:url(images/leftside.jpg) ;
+	background-repeat:repeat-y;
+	width:7px;
+}
+/* ---------- 菜单左侧页面中部表格 ---------- */
+.leftsidemiddle
+{
+	width:6px;
+	background-image:url(images/leftside.jpg) ;
+	background-repeat:repeat-x;
+	height:100%;
+}
+/* ---------- 菜单左侧页面下部表格 ---------- */
+.leftsidebottom
+{
+	vertical-align:baseline;
+	height:58px;
+	background-image:url(images/leftside.gif) ;
+	background-repeat:repeat-y;
+	width:6px;
+}
+/* ---------- 菜单右侧页面body ---------- */
+.rightsidebody
+{
+	height:100%;
+	padding:0; 
+	margin:0; 	
+	background-image:url(images/p_03.gif);
+}
+/* ---------- 菜单右侧页面表格 ---------- */
+.rightsidetable
+{
+	height:100%;
+	width:10px;
+	border:0px;
+}
+/* ---------- 菜单右侧页面上部表格 ---------- */
+.rightsidetop
+{
+	vertical-align:top;
+	height:2000px;
+	background-image:url(images/rightside.jpg);
+	width:8px;
+}
+/* ---------- 菜单右侧页面中部表格 ---------- */
+.rightsidemiddle
+{
+	width:10px;
+	height:100px;
+	background-image:url(images/rightside.jpg);
+}
+/* ---------- 菜单右侧页面中部切换表格 ---------- */
+.rightsidemiddle2
+{
+	width:10px;
+	height:100px;
+	background-image:url(images/rightside.jpg);
+}
+/* ---------- 菜单右侧页面底部表格 ---------- */
+.rightsidebottom
+{
+	vertical-align:baseline;
+	height:58px;
+	background-image:url(images/rightside.jpgf);
+	width:10px;
+}
+/* ---------- 框架底部页面body ---------- */
+.footerbody
+{
+	height:100%;
+	padding:0px; 
+	margin:0px; 	
+	background-image:url(images/footer_bg.gif);
+}
+/* ---------- 首页表格边框线条 ---------- */
+.homepageline
+{ 
+	background-color: #9B8B72; 
+}
+/* ---------- 按键控制表格背景样式 ---------- */
+.TableControl
+{ 
+	BACKGROUND: #D3CAA9;
+}
+/* ---------- 表格标题样式 ---------- */
+.TableHeader 
+{ 
+	BACKGROUND: #F0ECD5; 
+	color: #FFFFFF; 
+	font-weight: bold; 
+	background-image: url("images/header_bg.gif") 
+}
+/* ---------- 表格标题样式 按键 ---------- */
+.TableHeader1 
+{ 
+	BACKGROUND: #D3E5FA; 
+	background-image: url("./images/header_bg.gif");  
+	CURSOR: hand; 
+	COLOR: #ffffff;
+} 
+/* ---------- 内框表格背景演示 ---------- */
+.TableContent
+{ 
+	BACKGROUND: #E2DDBF;
+}
+/* ---------- 表格内容样式 ---------- */
+.TableData 
+{ 
+	BACKGROUND: #F0ECD5; 
+	FONT-SIZE: 10pt;
+}
+/* ---------- 表格交叉样式1 ---------- */
+.TableLine1 
+{ 
+	BACKGROUND: #EEECDF;
+}
+/* ---------- 表格交叉样式2 ---------- */
+.TableLine2 
+{ 
+	BACKGROUND: #F0ECD5;
+}
+.help
+{
+	background-image:url("images/help.gif");
+	width:16px;
+	height:16px;
+	background-color:#eeeeee;
+	cursor:pointer;
+}
+.usermanagetitlebgc
+{
+	background-color:#e7effc;
+}
+.usermanagetitlebgi
+{
+	background-image:url("images/045.gif");
+	height:30px;
+	width:30px;
+}
+.usermanagetitle
+{
+	font-weight:bolder;
+    font-size:14px;
+}
+/* ---------- 文字链接 － 链接的普通状态 ---------- */
+.usermanagetitle A:link 
+{ 
+	color: #2E0700; 
+	TEXT-DECORATION: none;
+	font-weight:bolder;
+}           
+
+/* ---------- 文字链接 － 已被访问链接 ---------- */
+.usermanagetitle A:visited 
+{ 
+	COLOR: #aaaaaa; 
+	TEXT-DECORATION: none;
+	font-weight:bolder;
+}       
+
+/* ---------- 文字链接 － 处于活动状态链接 ---------- */
+.usermanagetitle A:active 
+{ 
+	COLOR: #3333ff; 
+	TEXT-DECORATION: none;
+	font-weight:bolder;
+}        
+
+/* ---------- 文字链接 － 指针在链接上 ---------- */
+.usermanagetitle A:hover 
+{ 
+	COLOR: #ff0000; 
+	text-decoration:none;
+	font-weight:bolder;
+}   
+.usermanageinfo
+{
+	background-image:url("Images/info.ico");
+}
+
+.pageTitleTable
+{
+	background-color:#E2DDBF;
+}
+/* ---------- 列表样式 ---------- */
+.listtable
+{
+	width:100%;
+	cellpadding:0px;	
+	cellspacing:0px;
+	
+}
+/* ---------- 导航样式 ---------- */
+.bgnavigation
+{
+	font-size:12px;
+	font-weight:bolder;
+	height:30px;
+	background-image:url(images/bgnavigation.jpg);
+}
+/* ---------- 增加列表左侧样式 ---------- */
+.addtext
+{
+	text-align:right;
+	width:150px;
+	font-weight:bolder;
+}
+/* ---------- 查询样式 ---------- */
+.bgquery
+{
+	background-image: url(images/menubg.gif);
+	background-repeat: repeat-x;
+	background-position: top;
+	width:100%;
+	height:30px;
+}
+/* ---------- 操作样式 ---------- */
+.bgoperation
+{
+	background-image: url(images/menubg.gif);
+	background-repeat: repeat-x;
+	background-position: top;
+	width:100%;
+	height:30px;
+} 
+/*字段前的提示图片*/
+.divHelp
+{
+	background-image:url(Images/help.gif);		
+	width:0px;
+	height:0px;
+	font-size:10px;
+}
+.listGrid
+{
+	
+}
+.listOperation
+{
+	
+}
+/*左边菜单文字*/
+.menutext
+{
+	color:#347672;
+	font-size:12pt; 
+	font-family:楷体,华文行楷,隶书,仿宋,宋体;
+    font-weight:200;
+}
+/*列表控件下方文字样式*/
+.pagenow
+{
+	color:#347672;
+}
+.pagecount
+{
+	color:#347672;
+}
+.rowcount
+{
+	color:#347672;
+}
+.firstpage
+{
+	color:#347672;
+}
+.prevpage
+{
+	color:#347672;
+}
+.nextpage
+{
+	color:#347672;
+}
+.lastpage
+{
+	color:#347672;
+}
+.gopage
+{
+	color:#347672;
+}
+
+.pagenumbertext
+{
+	color:#347672;
+}
+.pagetext
+{
+	color:#347672;
+}
+/*消息对话框样式*/
+.messagetable
+{
+	border:bordercolordark=#ffffff bordercolorlight=#bfd3e6 bordercolor=#bfd3e6;
+}
+.messagetop
+{
+	background-color:#bfd3e6;
+	border-color:#bfd3e6;
+}
+
+
+/*   -------------------通讯录样式设计   下  */
+/*  --通讯录正文宽度*/
+.tdWidth
+{
+	width: 80px;
+}
+/* framne 的高度*/
+.frameWidth
+{
+	height: 510px;
+	width: 100%;
+}
+
+.defaultFrom
+{
+  width:100%;
+  height:510px;
+  
+}
+/* 左边的树*/
+.leftTree
+{
+ background-image:url(images/midbg.jpg);
+ background-repeat:repeat-y;
+}
+/* 右边的正文*/
+.rightTree
+{
+ width:76%;
+ height:510px;
+}
+
+/*   -------------------通讯录样式设计  上    */
+.timeHead
+{
+   height:16px;
+   width:60px;
+}
+.tablemessage {
+	border: 1px solid #c2e6dc;
+	cellpadding:0px;
+	cellspacing:0px;
+}
+
+.tablemessagebg {
+	background-color: #c2e6dc;
+}
+
+/* 查看界面样式 */
+.viewtable
+{
+	width:100%;
+	cellpadding:0;
+	cellspacing:0;
+}
+.viewcontent
+{
+	width:100%;
+}
+.viewtext
+{
+	text-align:right;
+	width:150px;
+	font-weight:bolder;	
+	valign:top;
+}
+.viewtitle
+{
+	color:#ff0000;
+	font-weight:bolder;
+}
+.viewcontentspace
+{
+	background-image:url(images/viewcontentspace.jpg);
+	height:37px;
+}
+.viewnavigation
+{
+	font-size:12px;
+	font-weight:bolder;
+	height:30px;
+	background-color:#3c9eb9;	
+}
+.viewtop
+{
+	background-color:#dff2ec;
+	width:100%;
+}
+
+/* 删除附件样式 */
+.uploaddeleteicon
+{
+	width:12px;
+	height:12px;
+	background-image:url(images/icon_del.gif);	
+}
+.imgDelete
+{
+		
+}
+/*  中间树背景 */
+.navigationbody
+{
+	background-image:url(images/midbg.jpg);
+}
+
+/* 菜单树前图标 */  
+.befortree1
+{
+	background-image:url(images/zmenu.gif);
+	height:12px;
+	width:12px;
+	border:0px;
+	
+}
+.befortree2
+{
+	background-image:url(images/zmenu1.gif);
+	height:12px;
+	width:12px;
+	border:0px;
+}
+
+/* 日程安排样式 开始*/
+
+      .tdWeekDay  /* 第一行标题栏 */
+      {
+         background-color: #DFF2EC;
+         border:1px solid #78D3AA;
+         height:35px
+      }
+      
+      .tdCalendarHead /* 日期栏（日，周，年 列表） */
+      {
+         background-color: #F5FBF9;
+         border:1px solid #78D3AA;
+         height:24px
+      }
+      
+       .tdMonthCalendarHead /* 日期栏（月列表） */
+      {
+         background-color: #F5FBF9;
+         border:1px solid #78D3AA;
+         border-top-style:none;
+         border-left-style:none;
+         border-right-style:none;
+         border-top-width:0;
+         border-left-width:0;
+         border-right-width:0;
+         height:24px
+      }
+      
+      .trTitleBar /* 时间选择栏 */
+      {
+         height:30px;
+      }
+      .tabCommon /* 一般表格 */
+      {
+         width:100%;
+         height:100%;
+      }
+      .currentDay /* 当天事务样式 */
+      {
+         background-color: #DFF2EC;
+      }
+      
+      .outDay /* 过期事务样式 */
+      {
+         background-color: #78D3AA;
+      }
+      
+      .commonDay /* 一般日期样式 */
+      {
+         border:1px solid #78D3AA;
+      } 
+      
+      .mainTable /* 主框架 */
+      {
+        width:100%;
+        height:100%;
+        border:1px solid #78D3AA;
+        border-bottom-style:none;
+        border-left-style:none;
+        border-right-style:none;
+        border-bottom-width:0;
+        border-left-width:0;
+        border-right-width:0;
+        border-collapse: collapse; 
+        table-layout: fixed;
+        rules:all;
+      }
+      .contentTable  /* 内容表 */
+      {
+        width:100%;
+        height:100%;
+
+        border-collapse: collapse; 
+        table-layout: fixed;
+        rules:all;
+      }
+table.gridview_m
+{
+ border-collapse: collapse;
+ border:solid 1px  #c6e4f8;
+ width:98%;
+
+}
+
+table.gridview_m  td,th
+{
+ border-collapse: collapse;
+ border:solid 1px #c6e4f8;
+
+}
+ /* 日程安排样式 结束*/
+ 
+ /*outlookbar样式*/
+.panelleft
+{
+	background: left top no-repeat url(images/panel_left.gif); 
+	text-align: center;
+}
+.panelright
+{
+	margin-left: 15px; 
+	padding-right: 15px; 
+	background: right top no-repeat url(images/panel_right.gif); 
+	padding-top: 4px; 
+	height: 25px; 
+	font: bold 10pt trebuchet ms;
+}
+.itemtd
+{
+	background-color:#cff3f8;
+}
+.upArrow
+{
+	background:url(images/up.gif);
+	width:14px;
+	height:14px;
+}
+.downArrow
+{
+	background:url(images/down.gif);
+	width:14px;
+	height:14px;
+}
+/*outlookbar样式结束*/
+
+
+
+/* ---------- 即时通讯超链接 ---------- */
+.linkjstx
+{
+	background-image: url(images/sysbutton_jstx.gif);
+	width:104px;
+	height:45px;
+	border:0px;
+	cursor:pointer;
+}
+.linkjstxMove
+{
+	background-image: url(images/sysbutton_jstx+.gif);
+	width:104px;
+	height:45px;
+	border:0px;
+	cursor:pointer;
+	
+}
+/* ---------- 公文流转超链接 ---------- */
+.linkgwlz
+{
+	background-image: url(images/sysbutton_gwlz.gif);
+	width:104px;
+	height:45px;
+	border:0px;
+	cursor:pointer;
+}
+.linkgwlzMove
+{
+	background-image: url(images/sysbutton_gwlz+.gif);
+	width:104px;
+	height:45px;
+	border:0px;
+	cursor:pointer;
+	
+}
+/* ---------- 公文传输超链接 ---------- */
+.linkgwcs
+{
+	background-image: url(images/sysbutton_gwcs.gif);
+	width:104px;
+	height:45px;
+	border:0px;
+	cursor:pointer;
+}
+.linkgwcsMove
+{
+	background-image: url(images/sysbutton_gwcs+.gif);
+	width:104px;
+	height:45px;
+	border:0px;
+	cursor:pointer;
+	
+}
+/* ---------- 协同办公超链接 ---------- */
+.linkxtbg
+{
+	background-image: url(images/sysbutton_xtbg.gif);
+	width:104px;
+	height:45px;
+	border:0px;
+	cursor:pointer;
+}
+.linkxtbgMove
+{
+	background-image: url(images/sysbutton_xtbg+.gif);
+	width:104px;
+	height:45px;
+	border:0px;
+	cursor:pointer;
+	
+}
+/* ---------- 视频点播超链接 ---------- */
+.linkspdb
+{
+	background-image: url(images/sysbutton_spdb.gif);
+	width:104px;
+	height:45px;
+	border:0px;
+	cursor:pointer;
+}
+.linkspdbMove
+{
+	background-image: url(images/sysbutton_spdb+.gif);
+	width:104px;
+	height:45px;
+	border:0px;
+	cursor:pointer;
+	
+}
+/* ---------- 网站管理超链接 ---------- */
+.linkwzgl
+{
+	background-image: url(images/sysbutton_wzgl.gif);
+	width:104px;
+	height:45px;
+	border:0px;
+	cursor:pointer;
+}
+.linkwzglMove
+{
+	background-image: url(images/sysbutton_wzgl+.gif);
+	width:104px;
+	height:45px;
+	border:0px;
+	cursor:pointer;
+	
+}
+
+/* ---------- 文件资料库超链接 ---------- */
+.linkwjzlk
+{
+	background-image: url(images/sysbutton_wjzlk.gif);
+	width:104px;
+	height:45px;
+	border:0px;
+	cursor:pointer;
+}
+.linkwjzlkMove
+{
+	background-image: url(images/sysbutton_wjzlk+.gif);
+	width:104px;
+	height:45px;
+	border:0px;
+	cursor:pointer;
+	
+}
+ 
+/* ---------- 选择分发人员 ---------- */ 
+.Distributionlinkbutton
+{
+	font-size:18px;
+	color:#ff0000;
+}
+
+/* ---------- 节点说明 ---------- */ 
+.RemarkStyle
+{
+	font-size:12px;
+}
+/*-------------*/
+.BigMenuStyle
+{
+	background-color:#84dec5; 
+	width:191px; 
+	height:117px;
+	 cursor:pointer; 
+	 color:White;
+	 font-size:xx-large		
+}
+.bgnavigation2
+{
+	font-size:20px;
+	font-weight:bolder;
+	height:30px;
+	background-image:url(images/bgnavigation.jpg);
+}
+.bgnavigation3
+{
+	font-size:16px;
+	font-weight:bolder;
+	height:30px;
+}
+.bgnavigation4
+{
+	font-size:16px;
+	font-weight:bolder;
+	height:30px;
+}
+.bgnavigation5
+{
+	font-size:16px;
+	height:30px;
+}

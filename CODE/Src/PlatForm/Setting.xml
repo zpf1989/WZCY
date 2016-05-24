@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<appSettings>
+  <!--主数据库类型-->
+  <add key="MainDBType" value="SQLServer"/>
+  <!--FCKeditor编辑器-->
+  <add key="FCKeditor:BasePath" value="~/fckeditor/"/>
+  <add key="FCKeditor:UserFilesPath" value="~/Upload/" />
+  <!--附件保存路径-->
+  <add key="AccessoryPath" value="D:\FILE\AccessPath"/>
+  <add key="ApplicationName" value="http://localhost:2923/Platform"></add>
+</appSettings>

@@ -1,0 +1,105 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{4FADDC97-CF7C-48E6-9F43-C6CEC9108458}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>OA.Model</RootNamespace>
+    <AssemblyName>OA.Model</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Accessories\Accessories.cs" />
+    <Compile Include="BaseSet\BillType.cs" />
+    <Compile Include="BaseSet\DeptInfo.cs" />
+    <Compile Include="BaseSet\PayType.cs" />
+    <Compile Include="BuyManage\BuyApplyBill\BOAReader.cs" />
+    <Compile Include="BuyManage\BuyApplyBill\BOASecondCheck.cs" />
+    <Compile Include="BuyManage\BuyApplyBill\BuyApplyBill.cs" />
+    <Compile Include="BuyManage\BuyApplyBill\BuyApplyBillItem.cs" />
+    <Compile Include="BuyManage\BuyBill\BOReader.cs" />
+    <Compile Include="BuyManage\BuyBill\BOSecondCheck.cs" />
+    <Compile Include="BuyManage\BuyBill\BuyBill.cs" />
+    <Compile Include="BuyManage\BuyBill\BuyBillItem.cs" />
+    <Compile Include="BuyManage\ReachGoodsBill\ReachGoodsBill.cs" />
+    <Compile Include="BuyManage\ReachGoodsBill\ReachGoodsBillItem.cs" />
+    <Compile Include="BuyManage\SupplierMg\SupplierInfo.cs" />
+    <Compile Include="HR\EmpleeManage\EmpChange.cs" />
+    <Compile Include="HR\EmpleeManage\EmpleeInfo.cs" />
+    <Compile Include="HR\OrgManage\PostInfo.cs" />
+    <Compile Include="OA\DailyWork\ApplyPublicPower.cs" />
+    <Compile Include="OA\DailyWork\ApplyPublicPowerItem.cs" />
+    <Compile Include="OA\News\NewsInfo.cs" />
+    <Compile Include="OA\WorkFlow\OfficeDoc.cs" />
+    <Compile Include="OA\WorkFlow\OfficeDocItem.cs" />
+    <Compile Include="SaleManage\AskPrice\APReader.cs" />
+    <Compile Include="SaleManage\AskPrice\APSecondCheck.cs" />
+    <Compile Include="SaleManage\AskPrice\AskPrice.cs" />
+    <Compile Include="SaleManage\AskPrice\AskPriceItem.cs" />
+    <Compile Include="SaleManage\BaseData\Client.cs" />
+    <Compile Include="SaleManage\SaleOrder\SaleOrder.cs" />
+    <Compile Include="SaleManage\SaleOrder\SaleOrderItem.cs" />
+    <Compile Include="SaleManage\SaleOrder\SOReader.cs" />
+    <Compile Include="SaleManage\SaleOrder\SOSecondCheck.cs" />
+    <Compile Include="SysManage\FunctionInfo.cs" />
+    <Compile Include="SysManage\RFRelation.cs" />
+    <Compile Include="SysManage\RoleInfo.cs" />
+    <Compile Include="SysManage\URrelation.cs" />
+    <Compile Include="SysManage\UserInfo.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WareHouseMg\BaseData\MaterialClass.cs" />
+    <Compile Include="WareHouseMg\BaseData\Materials.cs" />
+    <Compile Include="WareHouseMg\BaseData\MaterialType.cs" />
+    <Compile Include="WareHouseMg\BaseData\MeasureUnits.cs" />
+    <Compile Include="WareHouseMg\GoodsMovement\GMReader.cs" />
+    <Compile Include="WareHouseMg\GoodsMovement\GMSecondCheck.cs" />
+    <Compile Include="WareHouseMg\GoodsMovement\GoodsMovement.cs" />
+    <Compile Include="WareHouseMg\GoodsMovement\GoodsMovementItem.cs" />
+    <Compile Include="WareHouseMg\InvBalRealAccount.cs" />
+    <Compile Include="WareHouseMg\BaseData\WareHouse.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

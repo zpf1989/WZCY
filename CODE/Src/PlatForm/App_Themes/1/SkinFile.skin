@@ -1,0 +1,300 @@
+﻿<%--
+默认的外观模板。以下外观仅作为示例提供。
+
+1. 命名的控件外观。SkinId 的定义应唯一，因为在同一主题中不允许一个控件类型有重复的 SkinId。
+
+<asp:GridView runat="server" SkinId="gridviewSkin" BackColor="White" >
+   <AlternatingRowStyle BackColor="Blue" />
+</asp:GridView>
+
+2. 默认外观。未定义 SkinId。在同一主题中每个控件类型只允许有一个默认的控件外观。
+
+<asp:Image runat="server" ImageUrl="~/images/image1.jpg" />
+--%>
+
+<%--文本框--%>
+<%--<asp:TextBox runat="server"  CssClass="colorblur"
+onblur="this.className='colorblur'" 
+onfocus="this.className='colorfocus'"></asp:TextBox>--%>
+<%--下拉框--%> 
+<asp:DropDownList runat="server" ></asp:DropDownList>
+
+<%--默认按钮--%>
+<asp:Button runat="server" CssClass="button" onmouseover="this.className='buttonMouseOver'" onmouseout="this.className='button'" ></asp:Button>
+
+<%--登录按钮--%>
+<asp:Button skinid="btn_login" text ="登录"  Font-Size="14px"  ForeColor="#3b5d78"　runat="server" CssClass="LoginButton" onmouseover="this.className='LoginButtonMouseOver'" onmouseout="this.className='LoginButton'"  height=22px Width="60px"></asp:Button>
+
+<%--登录重填按钮--%>
+<asp:Button skinid="btn_reWrite" text ="重填"  Font-Size="14px"  ForeColor="#3b5d78" runat="server" CssClass="ReWriteButton" onmouseover="this.className='ReWriteButtonMouseOver'" onmouseout="this.className='ReWriteButton'"  height=24px Width="60px"></asp:Button>
+<%--匿名登陆按钮--%>
+<asp:Button skinid="btn_NoNameLogin" text ="匿名登陆"  Font-Size="14px"  ForeColor="#3b5d78" runat="server" CssClass="ReWriteButton" onmouseover="this.className='ReWriteButtonMouseOver'" onmouseout="this.className='ReWriteButton'"  height=24px Width="60px"></asp:Button>
+
+
+<%--添加活动按钮--%>
+<asp:Button skinId="btn_AddActive"  Font-Size="13px" text ="添加活动"  Font-Bold="false"  runat="server" CssClass="CloseButton" onmouseover="this.className='CloseButtonMouseOver'" onmouseout="this.className='CloseButton'" height=22px Width="60px" ForeColor=#3b5d78 ></asp:Button>
+
+<%--项管理按钮--%>
+
+<asp:Button skinid="btn_QueItemManage" text ="项管理"  Font-Size="14px"  ForeColor="#3b5d78" runat="server" CssClass="ReWriteButton" onmouseover="this.className='btn_QueItemManageMouseOver'" onmouseout="this.className='btn_QueItemManage'"  height=22px Width="70px"></asp:Button>
+
+<%--详细项项管理按钮--%>
+
+<asp:Button skinid="btn_DeatailItemManage" text ="详细项管理"  Font-Size="14px"  ForeColor="#3b5d78" runat="server" CssClass="ReWriteButton" onmouseover="this.className='btn_DeatailItemManageMouseOver'" onmouseout="this.className='btn_DeatailItemManage'"  height=22px Width="150px"></asp:Button>
+<%--查看记录按钮--%>
+
+<asp:Button skinid="btn_recorder" Font-Size="14px"  ForeColor="#3b5d78" runat="server" CssClass="examineButton" onmouseover="this.className='examineButtonMouseOver'" onmouseout="this.className='examineButton'"  height=22px Width="71px"></asp:Button>
+<%--查看详情按钮--%>
+<asp:Button skinid="btn_view" Font-Size="14px"  ForeColor="#3b5d78" runat="server" CssClass="checkeButton" onmouseover="this.className='checkeButtonMouseOver'" onmouseouxiangt="this.className='checkeButton'"  height=22px Width="71px"></asp:Button>
+<%--重置按钮--%> 
+<asp:Button skinid="btn_reset"  Font-Size="14px"  ForeColor="#3b5d78" runat="server" CssClass="ResetButton" onmouseover="this.className='ResetButtonMouseOver'" onmouseout="this.className='ResetButton'"  height=22px Width="60px"></asp:Button>
+<%--领导活动安排按钮--%> 
+<asp:Button skinid="btn_leaderarrange" text ="领导活动安排"  Font-Size="13px"  ForeColor="#3b5d78" runat="server" CssClass="CloseButton" onmouseover="this.className='CloseButtonMouseOver'" onmouseout="this.className='CloseButton'"  height=22px Width="100px"></asp:Button>
+<%--会议室安排按钮--%> 
+<asp:Button skinid="btn_meetingarrange"  text ="会议室安排" Font-Size="13px"  ForeColor="#3b5d78" runat="server" CssClass="CloseButton" onmouseover="this.className='CloseButtonMouseOver'" onmouseout="this.className='CloseButton'"  height=22px Width="90px"></asp:Button>
+<%--确定按钮--%>
+<asp:Button skinId="btn_ok"   Font-Size="14px"  ForeColor="#3b5d78" runat="server" CssClass="OKButton" onmouseover="this.className='OKButtonMouseOver'" onmouseout="this.className='OKButton'"  height=22px Width="60px"></asp:Button>
+<%--取消按钮--%>
+<asp:Button skinId="btn_cancel"   Font-Size="14px"  ForeColor="#3b5d78" runat="server" CssClass="CancelButton" onmouseover="this.className='CancelButtonMouseOver'" onmouseout="this.className='CancelButton'"  height=22px Width="60px"></asp:Button>
+<%--返回按钮--%>
+<asp:Button skinId="btn_return"   Font-Size="14px"  ForeColor="#3b5d78" runat="server" CssClass="ReturnButton" onmouseover="this.className='ReturnButton'" onmouseout="this.className='ReturnButton'" height=22px Width="60px"></asp:Button>
+<%--新增按钮--%>
+<asp:Button skinId="btn_add"   Font-Size="14px"  ForeColor="#3b5d78" runat="server" CssClass="AddButton" onmouseover="this.className='AddButtonMouseOver'" onmouseout="this.className='AddButton'" height=22px ></asp:Button>
+<%--确认阅读按钮--%>
+<asp:Button skinId="btn_read"   Font-Size="14px"  ForeColor="#3b5d78" runat="server" CssClass="ReadButton" onmouseover="this.className='ReadButtonMouseOver'" onmouseout="this.className='ReadButton'" height=22px ></asp:Button>
+<%--修改按钮--%>  
+<asp:Button skinId="btn_edit"  Font-Size="14px"  ForeColor="#3b5d78" runat="server" CssClass="EditButton" onmouseover="this.className='EditButtonMouseOver'" onmouseout="this.className='EditButton'"  height=22px ></asp:Button>
+<%--查询按钮--%>
+<asp:Button skinId="btn_query" Font-Size="13px" Font-Bold="false"  runat="server" CssClass="QueryButton" onmouseover="this.className='QueryButtonMouseOver'" onmouseout="this.className='QueryButton'" height=22px Width="60px" ForeColor=#3b5d78></asp:Button>
+
+<%--删除按钮--%>
+<asp:Button skinId="btn_delete"  Font-Size="13px" Font-Bold="false"  runat="server" CssClass="DeleteButton" onmouseover="this.className='DeleteButtonMouseOver'" onmouseout="this.className='DeleteButton'" height=22px Width="60px" ForeColor=#3b5d78 ></asp:Button>
+<%--维护按钮--%>
+<asp:Button skinId="btn_maintain"  Font-Size="13px" text ="维护"  Font-Bold="false"  runat="server" CssClass="CloseButton" onmouseover="this.className='ColseButtonMouseOver'" onmouseout="this.className='CloseButton'" height=22px Width="60px" ForeColor=#3b5d78 ></asp:Button>
+<%--关闭按钮--%>
+<asp:Button skinId="btn_close"  Font-Size="13px" text ="关闭"  Font-Bold="false"  runat="server" CssClass="CloseButton" onmouseover="this.className='ColseButtonMouseOver'" onmouseout="this.className='CloseButton'" height=22px Width="60px" ForeColor=#3b5d78 ></asp:Button>
+
+<%--扫描PDF按钮--%>
+<asp:Button skinId="btn_pdf"  Font-Size="13px" text="扫描PDF"  Font-Bold="false"  runat="server" CssClass="CloseButton" onmouseover="this.className='ColseButtonMouseOver'" onmouseout="this.className='CloseButton'" height=22px Width="60px" ForeColor=#3b5d78 ></asp:Button>
+
+
+<%--转流转按钮--%>
+<asp:Button skinId="btn_ToWorkflow"  Font-Size="14px" text="转流转" Font-Bold="false"  runat="server" CssClass="ToWorkflowButton" onmouseover="this.className='ToWorkflowButtonMouseOver'" onmouseout="this.className='ToWorkflowButton'" height=22px Width="70px" ForeColor=#3b5d78 ></asp:Button>
+
+<%---
+<asp:Button skinId="btn_delete" text ="删  除"  Font-Size="14px"  ForeColor="#3b5d78" runat="server" CssClass="QueryButton" onmouseover="this.className='QueryButtonMouseOver'" onmouseout="this.className='QueryButton'" ></asp:Button>--%>
+<%--保存按钮--%>
+<asp:Button skinId="btn_save" Font-Size="14px"    ForeColor="#3b5d78"  runat="server"  CssClass="SaveButton" onmouseover="this.className='SaveButtonMouseOver'"  onmouseout="this.className='SaveButton'"  height="22px" Width="60px" ></asp:Button>
+<%--发送按钮--%>
+<asp:Button skinId="btn_send" Font-Size="14px"  ForeColor="#3b5d78" runat="server" CssClass="SendButton" onmouseover="this.className='SendButtonMouseOver'" onmouseout="this.className='SendButton'" height="22px" Width="60px"></asp:Button>
+<%--选择按钮--%>
+<asp:Button skinId="btn_select" Font-Size="14px"  ForeColor="#3b5d78"  runat="server"  CssClass="SelectButton" onmouseover="this.className='SelectButtonMouseOver'"  onmouseout="this.className='SelectButton'" sheight="22px"  Width="60px" ></asp:Button>
+<%--转发按钮--%>
+<asp:Button skinId="btn_transmit" Font-Size="14px"  ForeColor="#3b5d78" runat="server" CssClass="TransmitButton" onmouseover="this.className='TransmitButtonMouseOver'" onmouseout="this.className='TransmitButton'" height="22px" Width="60px"></asp:Button>
+<%--彻底删除按钮--%>
+<asp:Button skinId="btn_deletekill" Font-Size="14px"  ForeColor="#3b5d78" runat="server" CssClass="DeletekillButton" onmouseover="this.className='DeletekillButtonMouseOver'" onmouseout="this.className='DeletekillButton'"  height=22px Width="72px"></asp:Button>
+<%--回复按钮--%>
+<asp:Button skinId="btn_writeback" Font-Size="14px"  ForeColor="#3b5d78"　runat="server" CssClass="WritebackButton" onmouseover="this.className='WritebackButtonMouseOver'" onmouseout="this.className='WritebackButton'"  height=22px Width="60px"></asp:Button>
+<%--存草稿按钮--%>
+<asp:Button skinId="btn_savedraft" Font-Size="14px"  ForeColor="#3b5d78" runat="server" CssClass="SavedraftButton" onmouseover="this.className='SavedraftButtonMouseOver'" onmouseout="this.className='SavedraftButton'"  height=22px Width="70px"></asp:Button>
+
+
+<%--导出按钮--%>
+<asp:Button skinId="btn_ToExcel" text = Font-Size="14px"  ForeColor="#3b5d78"　runat="server" CssClass="ToExcelButton" onmouseover="this.className='ToExcelButtonMouseOver'" onmouseout="this.className='ToExcelButton'"  height=22px Width="60px"></asp:Button>
+<%--新建日程按钮--%>
+<asp:Button skinId="btn_AddCalendar" Font-Size="14px"  ForeColor="#3b5d78" runat="server" CssClass="AddCalendarButton" onmouseover="this.className='AddCalendarButtonMouseOver'" onmouseout="this.className='AddCalendarButton'"  height=22px Width="71px"></asp:Button>
+
+<%--扫描PDF按钮--%>
+<asp:Button skinId="btn_Scanpdf" text =""  Font-Size="14px"   ForeColor="#3b5d78" runat="server" CssClass="ScanpdfButton" onmouseover="this.className='ScanpdfButtonMouseOver'" onmouseout="this.className='ScanpdfButton'"  height=22px Width="71px"></asp:Button>
+
+<%--今天按钮--%>
+<asp:Button skinId="btn_today" Font-Size="14px"  ForeColor="#3b5d78" runat="server" CssClass="TodayButton" onmouseover="this.className='TodayButtonMouseOver'" onmouseout="this.className='TodayButton'"  height=22px Width="60px"></asp:Button>
+
+<%--存待发稿按钮--%>
+<asp:Button skinId="btn_WaitSend" Font-Size="14px"  ForeColor="#3b5d78" runat="server" CssClass="WaitSendButton" onmouseover="this.className='WaitSendButtonMouseOver'" onmouseout="this.className='WaitSendButton'"  height=22px Width="72px"></asp:Button>
+<%--撤销删除按钮--%>
+<asp:Button skinId="btn_UnDelete" Font-Size="14px"  ForeColor="#3b5d78" runat="server" CssClass="UnDeleteButton" onmouseover="this.className='UnDeleteButtonMouseOver'" onmouseout="this.className='UnDeleteButton'"  height=22px Width="72px"></asp:Button>
+<%--签收公文按钮--%>
+<asp:Button skinId="btn_Accept" Font-Size="14px"  ForeColor="#3b5d78"　runat="server" CssClass="AcceptButton" onmouseover="this.className='AcceptButtonMouseOver'" onmouseout="this.className='AcceptButton'"  height=22px Width="72px"></asp:Button>
+<%--打印按钮--%>
+<asp:Button skinId="btn_Print" Font-Size="14px"  ForeColor="#3b5d78"　runat="server" CssClass="PrintButton" onmouseover="this.className='PrintButtonMouseOver'" onmouseout="this.className='PrintButton'"  height=22px Width="60px"></asp:Button>
+<%--归档按钮--%>
+<asp:Button skinId="btn_ToRecord" Font-Size="14px"  ForeColor="#3b5d78"　runat="server" CssClass="ToRecordButton" onmouseover="this.className='ToRecordButtonMouseOver'" onmouseout="this.className='ToRecordButton'" height=22px Width="60px" ></asp:Button>
+<%--统计按钮--%>
+<asp:Button skinId="btn_Stat" text ="统计"  Font-Size="14px"  ForeColor="#3b5d78"　runat="server" CssClass="StatButton" onmouseover="this.className='StatButtonMouseOver'" onmouseout="this.className='StatButton'"  height=22px Width="60px" ></asp:Button>
+<%--共享按钮--%>
+<asp:Button skinId="btn_Share" Font-Size="14px"  ForeColor="#3b5d78"　runat="server" CssClass="ShareButton" onmouseover="this.className='ShareButtonMouseOver'" onmouseout="this.className='ShareButton'"  height=22px Width="60px" ></asp:Button>
+<%--收回按钮--%>
+<asp:Button skinId="btn_GetBack" Font-Size="14px"  ForeColor="#3b5d78"　runat="server" CssClass="GetBackButton" onmouseover="this.className='GetBackButtonMouseOver'" onmouseout="this.className='GetBackButton'" height=22px Width="60px" ></asp:Button>
+<%--重发按钮--%>
+<asp:Button skinId="btn_ReSend" Font-Size="14px"  ForeColor="#3b5d78"　runat="server" CssClass="ReSendButton" onmouseover="this.className='ReSendButtonMouseOver'" onmouseout="this.className='ReSendButton'"  height=22px Width="60px" ></asp:Button>
+<%--申请按钮--%>
+<asp:Button skinId="btn_Apply" Font-Size="14px"  ForeColor="#3b5d78"　runat="server" CssClass="ApplyButton" onmouseover="this.className='ApplyButtonMouseOver'" onmouseout="this.className='ApplyButton'"  height=22px Width="60px" ></asp:Button>
+<%--提交按钮--%>
+<asp:Button skinId="btn_Refer" Font-Size="14px"  ForeColor="#3b5d78"　runat="server" CssClass="ReferButton" onmouseover="this.className='ReferButtonMouseOver'" onmouseout="this.className='ReferButton'" height=22px Width="60px" ></asp:Button>
+<%--补发按钮--%>
+<asp:Button skinId="btn_Supply" Font-Size="14px"  ForeColor="#3b5d78"　runat="server" CssClass="SupplyButton" onmouseover="this.className='SupplyButtonMouseOver'" onmouseout="this.className='SupplyButton'"  height=22px Width="60px" ></asp:Button>
+<%--套红头--%>
+<asp:Button skinId="btn_Sign" Font-Size="14px"  ForeColor="#3b5d78"　runat="server" CssClass="SignButton" onmouseover="this.className='SignButtonMouseOver'" onmouseout="this.className='SignButton'" height=22px Width="72px" ></asp:Button>
+
+<%--审核按钮--%>
+<asp:Button skinId="btn_Audit" Font-Size="14px"  ForeColor="#3b5d78"　runat="server" CssClass="AuditButton" onmouseover="this.className='AuditButtonMouseOver'" onmouseout="this.className='AuditButton'" height=22px Width="60px" ></asp:Button>
+<%--审核通过按钮--%>
+<asp:Button skinId="btn_Check" Font-Size="14px"  ForeColor="#3b5d78"　runat="server" CssClass="CheckButton" onmouseover="this.className='CheckButtonMouseOver'" onmouseout="this.className='CheckButton'" height=22px Width="72px" ></asp:Button>
+<%--审核不通过按钮--%>
+<asp:Button skinId="btn_NoCheck" Font-Size="14px"  ForeColor="#3b5d78"　runat="server" CssClass="NoAuditButton" onmouseover="this.className='NoAuditButtonMouseOver'" onmouseout="this.className='NoAuditButton'"  height=22px Width="72px"></asp:Button>
+
+<%--正文标准化--%>
+<asp:Button skinId="btn_Text" Font-Size="14px"  ForeColor="#3b5d78"　runat="server" CssClass="TextButton" onmouseover="this.className='TextButtonMouseOver'" onmouseout="this.className='TextButton'"  height=22px Width="72px"></asp:Button>
+
+<%--出库按钮--%>
+<asp:Button skinId="btn_OutStorage" Font-Size="14px"  ForeColor="#3b5d78"　runat="server" CssClass="OutStorageButton" onmouseover="this.className='OutStorageButtonMouseOver'" onmouseout="this.className='OutStorageButton'"  height=22px Width="60px" ></asp:Button>
+<%--出库按钮--%>
+<asp:Button skinId="btn_InStorage" Font-Size="14px"  ForeColor="#3b5d78"　runat="server" CssClass="InStorageButton" onmouseover="this.className='InStorageButtonMouseOver'" onmouseout="this.className='InStorageButton'"  height=22px Width="60px" ></asp:Button>
+
+<%--清空密码按钮--%>
+<asp:Button skinId="btn_clearPassword" Font-Size="14px"  ForeColor="#3b5d78"　runat="server" CssClass="ClearPasswordButton" onmouseover="this.className='ClearPasswordButtonMouseOver'" onmouseout="this.className='ClearPasswordButton'"  height=22px Width="72px"></asp:Button>
+
+<%--保存人员角色--%>
+<asp:Button skinId="btn_savePersonRole" text ="保存" Font-Size="14px"  ForeColor="#3b5d78"　runat="server" CssClass="SavePersonRoleButton" onmouseover="this.className='SavePersonRoleButtonMouseOver'" onmouseout="this.className='SavePersonRoleButton'"  height=22px Width="60px" ></asp:Button>
+
+<%--取消人员角色--%>
+<asp:Button skinId="btn_cancelPersonRole" text ="取消"  Font-Size="14px"  ForeColor="#3b5d78"　runat="server" CssClass="CancelPersonRoleButton" onmouseover="this.className='CancelPersonRoleButtonMouseOver'" onmouseout="this.className='CancelPersonRoleButton'"  height=22px Width="60px"></asp:Button>
+
+<%--保存群组人员--%>
+<asp:Button skinId="btn_saveGroupPerson" text ="保存"  Font-Size="14px"  ForeColor="#3b5d78"　runat="server" CssClass="SaveGroupPersonButton" onmouseover="this.className='SaveGroupPersonButtonMouseOver'" onmouseout="this.className='SaveGroupPersonButton'"  height=22px Width="60px" ></asp:Button>
+
+<%--取消群组人员--%>
+<asp:Button skinId="btn_cancelGroupPerson" text ="取消"  Font-Size="14px"  ForeColor="#3b5d78"　runat="server" CssClass="CancelGroupPersonButton" onmouseover="this.className='CancelGroupPersonButtonMouseOver'" onmouseout="this.className='CancelGroupPersonButton'"  height=22px Width="60px" ></asp:Button>
+
+<%--保存角色权限--%>
+<asp:Button skinId="btn_saveRolePower" text ="保存"  Font-Size="14px"  ForeColor="#3b5d78"　runat="server" CssClass="SaveRolePowerButton" onmouseover="this.className='SaveRolePowerButtonMouseOver'" onmouseout="this.className='SaveRolePowerButton'"  height=22px Width="60px" ></asp:Button>
+
+<%--取消角色权限--%>
+<asp:Button skinId="btn_cancelRolePower" text ="取消"  Font-Size="14px"  ForeColor="#3b5d78"　runat="server" CssClass="CancelRolePowerButton" onmouseover="this.className='CancelRolePowerButtonMouseOver'" onmouseout="this.className='CancelRolePowerButton'"  height=22px Width="60px" ></asp:Button>
+
+<%--拟稿按钮--%>
+<asp:Button skinId="btn_Draft" runat="server" Font-Size="14px"  ForeColor="#3b5d78"　CssClass="NiGaoButton" onmouseover="this.className='NiGaoButtonMouseOver'" onmouseout="this.className='NiGaoButton'"  height=22px Width="60px"></asp:Button>
+
+<%--办理按钮--%>
+<asp:Button skinId="btn_Transact" Font-Size="14px"  ForeColor="#3b5d78"　runat="server" CssClass="TransactButton" onmouseover="this.className='TransactButtonMouseOver'" onmouseout="this.className='TransactButton'"  height=22px Width="60px" ></asp:Button>
+
+<%--暂存按钮--%>
+<asp:Button skinId="btn_Temp"  Font-Size="14px"  ForeColor="#3b5d78"　runat="server" CssClass="TempButton" onmouseover="this.className='TempButtonMouseOver'" onmouseout="this.className='TempButton'" height=22px Width="60px" ></asp:Button>
+
+<%--退回按钮--%>
+<asp:Button skinId="btn_Untread"  Font-Size="14px"  ForeColor="#3b5d78"　runat="server" CssClass="UntreadButton" onmouseover="this.className='UntreadButtonMouseOver'" onmouseout="this.className='UntreadButton'" height=22px Width="60px" ></asp:Button>
+
+<%--转传输按钮--%>
+<asp:Button skinId="btn_ChangeTransmit" Font-Size="14px"  ForeColor="#3b5d78"　runat="server" CssClass="ChangeTransmitButton" onmouseover="this.className='ChangeTransmitButtonMouseOver'" onmouseout="this.className='ChangeTransmitButton'" height=22px Width="72px" ></asp:Button>
+
+<%--分发按钮--%>
+<asp:Button skinId="btn_Dispense" Font-Size="14px"  ForeColor="#3b5d78"　runat="server" CssClass="DispenseButton" onmouseover="this.className='DispenseButtonMouseOver'" onmouseout="this.className='DispenseButton'" height=22px Width="60px" ></asp:Button>
+
+<%--办结按钮--%>
+<asp:Button skinId="btn_Finish"  Font-Size="14px"  ForeColor="#3b5d78"　runat="server" CssClass="FinishButton" onmouseover="this.className='FinishButtonMouseOver'" onmouseout="this.className='FinishButton'"  height=22px Width="60px" ></asp:Button>
+
+<%--中止按钮--%>
+<asp:Button skinId="btn_Break"  Font-Size="14px"  ForeColor="#3b5d78"　runat="server" CssClass="BreakButton" onmouseover="this.className='BreakButtonMouseOver'" onmouseout="this.className='BreakButton'" height=22px Width="60px" ></asp:Button>
+
+<%--收文按钮--%>
+<asp:Button skinId="btn_Collection"  Font-Size="14px"  ForeColor="#3b5d78"　runat="server" CssClass="CollectionButton" onmouseover="this.className='CollectionButtonMouseOver'" onmouseout="this.className='CollectionButton'"  height=22px Width="60px" ></asp:Button>
+
+<%--清空按钮--%>
+<asp:Button skinId="btn_Clear"  Font-Size="14px"  ForeColor="#3b5d78"　runat="server" CssClass="ClearButton" onmouseover="this.className='ClearButtonMouseOver'" onmouseout="this.className='ClearButton'"  height=22px Width="60px" ></asp:Button>
+
+<%--委托按钮--%>
+<asp:Button skinid="btn_Consign" Font-Size="14px"  ForeColor="#3b5d78"　runat="server" CssClass="ConsignButton" onmouseover="this.className='ConsignButtonMouseOver'" onmouseout="this.className='ConsignButton'"  height=22px Width="60px" ></asp:Button>
+
+<%--分发按钮--%>
+<asp:Button skinid="btn_DispensePeple" Font-Size="14px"  ForeColor="#3b5d78"　runat="server" CssClass="DispensePepleButton" onmouseover="this.className='DispensePepleButtonMouseOver'" onmouseout="this.className='DispensePepleButton'" height=22px Width="60px" ></asp:Button>
+
+<%--完成按钮--%>
+<asp:Button skinid="btn_Over" Font-Size="14px"  ForeColor="#3b5d78"　runat="server" CssClass="OverButton" onmouseover="this.className='OverButtonMouseOver'" onmouseout="this.className='OverButton'"  height=22px Width="60px" ></asp:Button>
+
+<%--转办理按钮--%>
+<asp:Button skinid="btn_TurnToHandle" Font-Size="14px"  ForeColor="#3b5d78"　runat="server" CssClass="TurnToHandleButton" onmouseover="this.className='TurnToHandleButtonMouseOver'" onmouseout="this.className='TurnToHandleButton'"  height=22px Width="72px" ></asp:Button>
+
+<%--编辑正文按钮--%>
+<asp:Button skinid="btn_EditContent" Font-Size="14px"  ForeColor="#3b5d78"　runat="server" CssClass="EditContentButton" onmouseover="this.className='EditContentButtonMouseOver'" onmouseout="this.className='EditContentButton'"  height=22px Width="72px"></asp:Button>
+
+<%--催办按钮--%>
+<asp:Button skinid="btn_Urge" Font-Size="14px"  ForeColor="#3b5d78"　runat="server" CssClass="UrgeButton" onmouseover="this.className='UrgeButtonMouseOver'" onmouseout="this.className='UrgeButton'"  height=22px Width="60px" ></asp:Button>
+
+<%--会签人按钮--%>
+<asp:Button skinid="btn_Signers" Font-Size="14px"  ForeColor="#3b5d78"　runat="server" CssClass="SignersButton" onmouseover="this.className='SignersButtonMouseOver'" onmouseout="this.className='SignersButton'"  height=22px Width="72px" ></asp:Button>
+
+<%--会签办理按钮--%>
+<asp:Button skinid="btn_UnionSign" Font-Size="14px"  ForeColor="#3b5d78"　runat="server" CssClass="UnionSignButton" onmouseover="this.className='UnionSignButtonMouseOver'" onmouseout="this.className='UnionSignButton'"  height=22px Width="72px"></asp:Button>
+
+<%--子流程按钮--%>
+<asp:Button skinid="btn_OpenChild" Font-Size="14px"  ForeColor="#3b5d78"　runat="server" CssClass="OpenChildButton" onmouseover="this.className='OpenChildButtonMouseOver'" onmouseout="this.className='OpenChildButton'"  height=22px Width="72px"></asp:Button>
+
+<%--启动按钮--%>
+<asp:Button skinid="btn_ChildFlow" Font-Size="14px"  ForeColor="#3b5d78"　runat="server" CssClass="ChildFlowButton" onmouseover="this.className='ChildFlowButtonMouseOver'" onmouseout="this.className='ChildFlowButton'"  height=22px Width="60px"></asp:Button>
+
+<%--查看正文按钮--%>
+<asp:Button skinid="btn_ViewDocument" Font-Size="14px"  ForeColor="#3b5d78"　runat="server" CssClass="ViewDocumentButton" onmouseover="this.className='ViewDocumentButtonMouseOver'" onmouseout="this.className='ViewDocumentButton'"  height=22px Width="72px"></asp:Button>
+
+<%--预览按钮--%>
+<asp:Button skinid="btn_ReView" Font-Size="14px"  ForeColor="#3b5d78"　runat="server" CssClass="ReViewButton" onmouseover="this.className='ReViewButtonMouseOver'" onmouseout="this.className='ReViewButton'"  height=22px Width="60px" ></asp:Button>
+
+<%--调序按钮--%>
+<asp:Button skinid="btn_Sort" Font-Size="14px"  ForeColor="#3b5d78"　runat="server" CssClass="suitwellButton" onmouseover="this.className='suitwellButtonMouseOver'" onmouseout="this.className='suitwellButton'" height=22px Width="60px" ></asp:Button>
+
+<%--调序按钮--%>
+<asp:Button skinid="btn_Draw" Font-Size="14px"  ForeColor="#3b5d78"　runat="server" CssClass="DrawButton" onmouseover="this.className='DrawButtonMouseOver'" onmouseout="this.className='DrawButton'" height=22px Width="60px" ></asp:Button>
+
+<%--反馈按钮--%>
+<asp:Button skinid="btn_Result" Font-Size="14px"  ForeColor="#3b5d78"　runat="server" CssClass="ResultButton" onmouseover="this.className='ResultButtonMouseOver'" onmouseout="this.className='ResultButton'"  height=22px Width="60px" ></asp:Button>
+<%--设置活动模板库--%>
+<asp:Button skinid="btn_SetFlag" Font-Size="14px"  ForeColor="#3b5d78"　runat="server" CssClass="FlagButton" onmouseover="this.className='FlagButtonMouseOver'" onmouseout="this.className='FlagButton'"  height=22px Width="103px"></asp:Button>
+<%--生成静态界面--%>
+<asp:Button skinid="btn_Creat" Font-Size="14px"  ForeColor="#3b5d78"　runat="server" CssClass="CreatButton" onmouseover="this.className='CreatButtonMouseOver'" onmouseout="this.className='CreatButton'"  height=22px Width="90px"></asp:Button>
+<%--导出按钮--%>
+<asp:Button skinId="btn_out" Font-Size="14px"  ForeColor="#3b5d78"　runat="server" CssClass="WritebackButton" onmouseover="this.className='WritebackButtonMouseOver'" onmouseout="this.className='WritebackButton'" height=22px Width="60px" ></asp:Button>
+<%--导入按钮--%>
+<asp:Button skinId="btn_in" Font-Size="14px"  ForeColor="#3b5d78"　runat="server" CssClass="transmitButton" onmouseover="this.className='transmitButtonMouseOver'" onmouseout="this.className='transmitButton'"  height=22px Width="60px"></asp:Button>
+<%-- 无字按钮--%>
+<asp:Button skinId="btn_NoFoint"  text ="无字"  Font-Size="14px"  ForeColor="#3b5d78"　runat="server" CssClass="NoPointButton" onmouseover="this.className='NoPointButtonMouseOver'" onmouseout="this.className='NoPointButton'"  height=22px Width="60px"></asp:Button>
+<%--移动按钮--%>
+<asp:Button skinId="btn_Remove" Font-Size="14px"  ForeColor="#3b5d78"　runat="server" CssClass="RemoveButton" onmouseover="this.className='RemoveButtonMouseOver'" onmouseout="this.className='RemoveButton'"  height=22px Width="60px"></asp:Button>
+<%--GridView列表--%>
+<asp:GridView runat="server" Width="98%" 
+    AutoGenerateColumns="False" EmptyDataText="暂无内容！"
+    HeaderStyle-BackColor="#f3faff" 
+     PagerStyle-HorizontalAlign="Right" 
+     PagerSettings-PageButtonCount="10"
+     PagerStyle-BackColor="#ffffff" 
+     PagerStyle-ForeColor="#c6e4f8"  
+     PageSize="15"
+     RowStyle-Height="20px"
+     CssClass="gridview_m" >
+    <HeaderStyle CssClass="girdview_head" />
+    <RowStyle CssClass="gridview_row" />
+    <PagerStyle HorizontalAlign="Center" />
+     <PagerSettings FirstPageText="首页" LastPageText="尾页" Mode="Numeric" NextPageText="下一页"
+                        Position="Top" PreviousPageText="上一页" />
+                        <AlternatingRowStyle BackColor="#f3faff" />
+</asp:GridView>
+
+<%@ Register Assembly="Gentle.WebControlLibrary" Namespace="Gentle.WebControlLibrary"
+    TagPrefix="asp" %>
+<asp:CustomGridView  runat="server" Width="98%" 
+    AutoGenerateColumns="False" EmptyDataText="暂无内容！"
+     HeaderStyle-BackColor="#f3faff" 
+     PagerStyle-HorizontalAlign="Right" 
+     PagerSettings-PageButtonCount="10"
+     PagerStyle-BackColor="#ffffff" 
+     PagerStyle-ForeColor="#c6e4f8"  
+     PageSize="15"
+     RowStyle-Height="20px"
+     CssClass="gridview_m" >
+    <HeaderStyle CssClass="girdview_head" />
+    <RowStyle CssClass="gridview_row" />
+    <PagerStyle HorizontalAlign="Center" />
+    <PagerSettings  FirstPageText="首页" LastPageText="尾页" Mode="Numeric" NextPageText="下一页"
+                        Position="Bottom" PreviousPageText="上一页" />
+                          <AlternatingRowStyle BackColor="#f3faff" />
+</asp:CustomGridView>
+
