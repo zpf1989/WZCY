@@ -66,6 +66,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Accessories\IAccessoriesDAL.cs" />
+    <Compile Include="demo\IDemoDepartmentDAL.cs" />
     <Compile Include="SysManage\IFunctionDAL.cs" />
     <Compile Include="SysManage\IRFRelationDAL.cs" />
     <Compile Include="SysManage\IRoleManageDAL.cs" />

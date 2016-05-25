@@ -66,6 +66,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Accessories\Accessories.cs" />
+    <Compile Include="demo\DemoDepartment.cs" />
+    <Compile Include="demo\DemoEmployee.cs" />
     <Compile Include="SysManage\FunctionInfo.cs" />
     <Compile Include="SysManage\RFRelation.cs" />
     <Compile Include="SysManage\RoleInfo.cs" />
