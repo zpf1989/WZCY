@@ -153,6 +153,27 @@ namespace OA.DALFactory
             }
             return iAccessoriesDAL;
         }
-
+        /// <summary>
+        /// 获取IDemoDepartmentDAL的实例
+        /// </summary>
+        /// <returns></returns>
+        public static OA.IDAL.IDemoDepartmentDAL GetIDemoDepartmentDAL()
+        {
+            OA.IDAL.IDemoDepartmentDAL iDemoDepartmentDAL;
+            switch (dbType)
+            {
+                //case "Oracle":
+                //    iAffix = new Upload.DALORACLE.Affix();
+                //    break;
+                //case "GBase":
+                //    iAffix = new Upload.DALGBase.Affix();
+                //    break;
+                case "SQLServer":
+                default:
+                    iDemoDepartmentDAL = new OA.DAL.DemoDepartmentDAL();
+                    break;
+            }
+            return iDemoDepartmentDAL;
+        }
     }
 }
