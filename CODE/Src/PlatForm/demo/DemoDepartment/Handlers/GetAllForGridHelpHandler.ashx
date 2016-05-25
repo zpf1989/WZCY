@@ -13,7 +13,7 @@ public class GetAllForGridHelpHandler : IHttpHandler
     public void ProcessRequest(HttpContext context)
     {
         List<OA.Model.DemoDepartment> demoDepts = demoDepartmentBLL.GetAllDepartmentsForGridHelp();
-        string json = JsonConvert.SerializeObject(demoDepts);
+        string json = demoDepts.SerializeToJson();
         context.Response.WriteJson(json); 
     }
 

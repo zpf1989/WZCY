@@ -52,7 +52,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Extensions\HttpHandlerHelper.cs" />
+    <Compile Include="Extensions\HttpResponseExtension.cs" />
+    <Compile Include="Extensions\JsonSerializerExtension.cs" />
     <Compile Include="JScript.cs" />
     <Compile Include="PageEntity.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

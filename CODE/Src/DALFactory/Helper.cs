@@ -175,5 +175,24 @@ namespace OA.DALFactory
             }
             return iDemoDepartmentDAL;
         }
+
+        public static OA.IDAL.IDemoEmployeeDAL GetIDemoEmployeeDAL()
+        {
+            OA.IDAL.IDemoEmployeeDAL iDemoEmployeeDAL;
+            switch (dbType)
+            {
+                //case "Oracle":
+                //    iAffix = new Upload.DALORACLE.Affix();
+                //    break;
+                //case "GBase":
+                //    iAffix = new Upload.DALGBase.Affix();
+                //    break;
+                case "SQLServer":
+                default:
+                    iDemoEmployeeDAL = new OA.DAL.DemoEmployeeDAL();
+                    break;
+            }
+            return iDemoEmployeeDAL;
+        }
     }
 }

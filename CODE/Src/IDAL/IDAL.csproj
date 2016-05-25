@@ -67,6 +67,7 @@
   <ItemGroup>
     <Compile Include="Accessories\IAccessoriesDAL.cs" />
     <Compile Include="demo\IDemoDepartmentDAL.cs" />
+    <Compile Include="demo\IDemoEmployeeDAL.cs" />
     <Compile Include="SysManage\IFunctionDAL.cs" />
     <Compile Include="SysManage\IRFRelationDAL.cs" />
     <Compile Include="SysManage\IRoleManageDAL.cs" />
@@ -75,6 +76,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\GeneralClass\GeneralClass.csproj">
+      <Project>{87ba21b2-571b-4fd5-8672-82d5c4d5dcec}</Project>
+      <Name>GeneralClass</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Model\Model.csproj">
       <Project>{4FADDC97-CF7C-48E6-9F43-C6CEC9108458}</Project>
       <Name>Model</Name>

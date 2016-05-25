@@ -18,9 +18,9 @@ namespace OA.GeneralClass.Extensions
         /// <param name="rst">结果代码</param>
         /// <param name="msg">提示信息</param>
         /// <param name="data">响应数据</param>
-        public static void WriteJson(this HttpResponse response,ResultCode rst, string msg = "", object data = null)
+        public static void WriteJson(this HttpResponse response, ResultCode rst, string msg = "", object data = null)
         {
-            string jsonString = JsonConvert.SerializeObject(new { code = (int)rst, msg = msg, data = data });
+            string jsonString = new { code = (int)rst, msg = msg, data = data }.SerializeToJson();
             response.WriteJson(jsonString);
         }
         /// <summary>
@@ -28,7 +28,7 @@ namespace OA.GeneralClass.Extensions
         /// </summary>
         /// <param name="response"></param>
         /// <param name="jsonString">json字符串</param>
-        public static void WriteJson(this HttpResponse response,string jsonString)
+        public static void WriteJson(this HttpResponse response, string jsonString)
         {
             response.ContentType = "application/json";
             response.Write(jsonString);
