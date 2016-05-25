@@ -1,4 +1,6 @@
-﻿/*————————————————————————公共扩展:begin——————————————————————*/
+﻿/// <reference path="../help/help_grid.html" />
+/// <reference path="../help/help_grid.html" />
+/*————————————————————————公共扩展:begin——————————————————————*/
 //全局函数:序列化表单内容为Json对象
 $.fn.serializeToJson = function (boolNoSelEmpty) {
     var o = {};
@@ -136,6 +138,18 @@ var gFunc = {
         var dateNow = new Date();
         age = dateNow.getYear() - birthDay.getYear();
         return age;
+    },
+    getRootPath: function () {
+        //获取当前网址，如： http://localhost:8083/uimcardprj/share/meun.jsp
+        var curWwwPath = window.document.location.href;
+        //获取主机地址之后的目录，如： uimcardprj/share/meun.jsp
+        var pathName = window.document.location.pathname;
+        var pos = curWwwPath.indexOf(pathName);
+        //获取主机地址，如： http://localhost:8083
+        var localhostPaht = curWwwPath.substring(0, pos);
+        //获取带"/"的项目名，如：/uimcardprj
+        var projectName = pathName.substring(0, pathName.substr(1).indexOf('/') + 1);
+        return (localhostPaht + projectName);
     }
 };
 /*————————————————————————公共扩展:end——————————————————————*/
@@ -549,12 +563,12 @@ var validateHelper = {
 
 /*————————————————————————帮助相关:start——————————————————————*/
 var helpInitializer = {
-    org: function (grid) {
+    dept: function (grid) {
         if (!grid) {
             return;
         }
         grid.datagrid({
-            url: '../Organization/Handlers/GetForGridHelp.ashx',
+            url: gFunc.getRootPath() + '/demo/DemoDepartment/Handlers/GetAllForGridHelp.ashx',
             title: '部门帮助',
             singleSelect: true,
             pagination: true,
@@ -569,8 +583,16 @@ var helpInitializer = {
     }
 };
 
-// 弹出列表帮助
-function showPopGridHelp(gridid, url, width, height, isModal, funLoadCallback, funSubmitCallback, target) {
+/*
+弹出列表帮助
+width,：宽
+height：高
+isModal：是否模态
+funLoadCallback：弹出窗口加载后执行的操作（如加载列表数据等初始化页面内容操作）
+funSubmitCallback：点击确定按钮后的操作，用于父界面获取弹出框选择的值（通过注册回调函数传递）
+target：触发弹出窗体的控件
+*/
+function showPopGridHelp(width, height, isModal, funLoadCallback, funSubmitCallback, target) {
 
     isModal = isModal == true ? true : false;
     var id = "_tmpWin_" + Math.floor(Math.random() * 10000 + 1);
@@ -578,9 +600,10 @@ function showPopGridHelp(gridid, url, width, height, isModal, funLoadCallback, f
 
     win.addClass("myOpenWindow");
     win.appendTo($("body"));
+    //var helpUrl = gFunc.getRootPath();
     $(win).dialog({
         title: "",
-        href: url,
+        href: gFunc.getRootPath() + '/help/help_grid_public.html',
         width: width,
         height: height,
         modal: isModal,
@@ -591,7 +614,7 @@ function showPopGridHelp(gridid, url, width, height, isModal, funLoadCallback, f
             width: 75,
             handler: function () {
                 var selData = null;
-                var row = $('#' + gridid).datagrid('getSelected');
+                var row = $('#help_grid').datagrid('getSelected');
                 if (funSubmitCallback && target) {
                     funSubmitCallback(row, target);
                 }
@@ -609,7 +632,7 @@ function showPopGridHelp(gridid, url, width, height, isModal, funLoadCallback, f
             $(win).dialog("destroy");
         },
         onLoad: function () {
-            funLoadCallback($('#' + gridid));
+            funLoadCallback($('#help_grid'));
             $("#" + id).next().children("a").first().focus();
             $(win).keydown(function (event) {
                 if (event.keyCode == 13) {

@@ -1,4 +1,4 @@
-﻿<%@ WebHandler Language="C#" Class="GetAllForGridHelpHandler" %>
+﻿<%@ WebHandler Language="C#" Class="GetAllForGridHelp" %>
 
 using System;
 using System.Web;
@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using Newtonsoft.Json;
 using OA.GeneralClass.Extensions;
 
-public class GetAllForGridHelpHandler : IHttpHandler
+public class GetAllForGridHelp : IHttpHandler
 {
     OA.BLL.DemoDepartmentBLL demoDepartmentBLL = new OA.BLL.DemoDepartmentBLL();
     
