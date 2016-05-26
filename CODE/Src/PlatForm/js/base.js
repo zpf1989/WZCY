@@ -568,16 +568,16 @@ var helpInitializer = {
             return;
         }
         grid.datagrid({
-            url: gFunc.getRootPath() + '/demo/DemoDepartment/Handlers/GetAllForGridHelp.ashx',
+            url: gFunc.getRootPath() + '/demo/DemoDepartment/DepartmentService.asmx/GetForGridHelp',
             title: '部门帮助',
             singleSelect: true,
             pagination: true,
             pageSize: 10,
             fit: true,
             columns: [[
-                { field: 'Id', title: '主键', width: 50, align: 'center' },
-                { field: 'Code', title: '部门编号', width: 100, align: 'center' },
-                { field: 'Name', title: '部门名称', width: 60, align: 'center' },
+                { field: 'DeptId', title: '主键', width: 50, align: 'center' },
+                { field: 'DeptCode', title: '部门编号', width: 100, align: 'center' },
+                { field: 'DeptName', title: '部门名称', width: 60, align: 'center' },
             ]]
         });
     }

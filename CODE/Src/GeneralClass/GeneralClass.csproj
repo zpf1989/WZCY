@@ -52,6 +52,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Extensions\DataExtention.cs" />
     <Compile Include="Extensions\HttpResponseExtension.cs" />
     <Compile Include="Extensions\JsonSerializerExtension.cs" />
     <Compile Include="JScript.cs" />

@@ -17,7 +17,8 @@
     <div class="easyui-layout" fit="true">
         <div region="north" collapsible="true" title="查询条件" height="80px" style="padding: 10px;">
             <form id="searchForm" action="#" style="text-align: left">
-                <label>姓名：</label><input name="Name" id="Name" class="easyui-textbox" />
+                <label>姓名：</label><input name="EmpName" id="EmpName" class="easyui-textbox" />
+                <label>部门：</label><input name="DeptName" id="DeptName" class="easyui-textbox" />
                 <a href="javascript:void(0);" id="btnSearch" class="easyui-linkbutton" iconcls="icon-search"
                     style="width: 75px;">查询</a>
             </form>

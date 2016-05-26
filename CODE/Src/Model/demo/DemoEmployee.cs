@@ -10,19 +10,19 @@ namespace OA.Model
     /// </summary>
     public class DemoEmployee
     {
-        public string Id { get; set; }
-        public string Code { get; set; }
-        public string Name { get; set; }
-        public string Gender { get; set; }
-        public int Age { get; set; }
-        public DateTime BirthDay { get; set; }
-        public decimal Salary { get; set; }
+        public string EmpId { get; set; }
+        public string EmpCode { get; set; }
+        public string EmpName { get; set; }
+        public string EmpGender { get; set; }
+        public int EmpAge { get; set; }
+        public DateTime EmpBirthDay { get; set; }
+        public decimal EmpSalary { get; set; }
         /// <summary>
         /// 部门id
         /// </summary>
         public string DeptId { get; set; }
         /// <summary>
-        /// 部门名称
+        /// 部门名称：冗余（测试用）
         /// </summary>
         public string DeptName { get; set; }
     }

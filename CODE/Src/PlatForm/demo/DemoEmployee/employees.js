@@ -18,7 +18,7 @@
             height: 450,
             singleSelect: false,
             idField: 'id',
-            url: 'Handlers/GetList.ashx',
+            url: 'EmployeeService.asmx/GetList',
             remoteSort: false,
             rownumbers: true,
             pagination: true,
@@ -51,9 +51,9 @@
             }],
             columns: [[
                 { field: 'ck', title: '', width: 100, align: 'center', checkbox: true },
-                { field: 'Id', title: 'ID', width: 60 },
+                { field: 'EmpId', title: 'ID', width: 60 },
                 {
-                    field: 'Code', title: '编号', width: 80, align: 'center',
+                    field: 'EmpCode', title: '编号', width: 80, align: 'center',
                     editor: {
                         type: 'textbox',
                         options: {
@@ -63,7 +63,7 @@
                     }
                 },
                 {
-                    field: 'Name', title: '姓名', width: 80, align: 'center',
+                    field: 'EmpName', title: '姓名', width: 80, align: 'center',
                     editor: {
                         type: 'textbox',
                         options: {
@@ -73,7 +73,7 @@
                     }
                 },
                 {
-                    field: 'Gender', title: '性别', width: 80, align: 'center',
+                    field: 'EmpGender', title: '性别', width: 80, align: 'center',
                     formatter: function (value, row, index) { return formatHandler.gender.format(value); },
                     editor: {
                         type: 'combobox',
@@ -87,7 +87,7 @@
                     }
                 },
                 {
-                    field: 'BirthDay', title: '出生日期', width: 120, align: 'center',
+                    field: 'EmpBirthDay', title: '出生日期', width: 120, align: 'center',
                     formatter: formatHandler.date.format,
                     editor: {
                         type: 'datebox',
@@ -100,10 +100,10 @@
                     }
                 },
                 {
-                    field: 'Age', title: '年龄', width: 80, align: 'center',
+                    field: 'EmpAge', title: '年龄', width: 80, align: 'center',
                 },
                 {
-                    field: 'Salary', title: '薪资', width: 80, align: 'center',
+                    field: 'EmpSalary', title: '薪资', width: 80, align: 'center',
                     editor: {
                         type: 'numberbox',
                         options: { precision: 2 }
@@ -243,7 +243,7 @@
         var row = employees.grid.datagrid('getRows')[index];
 
         //提交到服务端
-        $.post('Handlers/Save.ashx', JSON.stringify(row), function (result) {
+        $.post('EmployeeService.asmx/Save', JSON.stringify(row), function (result) {
             if (result && result.code) {
                 if (result.data && result.data.Id) {
                     employees.grid.datagrid('updateRowCell', { field: 'Id', index: index, value: result.data.Id });
@@ -323,11 +323,11 @@
             if (gFunc.isNull(deptData) || gFunc.isNull(target)) {
                 return;
             }
-            $(target).val(deptData.Name);
+            $(target).val(deptData.DeptName);
             var index = employees.getRowIndexByEditor(target);
             var row = employees.grid.datagrid('getRows')[index];
             //给关联列赋值
-            employees.grid.datagrid('updateRowCell', { field: 'DeptId', index: index, value: deptData.Id });
+            employees.grid.datagrid('updateRowCell', { field: 'DeptId', index: index, value: deptData.DeptId });
 
         }
     },

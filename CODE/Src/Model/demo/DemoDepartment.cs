@@ -10,8 +10,8 @@ namespace OA.Model
     /// </summary>
     public class DemoDepartment
     {
-        public string Id { get; set; }
-        public string Code { get; set; }
-        public string Name { get; set; }
+        public string DeptId { get; set; }
+        public string DeptCode { get; set; }
+        public string DeptName { get; set; }
     }
 }
