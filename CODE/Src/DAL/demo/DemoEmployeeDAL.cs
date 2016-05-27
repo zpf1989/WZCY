@@ -18,14 +18,43 @@ namespace OA.DAL
 
         public bool Add(params DemoEmployee[] emps)
         {
-            //1、生成ID
-            emps.ToList().ForEach(e => e.EmpId = Guid.NewGuid().ToString());
-            //2、组织sql插入到数据库
-            //测试数据
-            //DemoEmployees.AddRange(emps);
+            if (emps == null || emps.Length < 1)
+            {
+                return false;
+            }
+            StringBuilder sbSql = new StringBuilder();
+            List<SqlParameter> sqlParams = new List<SqlParameter>();
+            DemoEmployee emp = null;
+            for (int i = 0; i < emps.Length; i++)
+            {
+                emp = emps[i];
+                //1、组织sql
+                sbSql.AppendFormat("insert into {0}(EmpId,EmpCode,EmpName,EmpGender,EmpAge,EmpBirthDay,EmpSalary,DeptId,DeptName)", TableName);
+                sbSql.AppendFormat(" values (@EmpId{0},@EmpCode{0},@EmpName{0},@EmpGender{0},@EmpAge{0},@EmpBirthDay{0},@EmpSalary{0},@DeptId{0},@DeptName{0});");
+                sqlParams.AddRange(new SqlParameter[]{ 
+                            new SqlParameter("@EmpId"+i, SqlDbType.VarChar,36){Value=Guid.NewGuid().ToString()},
+                            new SqlParameter("@EmpCode"+i, SqlDbType.VarChar,50){Value=emp.EmpCode},
+                            new SqlParameter("@EmpName"+i, SqlDbType.VarChar,100){Value=emp.EmpName},
+                            new SqlParameter("@EmpGender"+i, SqlDbType.Char,1){Value=emp.EmpGender},
+                            new SqlParameter("@EmpAge"+i, SqlDbType.Int){Value=emp.EmpAge},
+                            new SqlParameter("@EmpBirthDay"+i, SqlDbType.Date){Value=emp.EmpBirthDay},
+                            new SqlParameter("@EmpSalary"+i, SqlDbType.Decimal){Value=emp.EmpSalary},
+                            new SqlParameter("@DeptId"+i, SqlDbType.VarChar,36){Value=emp.DeptId},
+                            new SqlParameter("@DeptName"+i, SqlDbType.VarChar,50){Value=emp.DeptName},
+                                            });
+            }
+            //2、执行sql
+            int rst = 0;
+            try
+            {
+                rst = DBAccess.ExecuteNonQuery(DB.Type, DB.ConnectionString, CommandType.Text, sbSql.ToString(), sqlParams.ToArray());
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
             //3、返回成功或失败的标志
-            return true;
-            return false;
+            return rst > 0;
         }
 
         public bool Delete(params string[] empIds)
@@ -46,13 +75,43 @@ namespace OA.DAL
 
         public bool Update(params DemoEmployee[] emps)
         {
-            //1、组织sql
+            if (emps == null || emps.Length < 1)
+            {
+                return false;
+            }
+            StringBuilder sbSql = new StringBuilder();
+            List<SqlParameter> sqlParams = new List<SqlParameter>();
+            DemoEmployee emp = null;
+            for (int i = 0; i < emps.Length; i++)
+            {
+                emp = emps[i];
+                //1、组织sql
+                sbSql.AppendFormat("update {0} set EmpCode=@EmpCode{1},EmpName=@EmpName{1},EmpGender=@EmpGender{1},EmpAge=@EmpAge{1},EmpBirthDay=@EmpBirthDay{1},EmpSalary=@EmpSalary{1},DeptId=@DeptId{1},DeptName=@DeptName{1}", TableName, i);
+                sbSql.AppendFormat(" where EmpId=@EmpId{0};", i);
+                sqlParams.AddRange(new SqlParameter[]{ 
+                            new SqlParameter("@EmpId"+i, SqlDbType.VarChar,36){Value=emp.EmpId},
+                            new SqlParameter("@EmpCode"+i, SqlDbType.VarChar,50){Value=emp.EmpCode},
+                            new SqlParameter("@EmpName"+i, SqlDbType.VarChar,100){Value=emp.EmpName},
+                            new SqlParameter("@EmpGender"+i, SqlDbType.Char,1){Value=emp.EmpGender},
+                            new SqlParameter("@EmpAge"+i, SqlDbType.Int){Value=emp.EmpAge},
+                            new SqlParameter("@EmpBirthDay"+i, SqlDbType.Date){Value=emp.EmpBirthDay},
+                            new SqlParameter("@EmpSalary"+i, SqlDbType.Decimal){Value=emp.EmpSalary},
+                            new SqlParameter("@DeptId"+i, SqlDbType.VarChar,36){Value=emp.DeptId},
+                            new SqlParameter("@DeptName"+i, SqlDbType.VarChar,50){Value=emp.DeptName},
+                                            });
+            }
             //2、执行sql
+            int rst = 0;
+            try
+            {
+                rst = DBAccess.ExecuteNonQuery(DB.Type, DB.ConnectionString, CommandType.Text, sbSql.ToString(), sqlParams.ToArray());
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
             //3、返回成功或失败的标志
-
-            //测试
-
-            return false;
+            return rst > 0;
         }
 
         public List<DemoEmployee> GetDemoEmployeesByPage(PageEntity pageEntity, string whereSql = null, string orderBySql = null)

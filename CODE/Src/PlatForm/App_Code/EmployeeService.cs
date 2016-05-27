@@ -56,7 +56,7 @@ public class EmployeeService : System.Web.Services.WebService
     }
 
     [WebMethod]
-    public void Save()
+    public void Add()
     {
         //获取请求数据
         using (var reader = new System.IO.StreamReader(Context.Request.InputStream))
@@ -64,10 +64,10 @@ public class EmployeeService : System.Web.Services.WebService
             string data = reader.ReadToEnd();
             if (!string.IsNullOrEmpty(data))
             {
-                var emp = data.DeSerializeFromJson<OA.Model.DemoEmployee>();
-                if (emp != null)
+                var emps = data.DeSerializeFromJson<List<OA.Model.DemoEmployee>>();
+                if (emps != null)
                 {
-                    bool rst = string.IsNullOrEmpty(emp.EmpId) ? demoEmployeeBLL.Add(emp) : demoEmployeeBLL.Update(emp);
+                    bool rst = demoEmployeeBLL.Add(emps.ToArray());
                     if (rst)
                     {
                         Context.Response.WriteJson(OA.GeneralClass.ResultCode.Success, null, null);
@@ -76,7 +76,30 @@ public class EmployeeService : System.Web.Services.WebService
                 }
             }
         }
-        Context.Response.WriteJson(OA.GeneralClass.ResultCode.Failure, "保存失败", null);
+        Context.Response.WriteJson(OA.GeneralClass.ResultCode.Failure, "新增失败", null);
     }
 
+    [WebMethod]
+    public void Update()
+    {
+        //获取请求数据
+        using (var reader = new System.IO.StreamReader(Context.Request.InputStream))
+        {
+            string data = reader.ReadToEnd();
+            if (!string.IsNullOrEmpty(data))
+            {
+                var emps = data.DeSerializeFromJson<List<OA.Model.DemoEmployee>>();
+                if (emps != null)
+                {
+                    bool rst = demoEmployeeBLL.Update(emps.ToArray());
+                    if (rst)
+                    {
+                        Context.Response.WriteJson(OA.GeneralClass.ResultCode.Success, null, null);
+                        return;
+                    }
+                }
+            }
+        }
+        Context.Response.WriteJson(OA.GeneralClass.ResultCode.Failure, "更新失败", null);
+    }
 }

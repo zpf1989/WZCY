@@ -169,7 +169,7 @@
                 $(this).datagrid('refreshRow', index);
             }
         });
-        employees.grid.datagrid('hideColumn', 'Id');//隐藏id列
+        employees.grid.datagrid('hideColumn', 'EmpId');//隐藏id列
         employees.grid.datagrid('hideColumn', 'DeptId');//隐藏部门id列
     },
     getRowIndexByEditor: function (target) {
@@ -194,6 +194,12 @@
         var row = employees.grid.datagrid('getRows')[index];
         $.messager.confirm('提示', '确定要删除吗?', function (r) {
             if (r) {
+                if (gFunc.isNull(row.EmpId)) {
+                    //主键为空，说明是新增的，客户端直接删除即可
+                    employees.grid.datagrid('clearSelections');
+                    employees.grid.datagrid('deleteRow', index);
+                    return;
+                }
                 $.post('Handlers/Delete.ashx?id=' + row.Id, null, function (result) {
                     if (result) {
                         if (result.code) {
@@ -219,7 +225,11 @@
             if (result) {
                 var ids = [];
                 for (var idx = 0; idx < rows.length; idx++) {
-                    ids.push(rows[idx].Id);
+                    if (gFunc.isNull(rows[idx].EmpId)) {
+                        employees.grid.datagrid('deleteRow', employees.grid.datagrid('getRowIndex', rows[idx]));
+                    } else {
+                        ids.push(rows[idx].Id);
+                    }
                 }
                 $.post('Handlers/DeleteBatch.ashx', JSON.stringify(ids), function (result) {
                     if (result && result.code) {
@@ -243,7 +253,7 @@
         var row = employees.grid.datagrid('getRows')[index];
 
         //提交到服务端
-        $.post('EmployeeService.asmx/Save', JSON.stringify(row), function (result) {
+        $.post('EmployeeService.asmx/Update', JSON.stringify(row), function (result) {
             if (result && result.code) {
                 if (result.data && result.data.Id) {
                     employees.grid.datagrid('updateRowCell', { field: 'Id', index: index, value: result.data.Id });
@@ -286,7 +296,7 @@
             return;
         }
         //提交保存
-        $.post('Handlers/AddDemoEmployee.ashx', JSON.stringify(editingRows), function (result) {
+        $.post('EmployeeService.asmx/Update', JSON.stringify(editingRows), function (result) {
             if (result && result.code) {
                 //重新加载
                 employees.grid.datagrid('reload');
