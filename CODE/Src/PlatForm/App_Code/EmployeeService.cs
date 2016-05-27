@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Services;
 using OA.GeneralClass.Extensions;
+using System.IO;
 
 /// <summary>
 /// EmployeeService 的摘要说明
@@ -56,7 +57,7 @@ public class EmployeeService : System.Web.Services.WebService
     }
 
     [WebMethod]
-    public void Add()
+    public void Save()
     {
         //获取请求数据
         using (var reader = new System.IO.StreamReader(Context.Request.InputStream))
@@ -65,9 +66,9 @@ public class EmployeeService : System.Web.Services.WebService
             if (!string.IsNullOrEmpty(data))
             {
                 var emps = data.DeSerializeFromJson<List<OA.Model.DemoEmployee>>();
-                if (emps != null)
+                if (emps != null && emps.Count > 0)
                 {
-                    bool rst = demoEmployeeBLL.Add(emps.ToArray());
+                    bool rst = demoEmployeeBLL.Save(emps.ToArray());
                     if (rst)
                     {
                         Context.Response.WriteJson(OA.GeneralClass.ResultCode.Success, null, null);
@@ -78,20 +79,18 @@ public class EmployeeService : System.Web.Services.WebService
         }
         Context.Response.WriteJson(OA.GeneralClass.ResultCode.Failure, "新增失败", null);
     }
-
     [WebMethod]
-    public void Update()
+    public void Delete()
     {
-        //获取请求数据
         using (var reader = new System.IO.StreamReader(Context.Request.InputStream))
         {
             string data = reader.ReadToEnd();
             if (!string.IsNullOrEmpty(data))
             {
-                var emps = data.DeSerializeFromJson<List<OA.Model.DemoEmployee>>();
-                if (emps != null)
+                var empIds = data.DeSerializeFromJson<List<string>>();
+                if (empIds != null && empIds.Count > 0)
                 {
-                    bool rst = demoEmployeeBLL.Update(emps.ToArray());
+                    bool rst = demoEmployeeBLL.Delete(empIds.ToArray());
                     if (rst)
                     {
                         Context.Response.WriteJson(OA.GeneralClass.ResultCode.Success, null, null);
@@ -100,6 +99,6 @@ public class EmployeeService : System.Web.Services.WebService
                 }
             }
         }
-        Context.Response.WriteJson(OA.GeneralClass.ResultCode.Failure, "更新失败", null);
+        Context.Response.WriteJson(OA.GeneralClass.ResultCode.Failure, "删除失败", null);
     }
 }

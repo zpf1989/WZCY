@@ -18,14 +18,12 @@ namespace OA.IDAL
         /// <returns></returns>
         List<DemoEmployee> GetDemoEmployeesByPage(PageEntity pageEntity, string whereSql = null, string orderBySql = null);
         /// <summary>
-        /// 新增：支持单条和批量
+        /// 新增或更新：支持单条和批量
         /// </summary>
         /// <param name="emps"></param>
         /// <returns></returns>
-        bool Add(params DemoEmployee[] emps);
+        bool Save(params DemoEmployee[] emps);
 
         bool Delete(params string[] empIds);
-
-        bool Update(params DemoEmployee[] emps);
     }
 }

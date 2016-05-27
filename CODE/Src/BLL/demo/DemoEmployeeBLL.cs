@@ -16,19 +16,14 @@ namespace OA.BLL
             return iDemoEmployeeDAL.GetDemoEmployeesByPage(pageEntity, whereSql, orderBySql);
         }
 
-        public bool Add(params DemoEmployee[] emps)
+        public bool Save(params DemoEmployee[] emps)
         {
-            return iDemoEmployeeDAL.Add(emps);
+            return iDemoEmployeeDAL.Save(emps);
         }
 
         public bool Delete(params string[] empIds)
         {
             return iDemoEmployeeDAL.Delete(empIds);
-        }
-
-        public bool Update(params DemoEmployee[] emps)
-        {
-            return iDemoEmployeeDAL.Update(emps);
         }
     }
 }

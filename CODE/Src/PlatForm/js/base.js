@@ -82,7 +82,9 @@ var formatHandler = {
             var date = gFunc.getDate(value);
             return date.Format('yyyy-MM-dd');
         },
-        parse: function (text) { return gFunc.getDate(text); }
+        parse: function (text) {
+            return gFunc.getDate(text);
+        }
     },
     datetime: {
         format: function (value) {
@@ -109,8 +111,9 @@ var gFunc = {
             yyyy-MM-dd hh:mm:ss
     */
     getDate: function (value) {
+        //console.log("getDate input " + value);
         if (gFunc.isNull(value)) {
-            return null;
+            return new Date();
         }
         if (value instanceof Date) {
             return value;
@@ -136,7 +139,7 @@ var gFunc = {
             return null;
         }
         var dateNow = new Date();
-        age = dateNow.getYear() - birthDay.getYear();
+        age = dateNow.getYear() - birthDay.getYear() + 1;
         return age;
     },
     getRootPath: function () {
@@ -580,6 +583,7 @@ var helpInitializer = {
                 { field: 'DeptName', title: '部门名称', width: 60, align: 'center' },
             ]]
         });
+        grid.datagrid('hideColumn', 'DeptId');//隐藏id列
     }
 };
 

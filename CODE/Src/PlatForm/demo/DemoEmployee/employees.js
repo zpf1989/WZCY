@@ -51,7 +51,7 @@
             }],
             columns: [[
                 { field: 'ck', title: '', width: 100, align: 'center', checkbox: true },
-                { field: 'EmpId', title: 'ID', width: 60 },
+                { field: 'EmpId', title: 'ID', width: 60, visible: false },
                 {
                     field: 'EmpCode', title: '编号', width: 80, align: 'center',
                     editor: {
@@ -92,7 +92,7 @@
                     editor: {
                         type: 'datebox',
                         options: {
-                            editable: true,
+                            editable: false,//禁止手输
                             required: true,
                             formatter: formatHandler.date.format,
                             parser: formatHandler.date.parse
@@ -129,8 +129,8 @@
                     field: 'action', title: '操作', width: 120, align: 'center',
                     formatter: function (value, row, index) {
                         if (row.editing) {
-                            return '<input type="button" onclick="employees.saveRow(this)" value="保存"/>' +
-                                '<input type="button" onclick="employees.cancelRow(this)" value="取消"/>';
+                            return '<input type="button" onclick="employees.saveRow(this)" value="保存"/>';
+                            //+ '<input type="button" onclick="employees.cancelRow(this)" value="取消"/>';
                         } else {
                             return '<input type="button" onclick="employees.editRow(this)" value="修改"/>' +
                                 '<input type="button" onclick="employees.deleteRow(this)" value="删除"/>';
@@ -153,7 +153,7 @@
             },
             onEndEdit: function (index, row, changes) {
                 //自动计算年龄
-                row.Age = gFunc.getAge(row.BirthDay);
+                row.EmpAge = gFunc.getAge(row.EmpBirthDay);
                 row.editing = false;
             },
             onBeforeEdit: function (index, row) {
@@ -200,12 +200,11 @@
                     employees.grid.datagrid('deleteRow', index);
                     return;
                 }
-                $.post('Handlers/Delete.ashx?id=' + row.Id, null, function (result) {
+                $.post('EmployeeService.asmx/Delete', JSON.stringify([row.EmpId]), function (result) {
                     if (result) {
                         if (result.code) {
-                            //客户端删除
-                            employees.grid.datagrid('clearSelections');
-                            employees.grid.datagrid('deleteRow', index);
+                            //重新加载
+                            employees.grid.datagrid('reload');
                         } else if (result.msg) {
                             $.messager.alert('删除失败', result.msg);
                         }
@@ -228,12 +227,11 @@
                     if (gFunc.isNull(rows[idx].EmpId)) {
                         employees.grid.datagrid('deleteRow', employees.grid.datagrid('getRowIndex', rows[idx]));
                     } else {
-                        ids.push(rows[idx].Id);
+                        ids.push(rows[idx].EmpId);
                     }
                 }
-                $.post('Handlers/DeleteBatch.ashx', JSON.stringify(ids), function (result) {
+                $.post('EmployeeService.asmx/Delete', JSON.stringify(ids), function (result) {
                     if (result && result.code) {
-                        employees.grid.datagrid('clearSelections');
                         //重新加载
                         employees.grid.datagrid('reload');
                     }
@@ -253,11 +251,10 @@
         var row = employees.grid.datagrid('getRows')[index];
 
         //提交到服务端
-        $.post('EmployeeService.asmx/Update', JSON.stringify(row), function (result) {
+        $.post('EmployeeService.asmx/Save', JSON.stringify([row]), function (result) {
             if (result && result.code) {
-                if (result.data && result.data.Id) {
-                    employees.grid.datagrid('updateRowCell', { field: 'Id', index: index, value: result.data.Id });
-                }
+                //重新加载
+                employees.grid.datagrid('reload');
                 return;
             }
             if (!result || !result.code || result.code != "1") {
@@ -296,7 +293,7 @@
             return;
         }
         //提交保存
-        $.post('EmployeeService.asmx/Update', JSON.stringify(editingRows), function (result) {
+        $.post('EmployeeService.asmx/Save', JSON.stringify(editingRows), function (result) {
             if (result && result.code) {
                 //重新加载
                 employees.grid.datagrid('reload');
@@ -319,10 +316,12 @@
         employees.grid.datagrid('insertRow', {
             index: index,
             row: {//默认值
-                Gender: 1,
-                BirthDay: (new Date()),
-                Salary: 0,
-                Age: 0
+                EmpGender: 1,
+                EmpBirthDay: (new Date()),
+                EmpSalary: 0,
+                EmpAge: 0,
+                EmpCode: 'code' + index,
+                EmpName: 'name' + index
             }
         });
         employees.grid.datagrid('selectRow', index);
