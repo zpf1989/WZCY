@@ -1,0 +1,16 @@
+1、后台：三层
+   前台：web窗体+webservice
+2、涉及文件列表
+   Model.demo
+   IDAL.demo
+   DAL.demo
+   BLL.demo
+   Platform:
+	App_Code（webservice后台代码）
+	css/easyui（easyui样式文件）
+	demo（实例前台：web窗体+js+webservice）
+	help（列表帮助弹出框要加载的html文件，固定不需要修改）
+	js：
+		base.js，常用函数、easyui扩展（添加更多帮助时，在helpInitializer对象下追加属性即可）
+	jquery.easyui.min.js（easyui js代码）
+	jquery.min.js（jquery）
