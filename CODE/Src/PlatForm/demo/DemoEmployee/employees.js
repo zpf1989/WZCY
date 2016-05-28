@@ -17,7 +17,7 @@
             width: 1000,
             height: 450,
             singleSelect: false,
-            idField: 'id',
+            idField: 'EmpId',//列表主键，必须
             url: 'EmployeeService.asmx/GetList',
             remoteSort: false,
             rownumbers: true,
@@ -25,12 +25,16 @@
             pageSize: 10,
             fit: false,
             selectOnCheck: true,
-            //toolbar:'#toolbar',
             toolbar: [{
                 id: 'btnAdd',
                 text: '新增',
                 iconCls: 'icon-add',
                 handler: employees.insertRow
+            }, "-", {
+                id: 'btnEdit',
+                text: '修改',
+                iconCls: 'icon-edit',
+                handler: employees.editRowBatch
             }, "-", {
                 id: 'btnDelete',
                 text: '删除',
@@ -47,6 +51,8 @@
                 iconCls: 'icon-cancel',
                 handler: function () {
                     employees.grid.datagrid('rejectChanges');
+                    employees.grid.datagrid('clearChecked');
+                    employees.grid.datagrid('clearSelections');
                 }
             }],
             columns: [[
@@ -124,31 +130,10 @@
                             }
                         }
                     }
-                },
-                {
-                    field: 'action', title: '操作', width: 120, align: 'center',
-                    formatter: function (value, row, index) {
-                        if (row.editing) {
-                            return '<input type="button" onclick="employees.saveRow(this)" value="保存"/>';
-                            //+ '<input type="button" onclick="employees.cancelRow(this)" value="取消"/>';
-                        } else {
-                            return '<input type="button" onclick="employees.editRow(this)" value="修改"/>' +
-                                '<input type="button" onclick="employees.deleteRow(this)" value="删除"/>';
-                        }
-                    }
                 }
             ]],
             onLoadSuccess: function (data) {
-                //tooltips，先禁用tooltips，不完善
-                //employees.grid.datagrid('doCellTip', {
-                //    onlyShowInterrupt: true,
-                //    position: 'bottom',
-                //    maxWidth: '300px',
-                //    tipStyler: {
-                //        borderColor: '#000',
-                //        boxShadow: '1px 1px 3px #000'
-                //    }
-                //});
+                employees.grid.datagrid('clearChecked');
                 employees.grid.datagrid('clearSelections');
             },
             onEndEdit: function (index, row, changes) {
@@ -174,62 +159,59 @@
     },
     getRowIndexByEditor: function (target) {
         if (gFunc.isNull(target)) {
-            return;
+            return null;
         }
         return employees.grid.datagrid('getRowIndexByEditor', { element: target });
     },
-    editRow: function (target) {
-        if (gFunc.isNull(target)) {
+    editRowBatch: function () {
+        var rows = employees.grid.datagrid('getChecked');
+        console.log(rows.length);
+        if (gFunc.isNull(rows) || rows.length < 1) {
+            $.messager.alert('提示', '请选择要修改的数据');
             return;
         }
-        var index = employees.getRowIndexByEditor(target);
-        employees.grid.datagrid('selectRow', index);
-        employees.grid.datagrid('beginEdit', index);
-    },
-    deleteRow: function (target) {
-        if (gFunc.isNull(target)) {
-            return;
-        }
-        var index = employees.getRowIndexByEditor(target);
-        var row = employees.grid.datagrid('getRows')[index];
-        $.messager.confirm('提示', '确定要删除吗?', function (r) {
-            if (r) {
-                if (gFunc.isNull(row.EmpId)) {
-                    //主键为空，说明是新增的，客户端直接删除即可
-                    employees.grid.datagrid('clearSelections');
-                    employees.grid.datagrid('deleteRow', index);
-                    return;
-                }
-                $.post('EmployeeService.asmx/Delete', JSON.stringify([row.EmpId]), function (result) {
-                    if (result) {
-                        if (result.code) {
-                            //重新加载
-                            employees.grid.datagrid('reload');
-                        } else if (result.msg) {
-                            $.messager.alert('删除失败', result.msg);
-                        }
-                    }
-                });
+        for (var idx = 0; idx < rows.length; idx++) {
+            if (rows[idx].editing) {
+                continue;
             }
-        });
+            var index = employees.grid.datagrid('getRowIndex', rows[idx]);
+            employees.grid.datagrid('beginEdit', index);
+        }
     },
     deleteRowBatch: function () {
-        var rows = employees.grid.datagrid('getSelections');
-        if (gFunc.isNull(rows) || rows.length < 1) {
+        var checkedRows = employees.grid.datagrid('getChecked');
+        if (gFunc.isNull(checkedRows) || checkedRows.length < 1) {
             $.messager.alert('提示', '请选择要删除的数据');
             return;
         }
 
         $.messager.confirm('询问', '确定要删除所选数据吗？', function (result) {
             if (result) {
-                var ids = [];
-                for (var idx = 0; idx < rows.length; idx++) {
-                    if (gFunc.isNull(rows[idx].EmpId)) {
-                        employees.grid.datagrid('deleteRow', employees.grid.datagrid('getRowIndex', rows[idx]));
+                //1、删除选中行中新增的部分（这部分直接客户端删除即可）
+                while (true) {
+                    //因为删除一行后，checkedNewRows会变化，所以需要从checkedRows中重新筛选新增行，并且，每次只删除checkedRows[0]即可
+                    //$.grep是jquery的函数，用于过滤数组元素
+                    var checkedNewRows = $.grep(checkedRows, function (row, idx) {
+                        return gFunc.isNull(row.EmpId);//过滤条件：EmpId为空
+                    });
+                    if (!gFunc.isNull(checkedNewRows) && checkedNewRows.length > 0) {
+                        employees.grid.datagrid('deleteRow', employees.grid.datagrid('getRowIndex', checkedNewRows[0]));
                     } else {
-                        ids.push(rows[idx].EmpId);
+                        break;
                     }
+                };
+                //2、删除选中行中以保存的部分（这部分提交到服务端删除，然后刷新列表）
+                var checkedSavedRows = $.grep(checkedRows, function (row, idx) {
+                    return !gFunc.isNull(row.EmpId);//过滤条件：EmpId不为空
+                });
+                if (gFunc.isNull(checkedSavedRows) || checkedSavedRows.length < 1) {
+                    return;
                 }
+                var ids = [];
+                $.each(checkedSavedRows, function (index, row) {
+                    ids.push(row.EmpId);
+                });
+                //这里json序列化的目标一定是一个数组，否则，后台解析（解析为列表）时会出错
                 $.post('EmployeeService.asmx/Delete', JSON.stringify(ids), function (result) {
                     if (result && result.code) {
                         //重新加载
@@ -239,42 +221,13 @@
             }
         });
     },
-    saveRow: function (target) {
-        if (gFunc.isNull(target)) {
-            return;
-        }
-        var index = employees.getRowIndexByEditor(target);
-        if (!employees.grid.datagrid('validateRow', index)) {
-            return;
-        }
-        employees.grid.datagrid('endEdit', index);//执行这句，否则下面的row数据不全（试试其他办法，Org可以获取到）
-        var row = employees.grid.datagrid('getRows')[index];
-
-        //提交到服务端
-        $.post('EmployeeService.asmx/Save', JSON.stringify([row]), function (result) {
-            if (result && result.code) {
-                //重新加载
-                employees.grid.datagrid('reload');
-                return;
-            }
-            if (!result || !result.code || result.code != "1") {
-                if (result.msg) {
-                    $.messager.alert('错误', result.msg);
-                }
-                //修改状态
-                employees.grid.datagrid('beginEdit', index);
-            }
-
-        });
-    },
     saveRowBatch: function () {
         //获取所有正在编辑的行
-        var selectedRows = employees.grid.datagrid('getSelections');
+        var selectedRows = employees.grid.datagrid('getChecked');
         if (gFunc.isNull(selectedRows) || selectedRows.length < 1) {
             return;
         }
         var editingRows = [];
-        var checkSucceed = true;
         //逐行校验
         for (var idx = 0; idx < selectedRows.length; idx++) {
             var row = selectedRows[idx];
@@ -283,16 +236,18 @@
             }
             var rowIdx = employees.grid.datagrid('getRowIndex', row);
             if (!employees.grid.datagrid('validateRow', rowIdx)) {
-                checkSucceed = false;
-                continue;
+                $.messager.alert('提示', '数据校验失败，请检查输入！');
+                return;
             }
             employees.grid.datagrid('endEdit', rowIdx);//执行这句，否则下面的row数据不全
             editingRows.push(row);
+            employees.grid.datagrid('beginEdit', rowIdx);
         }
-        if (!checkSucceed || editingRows.length < 1) {
+        if (editingRows.length < 1) {
             return;
         }
         //提交保存
+        //这里json序列化的目标一定是一个数组，否则，后台解析（解析为列表）时会出错
         $.post('EmployeeService.asmx/Save', JSON.stringify(editingRows), function (result) {
             if (result && result.code) {
                 //重新加载
@@ -300,28 +255,15 @@
             }
         });
     },
-    cancelRow: function (target) {
-        if (gFunc.isNull(target)) {
-            return;
-        }
-        employees.grid.datagrid('cancelEdit', employees.getRowIndexByEditor(target));
-    },
     insertRow: function () {
-        var row = employees.grid.datagrid('getSelected');
-        if (row) {
-            var index = employees.grid.datagrid('getRowIndex', row);
-        } else {
-            index = 0;
-        }
+        var index = 0;
         employees.grid.datagrid('insertRow', {
             index: index,
             row: {//默认值
                 EmpGender: 1,
                 EmpBirthDay: (new Date()),
                 EmpSalary: 0,
-                EmpAge: 0,
-                EmpCode: 'code' + index,
-                EmpName: 'name' + index
+                EmpAge: 0
             }
         });
         employees.grid.datagrid('selectRow', index);
@@ -332,10 +274,11 @@
             if (gFunc.isNull(deptData) || gFunc.isNull(target)) {
                 return;
             }
-            $(target).val(deptData.DeptName);
+            //调用easyui扩展编辑器的赋值方法
+            $.fn.datagrid.defaults.editors.helpEdit.setValue(target, deptData.DeptName);
+            //给关联列赋值
             var index = employees.getRowIndexByEditor(target);
             var row = employees.grid.datagrid('getRows')[index];
-            //给关联列赋值
             employees.grid.datagrid('updateRowCell', { field: 'DeptId', index: index, value: deptData.DeptId });
 
         }

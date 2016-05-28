@@ -6,7 +6,7 @@
 <head runat="server">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title></title>
-    <link href="../../css/easyui/themes/default/easyui.css" rel="stylesheet" />
+    <link href="../../css/easyui/themes/bootstrap/easyui.css" rel="stylesheet" />
     <link href="../../css/easyui/themes/icon.css" rel="stylesheet" />
     <script src="../../js/jquery.min.js"></script>
     <script src="../../js/jquery.easyui.min.js"></script>

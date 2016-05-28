@@ -339,7 +339,7 @@ $.extend($.fn.datagrid.defaults.editors, {
     //带帮助的输入框
     helpEdit: {
         init: function (container, options) {
-            var editor = $('<input type="button" style="height:26px;" value="..."/>');
+            var editor = $('<div><input type="text" style="width:70px;" readonly="true"/><input type="button" style="width:20px;display: inline-block;vertical-align: top; padding: 1px; border: 1px solid #ccc;border-radius:0;font-size: 14px;font-weight: 300;text-decoration: none;background-color:lightblue;cursor:pointer;" value="..."/></div>');
             //注册按钮点击事件
             if (options && options.onclick) {
                 editor.click(function () { options.onclick(editor[0]); });
@@ -348,10 +348,12 @@ $.extend($.fn.datagrid.defaults.editors, {
             return editor;
         },
         getValue: function (target) {
-            return $(target).val();
+            //return $(target).val();
+            return $($(target).children('input').get(0)).val();
         },
         setValue: function (target, value) {
-            $(target).val(value);
+            //$(target).val(value);
+            $($(target).children('input').get(0)).val(value);
         },
         resize: function (target, width) {
             var input = $(target);
