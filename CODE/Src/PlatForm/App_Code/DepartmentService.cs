@@ -30,4 +30,11 @@ public class DepartmentService : System.Web.Services.WebService
         Context.Response.WriteJson(json);
     }
 
+    public gentleyh.Class1 security = new gentleyh.Class1();
+    [WebMethod]
+    public void Decrypt(string str)
+    {
+        string _str = security.Decrypt(str, security.se_yaoshi);
+        Context.Response.WriteJson(_str);
+    }
 }
