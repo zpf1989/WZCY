@@ -72,12 +72,14 @@
     <Compile Include="PageBase.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="SysManage\DepartmentBLL.cs" />
     <Compile Include="SysManage\FunctionBLL.cs" />
     <Compile Include="SysManage\RFRelationBLL.cs" />
     <Compile Include="SysManage\RoleManageBLL.cs" />
     <Compile Include="SysManage\URrelationBLL.cs" />
     <Compile Include="SysManage\UserInfoBLL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SysManage\UserManageBLL.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DALFactory\DALFactory.csproj">

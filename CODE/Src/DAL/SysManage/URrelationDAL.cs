@@ -12,6 +12,7 @@ namespace OA.DAL
 {
     public class URrelationDAL : IURrelationDAL
     {
+        public const string TableName = "OA_URrelation";
         /// <summary>
         /// 根据用户ID获取角色ID
         /// </summary>

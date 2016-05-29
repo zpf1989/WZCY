@@ -78,6 +78,10 @@ namespace OA.Model
             get { return _createUserID; }
         }
         /// <summary>
+        /// 创建者名称，实体类冗余字段（数据表中不存在，如果需要，则代码中处理赋值）
+        /// </summary>
+        public string CreateUser_Name { get; set; }
+        /// <summary>
         /// 部门ID
         /// </summary>
         public string DeptID
@@ -85,6 +89,10 @@ namespace OA.Model
             set { _deptid = value; }
             get { return _deptid; }
         }
+        /// <summary>
+        /// 部门名称，实体类冗余字段
+        /// </summary>
+        public string Dept_Name { get; set; }
         /// <summary>
         /// 操作权限
         /// </summary>
@@ -101,5 +109,9 @@ namespace OA.Model
             get { return _roleID; }
             set { this._roleID = value; }
         }
+        /// <summary>
+        /// 角色名称
+        /// </summary>
+        public string Role_Name { get; set; }
     }
 }

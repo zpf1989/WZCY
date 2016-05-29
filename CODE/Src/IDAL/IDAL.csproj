@@ -68,12 +68,14 @@
     <Compile Include="Accessories\IAccessoriesDAL.cs" />
     <Compile Include="demo\IDemoDepartmentDAL.cs" />
     <Compile Include="demo\IDemoEmployeeDAL.cs" />
+    <Compile Include="SysManage\IDepartmentDAL.cs" />
     <Compile Include="SysManage\IFunctionDAL.cs" />
     <Compile Include="SysManage\IRFRelationDAL.cs" />
     <Compile Include="SysManage\IRoleManageDAL.cs" />
     <Compile Include="SysManage\IURrelationDAL.cs" />
     <Compile Include="SysManage\IUserInfoDAL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SysManage\IUserManageDAL.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\GeneralClass\GeneralClass.csproj">

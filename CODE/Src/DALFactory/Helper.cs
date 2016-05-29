@@ -194,5 +194,47 @@ namespace OA.DALFactory
             }
             return iDemoEmployeeDAL;
         }
+
+        /// <summary>
+        /// 获取IDepartmentDAL的实例
+        /// </summary>
+        /// <returns></returns>
+        public static OA.IDAL.IDepartmentDAL GetIDepartmentDAL()
+        {
+            OA.IDAL.IDepartmentDAL iDepartmentDAL;
+            switch (dbType)
+            {
+                //case "Oracle":
+                //    iAffix = new Upload.DALORACLE.Affix();
+                //    break;
+                //case "GBase":
+                //    iAffix = new Upload.DALGBase.Affix();
+                //    break;
+                case "SQLServer":
+                default:
+                    iDepartmentDAL = new OA.DAL.DepartmentDAL();
+                    break;
+            }
+            return iDepartmentDAL;
+        }
+
+        public static OA.IDAL.IUserManageDAL GetIUserManageDAL()
+        {
+            OA.IDAL.IUserManageDAL iUserManageDAL;
+            switch (dbType)
+            {
+                //case "Oracle":
+                //    iAffix = new Upload.DALORACLE.Affix();
+                //    break;
+                //case "GBase":
+                //    iAffix = new Upload.DALGBase.Affix();
+                //    break;
+                case "SQLServer":
+                default:
+                    iUserManageDAL = new OA.DAL.UserManageDAL();
+                    break;
+            }
+            return iUserManageDAL;
+        }
     }
 }

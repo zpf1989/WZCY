@@ -71,12 +71,14 @@
     <Compile Include="DB.cs" />
     <Compile Include="demo\DemoDepartmentDAL.cs" />
     <Compile Include="demo\DemoEmployeeDAL.cs" />
+    <Compile Include="SysManage\DepartmentDAL.cs" />
     <Compile Include="SysManage\FunctionDAL.cs" />
     <Compile Include="SysManage\RFRelationDAL.cs" />
     <Compile Include="SysManage\RoleManageDAL.cs" />
     <Compile Include="SysManage\URrelationDAL.cs" />
     <Compile Include="SysManage\UserInfoDAL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SysManage\UserManageDAL.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\GeneralClass\GeneralClass.csproj">

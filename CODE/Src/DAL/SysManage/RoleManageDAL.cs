@@ -7,18 +7,21 @@ using System.Data;
 using OA.IDAL;
 using System.Data.SqlClient;
 using OA.Model;
+using OA.GeneralClass;
+using OA.GeneralClass.Extensions;
 
 namespace OA.DAL
 {
     public class RoleManageDAL : IRoleManageDAL
     {
+        public const string TableName = "OA_Role";
         /// <summary>
         /// 检验添加的角色是否存在
         /// </summary>
         /// <param name="RoleCode">角色编号</param>
         /// <param name="RoleName">角色名称</param>
         /// <returns></returns>
-        public int CheckRole(string RoleCode,string RoleName)
+        public int CheckRole(string RoleCode, string RoleName)
         {
             StringBuilder strSql = new StringBuilder();
             strSql.AppendFormat(" select count(*) from OA_Role where RoleCode='{0}' or RoleName='{1}' ", RoleCode, RoleName);
@@ -155,7 +158,7 @@ namespace OA.DAL
         /// <param name="pageSize">一页要显示的行数</param>
         /// <param name="startRowIndex">页码索引</param>
         /// <returns></returns>
-        public DataSet GetPageList(string RoleCode, string RoleName,int pageSize, int startRowIndex)
+        public DataSet GetPageList(string RoleCode, string RoleName, int pageSize, int startRowIndex)
         {
             StringBuilder strSql = new StringBuilder();
             if (!string.IsNullOrEmpty(RoleCode))
@@ -208,5 +211,26 @@ namespace OA.DAL
             return 0;
         }
 
+
+
+        public List<RoleInfo> GetRoleList()
+        {
+            List<RoleInfo> roles = new List<RoleInfo>();
+            DataSet ds = GetDataSetOfRole();
+            if (!ds.HasRow())
+            {
+                return roles;
+            }
+            foreach (DataRow row in ds.Tables[0].Rows)
+            {
+                roles.Add(new RoleInfo
+                {
+                    RoleID = row["RoleID"].ToString(),
+                    RoleCode = row["RoleCode"].ToString(),
+                    RoleName = row["RoleName"].ToString()
+                });
+            }
+            return roles;
+        }
     }
 }

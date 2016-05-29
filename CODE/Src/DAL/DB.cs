@@ -43,7 +43,7 @@ namespace OA.DAL
         {
             //组织查询参数
             List<SqlParameter> sqlParams = new List<SqlParameter>();
-            sqlParams.Add(new SqlParameter("tableName", SqlDbType.NVarChar, 100) { Value = entity.TableName });
+            sqlParams.Add(new SqlParameter("tableName", SqlDbType.NVarChar, 500) { Value = entity.TableName });
             sqlParams.Add(new SqlParameter("pk", SqlDbType.NVarChar, 100) { Value = entity.PK });
             sqlParams.Add(new SqlParameter("fields", SqlDbType.NVarChar, 1000) { Value = entity.Fields });
             sqlParams.Add(new SqlParameter("orderBySql", SqlDbType.NVarChar, 1000) { Value = entity.OrderBySql });

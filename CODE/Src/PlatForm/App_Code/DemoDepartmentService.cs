@@ -12,10 +12,10 @@ using OA.GeneralClass.Extensions;
 [WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]
 // 若要允许使用 ASP.NET AJAX 从脚本中调用此 Web 服务，请取消注释以下行。 
 // [System.Web.Script.Services.ScriptService]
-public class DepartmentService : System.Web.Services.WebService
+public class DemoDepartmentService : System.Web.Services.WebService
 {
-     OA.BLL.DepartmentBLL departmentBLL = new OA.BLL.DepartmentBLL();
-     public DepartmentService()
+    OA.BLL.DemoDepartmentBLL demoDepartmentBLL = new OA.BLL.DemoDepartmentBLL();
+    public DemoDepartmentService()
     {
 
         //如果使用设计的组件，请取消注释以下行 
@@ -25,8 +25,8 @@ public class DepartmentService : System.Web.Services.WebService
     [WebMethod]
     public void GetForGridHelp()
     {
-        List<OA.Model.DepartmentInfo> depts = departmentBLL.GetAllDepartmentsForGridHelp();
-        string json = depts.SerializeToJson();
+        List<OA.Model.DemoDepartment> demoDepts = demoDepartmentBLL.GetAllDepartmentsForGridHelp();
+        string json = demoDepts.SerializeToJson();
         Context.Response.WriteJson(json);
     }
 

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Data;
 using OA.Model;
+using OA.GeneralClass;
 
 namespace OA.IDAL
 {
@@ -61,5 +62,11 @@ namespace OA.IDAL
         /// <param name="RoleName">角色名称</param>
         /// <returns></returns>
         int GetRowCounts(string RoleCode, string RoleName);
+
+        /// <summary>
+        /// 获取全部角色列表
+        /// </summary>
+        /// <returns></returns>
+        List<RoleInfo> GetRoleList();
     }
 }
