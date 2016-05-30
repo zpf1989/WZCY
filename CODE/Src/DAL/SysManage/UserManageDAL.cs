@@ -68,14 +68,17 @@ namespace OA.DAL
                 {
                     //新增
                     user.UserID = Guid.NewGuid().ToString();
-                    sbSql.AppendFormat("insert into {0}(UserID,UserCode,UserName,UserPwd,UserState,CreateTime,CreateUserID,DeptID,Operator)", TableName);
-                    sbSql.AppendFormat(" values (@UserID{0},@UserCode{0},@UserName{0},@UserPwd{0},@UserState{0},@CreateTime{0},@CreateUserID{0},@DeptId{0},@Operator{0});", i);
+                    sbSql.AppendFormat("insert into {0}(UserID,UserCode,UserName,UserPwd,UserState,CreateTime,CreateUserID,DeptID)", TableName);
+                    sbSql.AppendFormat(" values (@UserID{0},@UserCode{0},@UserName{0},@UserPwd{0},@UserState{0},@CreateTime{0},@CreateUserID{0},@DeptID{0});", i);
+                    sbSql.AppendFormat("insert into {0}(ID,UserID,RoleID)  values (NEWID(),@UserID{1},@RoleID{1});", URrelationDAL.TableName, i);
                 }
                 else
                 {
                     //修改
-                    sbSql.AppendFormat("update {0} set UserCode=@UserCode{1},UserName=@UserName{1},DeptID=@DeptID{1},Operator=@Operator{1}", TableName, i);
+                    sbSql.AppendFormat("update {0} set UserCode=@UserCode{1},UserName=@UserName{1},DeptID=@DeptID{1}", TableName, i);
                     sbSql.AppendFormat(" where UserID=@UserID{0};", i);
+                    sbSql.AppendFormat("delete from {0} where UserID=@UserID{1};", URrelationDAL.TableName, i);
+                    sbSql.AppendFormat("insert into {0}(ID,UserID,RoleID)  values (NEWID(),@UserID{1},@RoleID{1});", URrelationDAL.TableName, i);
                 }
                 //不管新增或修改， 参数都一样
                 sqlParams.AddRange(new SqlParameter[]{ 
@@ -87,7 +90,8 @@ namespace OA.DAL
                             new SqlParameter("@CreateTime"+i, SqlDbType.DateTime){Value=user.CreateTime},
                             new SqlParameter("@CreateUserID"+i, SqlDbType.VarChar,36){Value=user.CreateUserID},
                             new SqlParameter("@DeptID"+i, SqlDbType.VarChar,36){Value=user.DeptID},
-                            new SqlParameter("@Operator"+i, SqlDbType.VarChar,50){Value=user.Operator},
+                            new SqlParameter("@RoleID"+i, SqlDbType.VarChar,36){Value=user.RoleID},
+                            //new SqlParameter("@Operator"+i, SqlDbType.VarChar,50){Value=user.Operator},
                                             });
             }
             //2、执行sql
@@ -114,7 +118,7 @@ namespace OA.DAL
             StringBuilder sbSql1 = new StringBuilder();//删除角色的sql
             StringBuilder sbSql2 = new StringBuilder();//删除用户的sql
             sbSql1.AppendFormat("delete from {0} where UserId in (", URrelationDAL.TableName);
-            sbSql2.AppendFormat("delete from {0} where UserdId in (", TableName);
+            sbSql2.AppendFormat("delete from {0} where UserId in (", TableName);
             List<SqlParameter> sqlParams = new List<SqlParameter>();
             for (int i = 0; i < userIds.Length; i++)
             {
@@ -134,6 +138,45 @@ namespace OA.DAL
             try
             {
                 rst = DBAccess.ExecuteNonQuery(DB.Type, DB.ConnectionString, CommandType.Text, sbSql1.ToString() + sbSql2.ToString(), sqlParams.ToArray());
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            //3、返回成功或失败的标志
+            return rst > 0;
+        }
+
+
+        public bool SetOpt(string[] userIds, string[] optValues)
+        {
+            if (userIds == null || userIds.Length < 1)
+            {
+                return false;
+            }
+            string optValString = "";
+            if (optValues != null && optValues.Length > 0)
+            {
+                optValString = string.Join(",", optValues);
+            }
+            StringBuilder sbSql = new StringBuilder();
+            sbSql.AppendFormat("update {0} set Operator='{1}' where UserId in (", TableName, optValString);
+            List<SqlParameter> sqlParams = new List<SqlParameter>();
+            for (int i = 0; i < userIds.Length; i++)
+            {
+                sbSql.AppendFormat("@UserId{0}", i);
+                sqlParams.Add(new SqlParameter("@UserId" + i, SqlDbType.VarChar, 36) { Value = userIds[i] });
+                if (i < userIds.Length - 1)
+                {
+                    sbSql.Append(",");
+                }
+            }
+            sbSql.Append(");");
+            //2、执行sql
+            int rst = 0;
+            try
+            {
+                rst = DBAccess.ExecuteNonQuery(DB.Type, DB.ConnectionString, CommandType.Text, sbSql.ToString(), sqlParams.ToArray());
             }
             catch (Exception ex)
             {

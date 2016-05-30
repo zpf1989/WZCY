@@ -20,11 +20,11 @@ var userInfoFormatter = {
     //操作权限
     operator: {
         src: [//value、text对应关系待定
-            { value: '1', text: '增加' },
+            { value: '1', text: '查看' },
             { value: '2', text: '修改' },
             { value: '3', text: '删除' },
-            { value: '4', text: '查看' },
-            { value: '5', text: '审批' }
+            { value: '4', text: '打印' },
+            { value: '5', text: '导出' }
         ],
         //将"1,2,3"转化为"增加,修改,删除"
         format: function (value) {
@@ -50,11 +50,6 @@ var userInfoFormatter = {
     }
 };
 
-//用户状态格式化
-var userSateFormatter = {
-
-};
-
 //用户列表对象
 var users = {
     grid: $('#gridUser'),
@@ -72,8 +67,8 @@ var users = {
         users.grid.datagrid({
             title: '用户列表',
             iconCls: 'icon-edit',
-            width: 1000,
-            height: 450,
+            //width: 1000,
+            //height: 450,
             singleSelect: false,
             idField: 'UserID',//列表主键，必须
             url: 'UserManageService.asmx/GetList',
@@ -112,6 +107,11 @@ var users = {
                     users.grid.datagrid('clearChecked');
                     users.grid.datagrid('clearSelections');
                 }
+            }, "-", {
+                id: 'btnOperator',
+                text: '操作权限',
+                iconCls: 'icon-edit',
+                handler: users.setOperatorBatch
             }],
             columns: [[
                 { field: 'ck', title: '', width: 100, align: 'center', checkbox: true },
@@ -306,7 +306,7 @@ var users = {
         }
         //提交保存
         //这里json序列化的目标一定是一个数组，否则，后台解析（解析为列表）时会出错
-        $.post('userservice.asmx/Save', JSON.stringify(editingRows), function (result) {
+        $.post('UserManageService.asmx/Save', JSON.stringify(editingRows), function (result) {
             if (result && result.code) {
                 //重新加载
                 users.grid.datagrid('reload');
@@ -324,6 +324,80 @@ var users = {
         });
         users.grid.datagrid('selectRow', index);
         users.grid.datagrid('beginEdit', index);
+    },
+    //批量设置操作权限
+    setOperatorBatch: function () {
+        var checkedRows = users.grid.datagrid('getChecked');
+        if (gFunc.isNull(checkedRows) || checkedRows.length < 1) {
+            $.messager.alert('提示', '请选择要设置操作权限的数据');
+            return;
+        }
+
+        var id = "_tmpWin_" + Math.floor(Math.random() * 10000 + 1);
+        var win = $("<div id='" + id + "'></div>");
+
+        win.addClass("myOpenWindow");
+        win.appendTo($("body"));
+        $(win).dialog({
+            title: "操作权限分配",
+            href: 'operator.html',
+            width: 200,
+            height: 200,
+            modal: true,
+            iconCls: null,
+            buttons: [{
+                text: '确定',
+                iconCls: 'icon-ok',
+                width: 75,
+                handler: function () {
+                    //获取选择项列表
+                    var optlist = $("input[name='optlist']:checked");
+                    var optvalues = [];
+                    $.each(optlist, function (index, opt) {
+                        optvalues.push(opt.value);
+                    });
+                    //获取选择用户列表
+                    var ids = [];
+                    $.each(checkedRows, function (index, row) {
+                        ids.push(row.UserID);
+                    });
+                    //提交到后台
+                    $.post('UserManageService.asmx/SetOpt', JSON.stringify([ids, optvalues]), function (result) {
+                        if (result && result.code) {
+                            //重新加载
+                            $(win).dialog("close");
+                            users.grid.datagrid('reload');
+                        } else {
+                            $.messager.alert('提示', '操作权限设置失败');
+                        }
+                    });
+                }
+            }, {
+                text: '取消',
+                iconCls: 'icon-cancel',
+                width: 75,
+                handler: function () {
+                    $(win).dialog("close");
+                }
+            }],
+            onClose: function () {
+                $(win).dialog("destroy");
+            },
+            onLoad: function () {
+                $("#" + id).next().children("a").first().focus();
+                $(win).keydown(function (event) {
+                    if (event.keyCode == 13) {
+                        var b = funSubmitCallback();
+                        if (b != false) {
+                            $(win).dialog("close");
+                        }
+                    }
+                });
+
+            }
+
+        });
+        return id;
     },
     helpReceiver: {
         dept: function (deptData, target) {

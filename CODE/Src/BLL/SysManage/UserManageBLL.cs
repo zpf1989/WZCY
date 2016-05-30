@@ -25,5 +25,10 @@ namespace OA.BLL
         {
             return iUserManageDAL.Delete(userIds);
         }
+
+        public bool SetOpt(string[] userIds,string[] optValues)
+        {
+            return iUserManageDAL.SetOpt(userIds, optValues);
+        }
     }
 }

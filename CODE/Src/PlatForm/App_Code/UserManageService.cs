@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Services;
 using OA.GeneralClass.Extensions;
+using OA.Model;
 
 /// <summary>
 /// UserManageService 的摘要说明
@@ -16,6 +17,7 @@ using OA.GeneralClass.Extensions;
 public class UserManageService : System.Web.Services.WebService
 {
     OA.BLL.UserManageBLL userManageBLL = new OA.BLL.UserManageBLL();
+    gentleyh.Class1 security = new gentleyh.Class1();
 
     public UserManageService()
     {
@@ -76,5 +78,72 @@ public class UserManageService : System.Web.Services.WebService
             }
         }
         Context.Response.WriteJson(OA.GeneralClass.ResultCode.Failure, "删除失败", null);
+    }
+
+    [WebMethod]
+    public void Save()
+    {
+        //获取请求数据
+        using (var reader = new System.IO.StreamReader(Context.Request.InputStream))
+        {
+            string data = reader.ReadToEnd();
+            if (!string.IsNullOrEmpty(data))
+            {
+                var users = data.DeSerializeFromJson<List<UserInfo>>();
+                if (users != null && users.Count > 0)
+                {
+                    //预处理
+                    //默认密码=用户编号
+                    foreach (UserInfo user in users)
+                    {
+                        if (string.IsNullOrEmpty(user.UserPwd))
+                        {
+                            user.UserPwd = security.Encrypt(user.UserCode, security.se_yaoshi);
+                        }
+                    }
+                    bool rst = userManageBLL.Save(users.ToArray());
+                    if (rst)
+                    {
+                        Context.Response.WriteJson(OA.GeneralClass.ResultCode.Success, null, null);
+                        return;
+                    }
+                }
+            }
+        }
+        Context.Response.WriteJson(OA.GeneralClass.ResultCode.Failure, "保存失败", null);
+    }
+
+    /// <summary>
+    /// 设置操作权限
+    /// </summary>
+    [WebMethod]
+    public void SetOpt()
+    {
+        //获取请求数据
+        using (var reader = new System.IO.StreamReader(Context.Request.InputStream))
+        {
+            string dataStr = reader.ReadToEnd();
+            if (!string.IsNullOrEmpty(dataStr))
+            {
+                var dataList = dataStr.DeSerializeFromJson<List<string[]>>();
+                if (dataList == null || dataList.Count < 2)
+                {
+                    Context.Response.WriteJson(OA.GeneralClass.ResultCode.Success, "参数错误", null);
+                }
+                string[] userIds = dataList[0];
+                string[] optvalues = dataList[1];
+                if (userIds != null && userIds.Length > 0)
+                {
+                    bool rst = userManageBLL.SetOpt(userIds, optvalues);
+                    if (rst)
+                    {
+                        Context.Response.WriteJson(OA.GeneralClass.ResultCode.Success, null, null);
+                        return;
+                    }
+                }
+                Context.Response.WriteJson(OA.GeneralClass.ResultCode.Success, null, optvalues);
+            }
+        }
+        Context.Response.WriteJson(OA.GeneralClass.ResultCode.Failure, "保存失败", null);
     }
 }
