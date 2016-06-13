@@ -25,5 +25,12 @@ namespace OA.IDAL
         bool Save(params UserInfo[] users);
 
         bool Delete(params string[] userIds);
+        /// <summary>
+        /// 设置操作权限
+        /// </summary>
+        /// <param name="userIds">用户id数组</param>
+        /// <param name="optValues">操作权限数组</param>
+        /// <returns></returns>
+        bool SetOpt(string[] userIds, string[] optValues);
     }
 }

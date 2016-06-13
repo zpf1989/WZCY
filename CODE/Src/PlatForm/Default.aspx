@@ -1,142 +1,177 @@
-Ôªø<%@ Page Language="C#" AutoEventWireup="true" CodeFile="Default.aspx.cs" Inherits="frmOA" %>
+<%@ Page Language="C#" AutoEventWireup="true"  CodeFile="Default.aspx.cs" Inherits="_Default" Debug="true"%>
 
-<!DOCTYPE html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head runat="server">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <link href="css/css.css" rel="stylesheet" type="text/css">
-    <title></title>
-    <style type="text/css">
-<!--
-body,td,th {
-	font-family: ÂæÆËΩØÈõÖÈªë;
-}
-    .auto-style1 {
-        height: 31px;
-    }
-    .auto-style2 {
-        font-family: "ÂæÆËΩØÈõÖÈªë";
-        font-size: 15px;
-        color: #0e2d5d;
-        height: 31px;
-    }
--->
-</style>
-</head>
-<body>
-    <form id="form1" runat="server">
-    <div>
-        <table width="100%" border="0" align="left" cellpadding="0" cellspacing="0">
+<HTML>
+	<HEAD>
+        <meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+        <link href="css/wz.css" rel="stylesheet" type="text/css">
+		<title> ◊“≥</title>
+	</HEAD>
+	<body leftMargin="0" topMargin="0" rightMargin="5">
+		<form id="frmDesktop" method="post" runat="server">
+			<table width="100%" height="490" border="0" cellpadding="0" cellspacing="0">
+      <tr>
+        <td width="50%" height="245" bgcolor="#e6f2fd"><table width="90%" height="200" border="0" align="center" cellpadding="0" cellspacing="0">
           <tr>
-            <td width="50" rowspan="6">&nbsp;</td>
-            <td width="102" height="40" align="center" class="t14gray">Â∫ìÂ≠òÁÆ°ÁêÜ</td>
-            <td width="711" class="t14gray"><table width="97%" border="0" align="left" cellpadding="0" cellspacing="0">
+            <td height="36" background="images/style-image/oa_43err.jpg"><table width="100%" border="0" cellspacing="0" cellpadding="0">
               <tr>
-                <td background="images/bj.jpg"><img src="images/bj.jpg" width="1" height="3"></td>
-              </tr>
-            </table></td>
-          </tr>
-          <tr>
-            <td height="115" colspan="2" class="t14gray"><table width="260" height="22" border="0" align="left" cellpadding="0" cellspacing="0">
-              <tr>
-                <td width="130" align="left"><table width="112" height="112" border="0" cellpadding="0" cellspacing="1" class="table3">
+                <td width="48%"><table width="160" border="0" align="left" cellpadding="0" cellspacing="0">
                   <tr>
-                    <td align="center" bgcolor="#f7f7f7"><table width="86%" height="83" border="0" cellpadding="0" cellspacing="0">
+                    <td width="8"><img src="images/style-image/oa_40.jpg" width="8" height="36" /></td>
+                    <td width="52"><img src="images/style-image/oa_41.jpg" width="52" height="36" /></td>
+                    <td width="100" align="center" valign="bottom" class="t14Bblue"><table width="85%" height="30" border="0" cellpadding="0" cellspacing="0">
                       <tr>
-                        <td align="center"><img src="images/sy_41.gif" width="43" height="48"></td>
-                      </tr>
-                      <tr>
-                        <td align="center" class="t14gray"><a href="#">ÊàêÂìÅËøõÂá∫Â∫ì</a></td>
+                        <td class="t14Bblue">–¬Œ≈’™“™</td>
                       </tr>
                     </table></td>
                   </tr>
                 </table></td>
-                <td width="130" align="left"><table width="112" height="112" border="0" cellpadding="0" cellspacing="1" class="table3">
+                <td width="52%" align="right"><table width="66" border="0" align="right" cellpadding="0" cellspacing="0">
                   <tr>
-                    <td align="center" bgcolor="#f7f7f7"><table width="86%" height="83" border="0" cellpadding="0" cellspacing="0">
-                        <tr>
-                          <td align="center"><img src="images/sy_43.gif" width="42" height="46"></td>
-                        </tr>
-                        <tr>
-                          <td align="center" class="t14gray">ÂéüÊùêÊñôËøõÂá∫Â∫ì</td>
-                        </tr>
-                    </table></td>
+                    <td width="58" class="t12black">ÿ≠&gt; ∏¸∂‡</td>
+                    <td width="8"><img src="images/style-image/oa_43.jpg" width="8" height="36" /></td>
                   </tr>
                 </table></td>
               </tr>
             </table></td>
           </tr>
           <tr>
-            <td height="40" align="center" class="t14gray">Âè∞Ë¥¶</td>
-            <td height="40" class="t14gray"><table width="97%" border="0" align="left" cellpadding="0" cellspacing="0">
+            <td height="164"><table width="100%" height="180" border="0" cellpadding="0" cellspacing="0" class="table3">
               <tr>
-                <td background="images/bj.jpg"><img src="images/bj.jpg" width="1" height="3"></td>
+                <td valign="top"><table width="96%" height="170" border="0" align="center" cellpadding="0" cellspacing="0" class="table4">
+                  <tr>
+                    <td valign="top">
+                        <asp:Label ID="lblNews" runat="server"></asp:Label>
+                    </td>
+                  </tr>
+                </table></td>
               </tr>
+            </table></td>
+          </tr>
+        </table></td>
+        <td width="50%" bgcolor="#e6f2fd"><table width="90%" height="200" border="0" align="center" cellpadding="0" cellspacing="0">
+          <tr>
+            <td height="36" background="images/style-image/oa_43err.jpg"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                  <td width="48%"><table width="160" border="0" align="left" cellpadding="0" cellspacing="0">
+                      <tr>
+                        <td width="8"><img src="images/style-image/oa_40.jpg" width="8" height="36" /></td>
+                        <td width="52"><img src="images/style-image/oa_41rt.jpg" width="52" height="36" /></td>
+                        <td width="100" align="center" valign="bottom" class="t14Bblue"><table width="85%" height="30" border="0" cellpadding="0" cellspacing="0">
+                            <tr>
+                              <td class="t14Bblue">“—∞Ïπ´Œƒ</td>
+                            </tr>
+                        </table></td>
+                      </tr>
+                  </table></td>
+                  <td width="52%" align="right"><table width="66" border="0" align="right" cellpadding="0" cellspacing="0">
+                      <tr>
+                        <td width="58" class="t12black">ÿ≠&gt; ∏¸∂‡</td>
+                        <td width="8"><img src="images/style-image/oa_43.jpg" width="8" height="36" /></td>
+                      </tr>
+                  </table></td>
+                </tr>
             </table></td>
           </tr>
           <tr>
-            <td height="115" colspan="2" class="t14gray"><table width="390" height="22" border="0" align="left" cellpadding="0" cellspacing="0">
-              <tr>
-                <td width="130" align="left"><table width="112" height="112" border="0" cellpadding="0" cellspacing="1" class="table3">
-                    <tr>
-                      <td align="center" bgcolor="#f7f7f7"><table width="86%" height="83" border="0" cellpadding="0" cellspacing="0">
-                          <tr>
-                            <td align="center"><img src="images/sy_47.gif" width="42" height="48"></td>
-                          </tr>
-                          <tr>
-                            <td align="center" class="t14gray">ÊàêÂìÅÂè∞Ë¥¶</td>
-                          </tr>
-                      </table></td>
-                    </tr>
-                </table></td>
-                <td width="130" align="left"><table width="112" height="112" border="0" cellpadding="0" cellspacing="1" class="table3">
-                    <tr>
-                      <td align="center" bgcolor="#f7f7f7"><table width="86%" height="83" border="0" cellpadding="0" cellspacing="0">
-                          <tr>
-                            <td align="center"><img src="images/sy_49.gif" width="39" height="48"></td>
-                          </tr>
-                          <tr>
-                            <td align="center" class="t14gray">ÂéüÊùêÊñôÂè∞Ë¥¶</td>
-                          </tr>
-                      </table></td>
-                    </tr>
-                </table></td>
-                <td width="130" align="left"></td>
-              </tr>
+            <td height="164"><table width="100%" height="180" border="0" cellpadding="0" cellspacing="0" class="table3">
+                <tr>
+                  <td valign="top"><table width="96%" height="170" border="0" align="center" cellpadding="0" cellspacing="0" class="table4">
+                      <tr>
+                        <td valign="top">
+                            <asp:Label ID="lblOfficeDocYB" runat="server"></asp:Label>
+                        </td>
+                      </tr>
+                  </table></td>
+                </tr>
+            </table></td>
+          </tr>
+        </table></td>
+      </tr>
+      <tr>
+        <td height="240" bgcolor="#e6f2fd"><table width="90%" height="200" border="0" align="center" cellpadding="0" cellspacing="0">
+          <tr>
+            <td height="36" background="images/style-image/oa_43err.jpg"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                  <td width="48%"><table width="160" border="0" align="left" cellpadding="0" cellspacing="0">
+                      <tr>
+                        <td width="8"><img src="images/style-image/oa_40.jpg" width="8" height="36" /></td>
+                        <td width="52"><img src="images/style-image/oa_41hg.jpg" width="52" height="36" /></td>
+                        <td width="100" align="center" valign="bottom" class="t14Bblue"><table width="85%" height="30" border="0" cellpadding="0" cellspacing="0">
+                            <tr>
+                              <td class="t14Bblue">¥˝∞Ïπ´Œƒ</td>
+                            </tr>
+                        </table></td>
+                      </tr>
+                  </table></td>
+                  <td width="52%" align="right"><table width="66" border="0" align="right" cellpadding="0" cellspacing="0">
+                      <tr>
+                        <td width="58" class="t12black">ÿ≠&gt; ∏¸∂‡</td>
+                        <td width="8"><img src="images/style-image/oa_43.jpg" width="8" height="36" /></td>
+                      </tr>
+                  </table></td>
+                </tr>
             </table></td>
           </tr>
           <tr>
-            <td height="40" align="center" class="t14gray">Êü•ËØ¢Êä•Ë°®</td>
-            <td height="40" class="t14gray"><table width="97%" border="0" align="left" cellpadding="0" cellspacing="0">
-              <tr>
-                <td background="images/bj.jpg"><img src="images/bj.jpg" width="1" height="3"></td>
-              </tr>
+            <td height="164"><table width="100%" height="180" border="0" cellpadding="0" cellspacing="0" class="table3">
+                <tr>
+                  <td valign="top"><table width="96%" height="170" border="0" align="center" cellpadding="0" cellspacing="0" class="table4">
+                      <tr>
+                        <td valign="top">
+                            <asp:Label ID="lblOfficeDocDB" runat="server"></asp:Label>
+                        </td>
+                      </tr>
+                  </table></td>
+                </tr>
+            </table></td>
+          </tr>
+        </table></td>
+        <td height="240" bgcolor="#e6f2fd"><table width="90%" height="200" border="0" align="center" cellpadding="0" cellspacing="0">
+          <tr>
+            <td height="36" background="images/style-image/oa_43err.jpg"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                  <td width="48%"><table width="160" border="0" align="left" cellpadding="0" cellspacing="0">
+                      <tr>
+                        <td width="8"><img src="images/style-image/oa_40.jpg" width="8" height="36" /></td>
+                        <td width="52"><img src="images/style-image/oa_41io.jpg" width="52" height="36" /></td>
+                        <td width="100" align="center" valign="bottom" class="t14Bblue"><table width="85%" height="30" border="0" cellpadding="0" cellspacing="0">
+                            <tr>
+                              <td class="t14Bblue">π´Àæ¬€Ã≥</td>
+                            </tr>
+                        </table></td>
+                      </tr>
+                  </table></td>
+                  <td width="52%" align="right"><table width="66" border="0" align="right" cellpadding="0" cellspacing="0">
+                      <tr>
+                        <td width="58" class="t12black">ÿ≠&gt; ∏¸∂‡</td>
+                        <td width="8"><img src="images/style-image/oa_43.jpg" width="8" height="36" /></td>
+                      </tr>
+                  </table></td>
+                </tr>
             </table></td>
           </tr>
           <tr>
-            <td height="115" colspan="2" class="t14gray"><table width="520" height="22" border="0" align="left" cellpadding="0" cellspacing="0">
-              <tr>
-                <td width="130" align="left"><table width="112" height="112" border="0" cellpadding="0" cellspacing="1" class="table3">
-                    <tr>
-                      <td align="center" bgcolor="#f7f7f7"><table width="86%" height="83" border="0" cellpadding="0" cellspacing="0">
+            <td height="164"><table width="100%" height="180" border="0" cellpadding="0" cellspacing="0" class="table3">
+                <tr>
+                  <td valign="top"><table width="96%" height="170" border="0" align="center" cellpadding="0" cellspacing="0" class="table4">
+                      <tr>
+                        <td valign="top"><table width="95%" height="27" border="0" align="center" cellpadding="0" cellspacing="0">
                           <tr>
-                            <td height="60" align="center"><img src="images/sy_57.gif" width="50" height="47"></td>
+                            <td width="3%"><img src="images/style-image/oa_58.jpg" width="3" height="7" /></td>
+                            <td width="80%" class="t12black">»´ °’˛∏Æ≤…π∫π§◊˜◊˘Ã∏ª·‘≤¬˙Ω· ¯</td>
+                            <td width="17%" class="t12black">2013-07-12 </td>
                           </tr>
-                          <tr>
-                            <td align="center" class="t14gray">‰∫ßÂìÅ‰ª∑Ê†ºÊü•ËØ¢</td>
-                          </tr>
-                      </table></td>
-                    </tr>
-                </table></td>
-                <td width="130" align="left"></td>
-                <td width="130" align="left"></td>
-                <td width="130" align="left"></td>
-              </tr>
+                        </table></td>
+                      </tr>
+                  </table></td>
+                </tr>
             </table></td>
           </tr>
-        </table>
-    </div>
-    </form>
-</body>
-</html>
+        </table></td>
+      </tr>
+    </table>
+		</form>
+	</body>
+</HTML>
