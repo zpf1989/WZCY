@@ -66,8 +66,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Accessories\IAccessoriesDAL.cs" />
-    <Compile Include="demo\IDemoDepartmentDAL.cs" />
-    <Compile Include="demo\IDemoEmployeeDAL.cs" />
+    <Compile Include="BaseData\IMaterialsDAL.cs" />
+    <Compile Include="BaseData\IMaterialClassDAL.cs" />
+    <Compile Include="BaseData\IMaterialTypeDAL.cs" />
+    <Compile Include="BaseData\IMeasureUnitsDAL.cs" />
+    <Compile Include="IBaseDAL.cs" />
     <Compile Include="SysManage\IDepartmentDAL.cs" />
     <Compile Include="SysManage\IFunctionDAL.cs" />
     <Compile Include="SysManage\IRFRelationDAL.cs" />

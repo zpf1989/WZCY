@@ -13,7 +13,7 @@ namespace OA.BLL
 
         public List<UserInfo> GetUsersByPage(PageEntity pageEntity, string whereSql = null, string orderBySql = null)
         {
-            return iUserManageDAL.GetUsersByPage(pageEntity, whereSql, orderBySql);
+            return iUserManageDAL.GetEntitiesByPage(pageEntity, whereSql, orderBySql);
         }
 
         public bool Save(params UserInfo[] users)

@@ -66,6 +66,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Accessories\Accessories.cs" />
+    <Compile Include="BaseData\MaterialClass.cs" />
+    <Compile Include="BaseData\Materials.cs" />
+    <Compile Include="BaseData\MaterialType.cs" />
+    <Compile Include="BaseData\MeasureUnits.cs" />
     <Compile Include="demo\DemoDepartment.cs" />
     <Compile Include="demo\DemoEmployee.cs" />
     <Compile Include="SysManage\DepartmentInfo.cs" />

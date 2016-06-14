@@ -9,6 +9,7 @@ namespace OA.DALFactory
     {
         public static string dbType = System.Configuration.ConfigurationManager.AppSettings["MainDBType"].ToString();
 
+        #region 系统管理
         /// <summary>
         /// 获取实现IUserInfoDAL的对象
         /// </summary>
@@ -154,48 +155,6 @@ namespace OA.DALFactory
             return iAccessoriesDAL;
         }
         /// <summary>
-        /// 获取IDemoDepartmentDAL的实例
-        /// </summary>
-        /// <returns></returns>
-        public static OA.IDAL.IDemoDepartmentDAL GetIDemoDepartmentDAL()
-        {
-            OA.IDAL.IDemoDepartmentDAL iDemoDepartmentDAL;
-            switch (dbType)
-            {
-                //case "Oracle":
-                //    iAffix = new Upload.DALORACLE.Affix();
-                //    break;
-                //case "GBase":
-                //    iAffix = new Upload.DALGBase.Affix();
-                //    break;
-                case "SQLServer":
-                default:
-                    iDemoDepartmentDAL = new OA.DAL.DemoDepartmentDAL();
-                    break;
-            }
-            return iDemoDepartmentDAL;
-        }
-
-        public static OA.IDAL.IDemoEmployeeDAL GetIDemoEmployeeDAL()
-        {
-            OA.IDAL.IDemoEmployeeDAL iDemoEmployeeDAL;
-            switch (dbType)
-            {
-                //case "Oracle":
-                //    iAffix = new Upload.DALORACLE.Affix();
-                //    break;
-                //case "GBase":
-                //    iAffix = new Upload.DALGBase.Affix();
-                //    break;
-                case "SQLServer":
-                default:
-                    iDemoEmployeeDAL = new OA.DAL.DemoEmployeeDAL();
-                    break;
-            }
-            return iDemoEmployeeDAL;
-        }
-
-        /// <summary>
         /// 获取IDepartmentDAL的实例
         /// </summary>
         /// <returns></returns>
@@ -236,5 +195,84 @@ namespace OA.DALFactory
             }
             return iUserManageDAL;
         }
+        #endregion
+
+        #region 基础数据
+        public static OA.IDAL.IMaterialClassDAL GetIMaterialClassDAL()
+        {
+            OA.IDAL.IMaterialClassDAL idal;
+            switch (dbType)
+            {
+                //case "Oracle":
+                //    iAffix = new Upload.DALORACLE.Affix();
+                //    break;
+                //case "GBase":
+                //    iAffix = new Upload.DALGBase.Affix();
+                //    break;
+                case "SQLServer":
+                default:
+                    idal = new OA.DAL.MaterialClassDAL();
+                    break;
+            }
+            return idal;
+        }
+
+        public static OA.IDAL.IMaterialTypeDAL GetIMaterialTypeDAL()
+        {
+            OA.IDAL.IMaterialTypeDAL idal;
+            switch (dbType)
+            {
+                //case "Oracle":
+                //    iAffix = new Upload.DALORACLE.Affix();
+                //    break;
+                //case "GBase":
+                //    iAffix = new Upload.DALGBase.Affix();
+                //    break;
+                case "SQLServer":
+                default:
+                    idal = new OA.DAL.MaterialTypeDAL();
+                    break;
+            }
+            return idal;
+        }
+
+        public static OA.IDAL.IMeasureUnitsDAL GetIMeasureUnitsDAL()
+        {
+            OA.IDAL.IMeasureUnitsDAL idal;
+            switch (dbType)
+            {
+                //case "Oracle":
+                //    iAffix = new Upload.DALORACLE.Affix();
+                //    break;
+                //case "GBase":
+                //    iAffix = new Upload.DALGBase.Affix();
+                //    break;
+                case "SQLServer":
+                default:
+                    idal = new OA.DAL.MeasureUnitsDAL();
+                    break;
+            }
+            return idal;
+        }
+
+        public static OA.IDAL.IMaterialsDAL GetIMaterialsDAL()
+        {
+            OA.IDAL.IMaterialsDAL idal;
+            switch (dbType)
+            {
+                //case "Oracle":
+                //    iAffix = new Upload.DALORACLE.Affix();
+                //    break;
+                //case "GBase":
+                //    iAffix = new Upload.DALGBase.Affix();
+                //    break;
+                case "SQLServer":
+                default:
+                    idal = new OA.DAL.MaterialsDAL();
+                    break;
+            }
+            return idal;
+        }
+        #endregion
     }
 }

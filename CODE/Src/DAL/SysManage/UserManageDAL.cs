@@ -8,13 +8,14 @@ using System.Data;
 using GentleUtil.DB;
 using OA.Model;
 using OA.GeneralClass.Extensions;
+using OA.GeneralClass;
 
 namespace OA.DAL
 {
     public class UserManageDAL : IUserManageDAL
     {
         public const string TableName = "OA_User";
-        public List<UserInfo> GetUsersByPage(GeneralClass.PageEntity pageEntity, string whereSql = null, string orderBySql = null)
+        public List<UserInfo> GetEntitiesByPage(PageEntity pageEntity, string whereSql = null, string orderBySql = null)
         {
             List<UserInfo> users = new List<UserInfo>();
             DataSet ds = DB.GetDataByPage(new PageQueryEntity
