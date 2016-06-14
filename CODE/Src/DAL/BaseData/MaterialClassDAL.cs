@@ -9,14 +9,20 @@ using GentleUtil.DB;
 using OA.Model;
 using OA.GeneralClass.Extensions;
 using OA.GeneralClass;
+using OA.GeneralClass.Logger;
 
 namespace OA.DAL
 {
     public class MaterialClassDAL : IMaterialClassDAL
     {
         public const string TableName = "MaterialClass";
+        ILogHelper<MaterialClassDAL> logger = LoggerFactory.GetLogger<MaterialClassDAL>();
         public List<MaterialClass> GetEntitiesByPage(PageEntity pageEntity, string whereSql = null, string orderBySql = null)
         {
+            if (string.IsNullOrEmpty(orderBySql))
+            {
+                orderBySql = "MaterialClassCode";
+            }
             List<MaterialClass> classes = new List<MaterialClass>();
             DataSet ds = DB.GetDataByPage(new PageQueryEntity
             {
@@ -62,7 +68,7 @@ namespace OA.DAL
                     //新增
                     cls.MaterialClassID = Guid.NewGuid().ToString();
                     sbSql.AppendFormat("insert into {0}(MaterialClassID,MaterialClassCode,MaterialClassName,Remark)", TableName);
-                    sbSql.AppendFormat(" values (@MaterialClassID,@MaterialClassCode,@MaterialClassName,@Remark);", i);
+                    sbSql.AppendFormat(" values (@MaterialClassID{0},@MaterialClassCode{0},@MaterialClassName{0},@Remark{0});", i);
                 }
                 else
                 {
@@ -86,7 +92,8 @@ namespace OA.DAL
             }
             catch (Exception ex)
             {
-                throw ex;
+                logger.LogError(ex);
+                return false;
             }
             //3、返回成功或失败的标志
             return rst > 0;
@@ -120,7 +127,8 @@ namespace OA.DAL
             }
             catch (Exception ex)
             {
-                throw ex;
+                logger.LogError(ex);
+                return false;
             }
             //3、返回成功或失败的标志
             return rst > 0;

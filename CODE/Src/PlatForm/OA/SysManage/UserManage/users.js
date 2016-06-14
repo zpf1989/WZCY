@@ -94,8 +94,7 @@ var users = {
                 text: '取消',
                 iconCls: 'icon-cancel',
                 handler: function () {
-                    users.grid.datagrid('rejectChanges');
-                    users.grid.datagrid('clearChecked').datagrid('clearSelections');
+                    users.grid.datagrid('rejectChanges').datagrid('clearChecked').datagrid('clearSelections');
                 }
             }, "-", {
                 id: 'btnOperator',

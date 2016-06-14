@@ -13,6 +13,7 @@ namespace OA.BLL
 
         public List<MaterialClass> GetMaterialClassesByPage(PageEntity pageEntity, string whereSql = null, string orderBySql = null)
         {
+
             return idal.GetEntitiesByPage(pageEntity, whereSql, orderBySql);
         }
 

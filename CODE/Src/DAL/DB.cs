@@ -1,5 +1,6 @@
 ﻿using GentleUtil.DB;
 using OA.GeneralClass;
+using OA.GeneralClass.Logger;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -11,6 +12,7 @@ namespace OA.DAL
 {
     public class DB
     {
+        static ILogHelper<DB> logger = LoggerFactory.GetLogger<DB>();
         public static string ConnectionString
         {
             get
@@ -53,10 +55,18 @@ namespace OA.DAL
             sqlParams.Add(sqlParamPageIndex);
             SqlParameter sqlParamTotalRecord = new SqlParameter("totalRecord", SqlDbType.Int) { Direction = ParameterDirection.Output };
             sqlParams.Add(sqlParamTotalRecord);
-            DataSet ds = DBAccess.ExecuteDataset(DB.ConnectionString, CommandType.StoredProcedure, "Proc_GetDataByPage", sqlParams.ToArray());
-            entity.PageEntity.PageIndex = Convert.ToInt32(sqlParamPageIndex.Value);
-            entity.PageEntity.TotalRecords = Convert.ToInt32(sqlParamTotalRecord.Value);
-            return ds;
+            try
+            {
+                DataSet ds = DBAccess.ExecuteDataset(DB.ConnectionString, CommandType.StoredProcedure, "Proc_GetDataByPage", sqlParams.ToArray());
+                entity.PageEntity.PageIndex = Convert.ToInt32(sqlParamPageIndex.Value);
+                entity.PageEntity.TotalRecords = Convert.ToInt32(sqlParamTotalRecord.Value);
+                return ds;
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex);
+                return null;
+            }
         }
     }
     /// <summary>

@@ -2,5 +2,5 @@
 */*/*/obj
 #忽略网站dll目录
 */*/PlatForm/Bin
-#忽略bin目录
-Code/bin
+#忽略网站日志目录
+*/*/PlatForm/log

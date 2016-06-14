@@ -70,8 +70,6 @@
     <Compile Include="BaseData\Materials.cs" />
     <Compile Include="BaseData\MaterialType.cs" />
     <Compile Include="BaseData\MeasureUnits.cs" />
-    <Compile Include="demo\DemoDepartment.cs" />
-    <Compile Include="demo\DemoEmployee.cs" />
     <Compile Include="SysManage\DepartmentInfo.cs" />
     <Compile Include="SysManage\FunctionInfo.cs" />
     <Compile Include="SysManage\RFRelation.cs" />

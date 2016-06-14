@@ -9,19 +9,28 @@ using GentleUtil.DB;
 using OA.Model;
 using OA.GeneralClass.Extensions;
 using OA.GeneralClass;
+using OA.GeneralClass.Logger;
 
 namespace OA.DAL
 {
     public class MaterialsDAL : IMaterialsDAL
     {
         public const string TableName = "Materials";
+
+        ILogHelper<MaterialsDAL> logger = LoggerFactory.GetLogger<MaterialsDAL>();
+
         public List<Materials> GetEntitiesByPage(PageEntity pageEntity, string whereSql = null, string orderBySql = null)
         {
+            if (string.IsNullOrEmpty(orderBySql))
+            {
+                orderBySql = "MaterialCode";
+            }
             List<Materials> classes = new List<Materials>();
             DataSet ds = DB.GetDataByPage(new PageQueryEntity
             {
                 PageEntity = pageEntity,
-                TableName = string.Format(" {0} m left join {1} c on m.MaterialClassID=c.MaterialClassID left join {2} t on m.MaterialTypeID=t.MaterialTypeID left join {3} un on m.PrimaryUnitID=un.UnitID left join {4} usr on m.Creator=usr.UserID "),
+                TableName = string.Format(" {0} m left join {1} c on m.MaterialClassID=c.MaterialClassID left join {2} t on m.MaterialTypeID=t.MaterialTypeID left join {3} un on m.PrimaryUnitID=un.UnitID left join {4} usr on m.Creator=usr.UserID ",
+                TableName, MaterialClassDAL.TableName, MaterialTypeDAL.TableName, MeasureUnitsDAL.TableName, UserManageDAL.TableName),
                 PK = "m.MaterialID",
                 Fields = "m.MaterialID,m.MaterialCode,m.MaterialName,m.Specs,m.MaterialClassID,m.MaterialTypeID,m.PrimaryUnitID,m.Price,m.Remark,m.Creator,m.CreateTime,m.WasterRate,c.MaterialClassName MaterialClass_Name,t.MaterialTypeName MaterialType_Name,un.UnitName PrimaryUnit_Name,usr.UserName Creator_Name",
                 OrderBySql = orderBySql,
@@ -73,7 +82,7 @@ namespace OA.DAL
                     //新增
                     material.MaterialID = Guid.NewGuid().ToString();
                     sbSql.AppendFormat("insert into {0}(MaterialID,MaterialCode,MaterialName,Specs,MaterialClassID,MaterialTypeID,PrimaryUnitID,Price,Remark,Creator,CreateTime,WasterRate)", TableName);
-                    sbSql.AppendFormat(" values (@MaterialID,@MaterialCode,@MaterialName,@Specs,@MaterialClassID,@MaterialTypeID,@PrimaryUnitID,@Price,@Remark,@Creator,@CreateTime,@WasterRate);", i);
+                    sbSql.AppendFormat(" values (@MaterialID{0},@MaterialCode{0},@MaterialName{0},@Specs{0},@MaterialClassID{0},@MaterialTypeID{0},@PrimaryUnitID{0},@Price{0},@Remark{0},@Creator{0},@CreateTime{0},@WasterRate{0});", i);
                 }
                 else
                 {
@@ -105,7 +114,8 @@ namespace OA.DAL
             }
             catch (Exception ex)
             {
-                throw ex;
+                logger.LogError(ex);
+                return false;
             }
             //3、返回成功或失败的标志
             return rst > 0;
@@ -139,7 +149,8 @@ namespace OA.DAL
             }
             catch (Exception ex)
             {
-                throw ex;
+                logger.LogError(ex);
+                return false;
             }
             //3、返回成功或失败的标志
             return rst > 0;
@@ -161,7 +172,8 @@ namespace OA.DAL
             }
             catch (Exception ex)
             {
-                throw ex;
+                logger.LogError(ex);
+                return false;
             }
         }
     }

@@ -9,14 +9,23 @@ using GentleUtil.DB;
 using OA.Model;
 using OA.GeneralClass.Extensions;
 using OA.GeneralClass;
+using OA.GeneralClass.Logger;
 
 namespace OA.DAL
 {
     public class MeasureUnitsDAL : IMeasureUnitsDAL
     {
         public const string TableName = "MeasureUnits";
+
+        ILogHelper<MeasureUnitsDAL> logger = LoggerFactory.GetLogger<MeasureUnitsDAL>();
+
         public List<MeasureUnits> GetEntitiesByPage(PageEntity pageEntity, string whereSql = null, string orderBySql = null)
         {
+            if (string.IsNullOrEmpty(orderBySql))
+            {
+                orderBySql = "UnitCode";
+            }
+
             List<MeasureUnits> units = new List<MeasureUnits>();
             DataSet ds = DB.GetDataByPage(new PageQueryEntity
             {
@@ -61,7 +70,7 @@ namespace OA.DAL
                     //新增
                     cls.UnitID = Guid.NewGuid().ToString();
                     sbSql.AppendFormat("insert into {0}(UnitID,UnitCode,UnitName)", TableName);
-                    sbSql.AppendFormat(" values (@UnitID,@UnitCode,@UnitName);", i);
+                    sbSql.AppendFormat(" values (@UnitID{0},@UnitCode{0},@UnitName{0});", i);
                 }
                 else
                 {
@@ -84,7 +93,8 @@ namespace OA.DAL
             }
             catch (Exception ex)
             {
-                throw ex;
+                logger.LogError(ex);
+                return false;
             }
             //3、返回成功或失败的标志
             return rst > 0;
@@ -118,7 +128,8 @@ namespace OA.DAL
             }
             catch (Exception ex)
             {
-                throw ex;
+                logger.LogError(ex);
+                return false;
             }
             //3、返回成功或失败的标志
             return rst > 0;

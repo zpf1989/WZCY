@@ -9,14 +9,20 @@ using GentleUtil.DB;
 using OA.Model;
 using OA.GeneralClass.Extensions;
 using OA.GeneralClass;
+using OA.GeneralClass.Logger;
 
 namespace OA.DAL
 {
     public class MaterialTypeDAL : IMaterialTypeDAL
     {
         public const string TableName = "MaterialType";
+        ILogHelper<MaterialTypeDAL> logger = LoggerFactory.GetLogger<MaterialTypeDAL>();
         public List<MaterialType> GetEntitiesByPage(PageEntity pageEntity, string whereSql = null, string orderBySql = null)
         {
+            if (string.IsNullOrEmpty(orderBySql))
+            {
+                orderBySql = "MaterialTypeCode";
+            }
             List<MaterialType> types = new List<MaterialType>();
             DataSet ds = DB.GetDataByPage(new PageQueryEntity
             {
@@ -62,7 +68,7 @@ namespace OA.DAL
                     //新增
                     typ.MaterialTypeID = Guid.NewGuid().ToString();
                     sbSql.AppendFormat("insert into {0}(MaterialTypeID,MaterialTypeCode,MaterialTypeName,Remark)", TableName);
-                    sbSql.AppendFormat(" values (@MaterialTypeID,@MaterialTypeCode,@MaterialTypeName,@Remark);", i);
+                    sbSql.AppendFormat(" values (@MaterialTypeID{0},@MaterialTypeCode{0},@MaterialTypeName{0},@Remark{0});", i);
                 }
                 else
                 {
@@ -74,7 +80,7 @@ namespace OA.DAL
                 sqlParams.AddRange(new SqlParameter[]{ 
                             new SqlParameter{ParameterName="@MaterialTypeID"+i, Value=typ.MaterialTypeID},
                             new SqlParameter{ ParameterName="@MaterialTypeCode"+i,Value=typ.MaterialTypeCode},
-                            new SqlParameter{ ParameterName="@MaterialTypeCode"+i,Value=typ.MaterialTypeName},
+                            new SqlParameter{ ParameterName="@MaterialTypeName"+i,Value=typ.MaterialTypeName},
                             new SqlParameter{ ParameterName="@Remark"+i,Value=typ.Remark},
                                             });
             }
@@ -86,7 +92,8 @@ namespace OA.DAL
             }
             catch (Exception ex)
             {
-                throw ex;
+                logger.LogError(ex);
+                return false;
             }
             //3、返回成功或失败的标志
             return rst > 0;
@@ -120,7 +127,8 @@ namespace OA.DAL
             }
             catch (Exception ex)
             {
-                throw ex;
+                logger.LogError(ex);
+                return false;
             }
             //3、返回成功或失败的标志
             return rst > 0;

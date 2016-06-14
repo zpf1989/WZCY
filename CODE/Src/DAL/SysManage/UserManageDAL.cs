@@ -9,14 +9,21 @@ using GentleUtil.DB;
 using OA.Model;
 using OA.GeneralClass.Extensions;
 using OA.GeneralClass;
+using OA.GeneralClass.Logger;
 
 namespace OA.DAL
 {
     public class UserManageDAL : IUserManageDAL
     {
         public const string TableName = "OA_User";
+        ILogHelper<UserManageDAL> logger = LoggerFactory.GetLogger<UserManageDAL>();
         public List<UserInfo> GetEntitiesByPage(PageEntity pageEntity, string whereSql = null, string orderBySql = null)
         {
+            if (string.IsNullOrEmpty(orderBySql))
+            {
+                orderBySql = "UserCode";
+            }
+
             List<UserInfo> users = new List<UserInfo>();
             DataSet ds = DB.GetDataByPage(new PageQueryEntity
             {
@@ -103,7 +110,8 @@ namespace OA.DAL
             }
             catch (Exception ex)
             {
-                throw ex;
+                logger.LogError(ex);
+                return false;
             }
             //3、返回成功或失败的标志
             return rst > 0;
@@ -142,7 +150,8 @@ namespace OA.DAL
             }
             catch (Exception ex)
             {
-                throw ex;
+                logger.LogError(ex);
+                return false;
             }
             //3、返回成功或失败的标志
             return rst > 0;
@@ -181,7 +190,8 @@ namespace OA.DAL
             }
             catch (Exception ex)
             {
-                throw ex;
+                logger.LogError(ex);
+                return false;
             }
             //3、返回成功或失败的标志
             return rst > 0;
