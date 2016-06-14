@@ -64,20 +64,11 @@ var users = {
         users.btnSearch.click(users.doSearch);
     },
     initgrid: function () {
-        users.grid.datagrid({
+        gFunc.initGridPublic(users.grid, {
             title: '用户列表',
-            iconCls: 'icon-edit',
-            //width: 1000,
-            //height: 450,
-            singleSelect: false,
-            idField: 'UserID',//列表主键，必须
+            icon: 'icon-edit',
+            key: 'UserID',
             url: 'UserManageService.asmx/GetList',
-            remoteSort: false,
-            rownumbers: true,
-            pagination: true,
-            pageSize: 10,
-            fit: false,
-            selectOnCheck: true,
             toolbar: [{
                 id: 'btnAdd',
                 text: '新增',
@@ -104,8 +95,7 @@ var users = {
                 iconCls: 'icon-cancel',
                 handler: function () {
                     users.grid.datagrid('rejectChanges');
-                    users.grid.datagrid('clearChecked');
-                    users.grid.datagrid('clearSelections');
+                    users.grid.datagrid('clearChecked').datagrid('clearSelections');
                 }
             }, "-", {
                 id: 'btnOperator',
@@ -191,29 +181,8 @@ var users = {
                     formatter: formatHandler.datetime.format
                 }
             ]],
-            onLoadSuccess: function (data) {
-                users.grid.datagrid('clearChecked');
-                users.grid.datagrid('clearSelections');
-            },
-            onEndEdit: function (index, row, changes) {
-                row.editing = false;
-            },
-            onBeforeEdit: function (index, row) {
-                row.editing = true;
-                $(this).datagrid('refreshRow', index);
-            },
-            onAfterEdit: function (index, row) {
-                row.editing = false;
-                $(this).datagrid('refreshRow', index);
-            },
-            onCancelEdit: function (index, row) {
-                row.editing = false;
-                $(this).datagrid('refreshRow', index);
-            }
+            hidecols: ['UserID', 'DeptID', 'RoleID'],
         });
-        users.grid.datagrid('hideColumn', 'UserID');//隐藏id列
-        users.grid.datagrid('hideColumn', 'DeptID');//隐藏部门id列
-        users.grid.datagrid('hideColumn', 'RoleID');//隐藏角色id列
     },
     getRowIndexByEditor: function (target) {
         if (gFunc.isNull(target)) {
@@ -237,8 +206,8 @@ var users = {
         }
     },
     deleteRowBatch: function () {
-        var checkedRows = users.grid.datagrid('getChecked');
-        if (gFunc.isNull(checkedRows) || checkedRows.length < 1) {
+        var delCheckedRows = users.grid.datagrid('getChecked');
+        if (gFunc.isNull(delCheckedRows) || delCheckedRows.length < 1) {
             $.messager.alert('提示', '请选择要删除的数据');
             return;
         }
@@ -247,9 +216,9 @@ var users = {
             if (result) {
                 //1、删除选中行中新增的部分（这部分直接客户端删除即可）
                 while (true) {
-                    //因为删除一行后，checkedNewRows会变化，所以需要从checkedRows中重新筛选新增行，并且，每次只删除checkedRows[0]即可
+                    //因为删除一行后，checkedNewRows会变化，所以需要从delCheckedRows中重新筛选新增行，并且，每次只删除delCheckedRows[0]即可
                     //$.grep是jquery的函数，用于过滤数组元素
-                    var checkedNewRows = $.grep(checkedRows, function (row, idx) {
+                    var checkedNewRows = $.grep(delCheckedRows, function (row, idx) {
                         return gFunc.isNull(row.UserID);//过滤条件：UserID为空
                     });
                     if (!gFunc.isNull(checkedNewRows) && checkedNewRows.length > 0) {
@@ -259,7 +228,7 @@ var users = {
                     }
                 };
                 //2、删除选中行中以保存的部分（这部分提交到服务端删除，然后刷新列表）
-                var checkedSavedRows = $.grep(checkedRows, function (row, idx) {
+                var checkedSavedRows = $.grep(delCheckedRows, function (row, idx) {
                     return !gFunc.isNull(row.UserID);//过滤条件：UserID不为空
                 });
                 if (gFunc.isNull(checkedSavedRows) || checkedSavedRows.length < 1) {
@@ -327,8 +296,8 @@ var users = {
     },
     //批量设置操作权限
     setOperatorBatch: function () {
-        var checkedRows = users.grid.datagrid('getChecked');
-        if (gFunc.isNull(checkedRows) || checkedRows.length < 1) {
+        var optCheckedRows = users.grid.datagrid('getChecked');
+        if (gFunc.isNull(optCheckedRows) || optCheckedRows.length < 1) {
             $.messager.alert('提示', '请选择要设置操作权限的数据');
             return;
         }
@@ -358,7 +327,7 @@ var users = {
                     });
                     //获取选择用户列表
                     var ids = [];
-                    $.each(checkedRows, function (index, row) {
+                    $.each(optCheckedRows, function (index, row) {
                         ids.push(row.UserID);
                     });
                     //提交到后台

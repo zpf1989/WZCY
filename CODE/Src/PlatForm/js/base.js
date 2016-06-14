@@ -153,6 +153,48 @@ var gFunc = {
         //获取带"/"的项目名，如：/uimcardprj
         var projectName = pathName.substring(0, pathName.substr(1).indexOf('/') + 1);
         return (localhostPaht + projectName);
+    },
+    initGridPublic: function (grid, options) {
+        $(grid).datagrid({
+            title: options.title,
+            iconCls: options.icon,
+            singleSelect: false,
+            idField: options.key,//列表主键，必须
+            url: options.url,
+            remoteSort: false,
+            rownumbers: true,
+            pagination: true,
+            pageSize: 10,
+            fit: false,
+            selectOnCheck: true,
+            toolbar: options.toolbar,
+            columns: options.columns,
+            onBeforeLoad: function () {
+                //加载前清除选中
+                $(grid).datagrid('clearSelections').datagrid('clearChecked');
+            },
+            onLoadSuccess: function (data) {
+                //$(grid).datagrid('clearSelections').datagrid('clearChecked');
+            },
+            onEndEdit: function (index, row, changes) {
+                row.editing = false;
+            },
+            onBeforeEdit: function (index, row) {
+                row.editing = true;
+                $(this).datagrid('refreshRow', index);
+            },
+            onAfterEdit: function (index, row) {
+                row.editing = false;
+                $(this).datagrid('refreshRow', index);
+            },
+            onCancelEdit: function (index, row) {
+                row.editing = false;
+                $(this).datagrid('refreshRow', index);
+            }
+        });
+        for (var i = 0; i < options.hidecols.length; i++) {
+            $(grid).datagrid('hideColumn', options.hidecols[i]);//隐藏列
+        }
     }
 };
 /*————————————————————————公共扩展:end——————————————————————*/

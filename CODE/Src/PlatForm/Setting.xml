@@ -8,4 +8,6 @@
   <!--附件保存路径-->
   <add key="AccessoryPath" value="D:\FILE\AccessPath"/>
   <add key="ApplicationName" value="http://localhost:2923/Platform"></add>
+  <!--是否开启日志-->
+  <add key="log" value="true"/>
 </appSettings>

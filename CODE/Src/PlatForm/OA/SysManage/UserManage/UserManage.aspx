@@ -25,7 +25,7 @@
             </form>
         </div>
         <div region="center">
-            <table id="gridUser" style="width: 100%; height: 100%;">
+            <table id="gridUser" style="width: 100%; height: 100%;"></table>
         </div>
     </div>
     <script src="users.js"></script>
