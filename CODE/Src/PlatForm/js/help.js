@@ -1,4 +1,6 @@
-﻿
+﻿/// <reference path="../OA/InventoryManage/MaterialType/MaterialTypeService.asmx" />
+/// <reference path="../OA/InventoryManage/MaterialType/MaterialTypeService.asmx" />
+
 //弹出帮助相关代码
 
 /*————————————————————————帮助相关:start——————————————————————*/
@@ -7,40 +9,77 @@ var helpInitializer = {
         if (!grid) {
             return;
         }
-        grid.datagrid({
+        gFunc.initGridPublic(grid, {
+            title: "部门帮助",
             url: gFunc.getRootPath() + '/OA/SysManage/Department/DepartmentService.asmx/GetForGridHelp',
-            title: '部门帮助',
-            singleSelect: true,
-            pagination: true,
-            pageSize: 10,
-            fit: true,
             columns: [[
-                { field: 'DeptId', title: '主键', width: 50, align: 'center' },
+                { field: 'DeptId' },
                 { field: 'DeptCode', title: '部门编号', width: 100, align: 'center' },
                 { field: 'DeptName', title: '部门名称', width: 60, align: 'center' },
                 { field: 'Remark', title: '备注', width: 60, align: 'center' },
-            ]]
+            ]],
+            hidecols: ['DeptId']
         });
-        grid.datagrid('hideColumn', 'DeptId');//隐藏id列
     },
     role: function (grid) {
         if (!grid) {
             return;
         }
-        grid.datagrid({
+        gFunc.initGridPublic(grid, {
+            title: "角色帮助",
             url: gFunc.getRootPath() + '/OA/SysManage/RoleManage/RoleManageService.asmx/GetForGridHelp',
-            title: '角色帮助',
-            singleSelect: true,
-            pagination: true,
-            pageSize: 10,
-            fit: true,
             columns: [[
-                { field: 'RoleId', title: '主键', width: 50, align: 'center' },
+                { field: 'RoleID' },
                 { field: 'RoleCode', title: '角色编号', width: 100, align: 'center' },
                 { field: 'RoleName', title: '角色名称', width: 60, align: 'center' }
-            ]]
+            ]],
+            hidecols: ['RoleID']
         });
-        grid.datagrid('hideColumn', 'RoleId');//隐藏id列
+    },
+    materialClass: function (grid) {
+        if (!grid) {
+            return;
+        }
+        gFunc.initGridPublic(grid, {
+            title: "物料分类帮助",
+            url: gFunc.getRootPath() + '/OA/InventoryManage/MaterialClass/MaterialClassService.asmx/GetList',
+            columns: [[
+                { field: 'MaterialClassID' },
+                { field: 'MaterialClassCode', title: '分类编号', width: 100, align: 'center' },
+                { field: 'MaterialClassName', title: '分类名称', width: 100, align: 'center' }
+            ]],
+            hidecols: ['MaterialClassID']
+        });
+    },
+    materialType: function (grid) {
+        if (!grid) {
+            return;
+        }
+        gFunc.initGridPublic(grid, {
+            title: "物料类型帮助",
+            url: gFunc.getRootPath() + '/OA/InventoryManage/MaterialType/MaterialTypeService.asmx/GetList',
+            columns: [[
+                { field: 'MaterialTypeID' },
+                { field: 'MaterialTypeCode', title: '类型编号', width: 100, align: 'center' },
+                { field: 'MaterialTypeName', title: '类型名称', width: 100, align: 'center' }
+            ]],
+            hidecols: ['MaterialTypeID']
+        });
+    },
+    measureUnits: function (grid) {
+        if (!grid) {
+            return;
+        }
+        gFunc.initGridPublic(grid, {
+            title: "计量单位帮助",
+            url: gFunc.getRootPath() + '/OA/InventoryManage/MeasureUnits/MeasureUnitsService.asmx/GetList',
+            columns: [[
+                { field: 'UnitID' },
+                { field: 'UnitCode', title: '单位编号', width: 100, align: 'center' },
+                { field: 'UnitName', title: '单位名称', width: 100, align: 'center' }
+            ]],
+            hidecols: ['UnitID']
+        });
     }
 };
 
@@ -76,7 +115,7 @@ function showPopGridHelp(width, height, isModal, funLoadCallback, funSubmitCallb
             handler: function () {
                 var selData = null;
                 var row = $('#help_grid').datagrid('getSelected');
-                if (funSubmitCallback && target) {
+                if (funSubmitCallback) {
                     funSubmitCallback(row, target);
                 }
                 $(win).dialog("close");

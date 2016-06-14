@@ -30,16 +30,37 @@ public class MaterialsService : System.Web.Services.WebService
     public void GetList()
     {
         //过滤条件
+        //这里拼写过滤条件时，使用了很多sql，违背分层原则，为了省事儿先这样吧
         string whereSql = string.Empty;
         string code = Context.Request["MaterialCode"];
         if (!string.IsNullOrEmpty(code))
         {
-            whereSql += string.Format(" and MaterialCode like '%{0}%'", code);
+            whereSql += string.Format(" and m.MaterialCode like '%{0}%'", code);
         }
         string name = Context.Request["MaterialName"];
         if (!string.IsNullOrEmpty(name))
         {
-            whereSql += string.Format(" and MaterialName like '%{0}%'", name);
+            whereSql += string.Format(" and m.MaterialName like '%{0}%'", name);
+        }
+        string materialClassID = Context.Request["MaterialClassID"];
+        string materialClassName = Context.Request["MaterialClassName"];
+        if (!string.IsNullOrEmpty(materialClassID))
+        {
+            whereSql += string.Format(" and m.MaterialClassID = '{0}'", materialClassID);
+        }
+        else if (!string.IsNullOrEmpty(materialClassName))
+        {
+            whereSql += string.Format(" and c.MaterialClassName like '%{0}%' ", materialClassName);
+        }
+        string materialTypeID = Context.Request["MaterialTypeID"];
+        string materialTypeName = Context.Request["MaterialTypeName"];
+        if (!string.IsNullOrEmpty(name))
+        {
+            whereSql += string.Format(" and m.MaterialTypeID = '{0}'", materialTypeID);
+        }
+        else if (!string.IsNullOrEmpty(materialTypeName))
+        {
+            whereSql += string.Format(" and t.MaterialTypeName like '%{0}%' ", materialTypeName);
         }
         //分页参数：easyui分页查询时，page、rows
         int pageIndex = 1;

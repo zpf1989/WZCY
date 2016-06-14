@@ -13,15 +13,49 @@
     <script src="../../../js/base.js"></script>
     <script src="../../../js/help.js"></script>
     <script src="../../../css/easyui/locale/easyui-lang-zh_CN.js"></script>
+    <style>
+        .btn-search-help {
+            position: relative;
+            right: 25px;
+            display: inline-block;
+            vertical-align: top;
+            padding: 1px;
+            border: 1px solid #ccc;
+            border-radius: 0;
+            font-size: 13px;
+            font-weight: 300;
+            text-decoration: none;
+            background-color: lightblue;
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
     <div class="easyui-layout" fit="true">
         <div region="north" collapsible="true" title="查询条件" height="80px" style="padding: 10px;">
             <form id="searchForm" action="#" style="text-align: left">
-                <label>编号：</label><input name="MaterialCode" id="MaterialCode" class="easyui-textbox" />
-                <label>名称：</label><input name="MaterialName" id="MaterialName" class="easyui-textbox" />
-                <a href="javascript:void(0);" id="btnSearch" class="easyui-linkbutton" iconcls="icon-search"
-                    style="width: 75px;">查询</a>
+                <div>
+                    <label>物料编号：</label><input name="MaterialCode" id="MaterialCode" class="easyui-textbox" />
+                </div>
+                <div>
+                    <label>物料名称：</label><input name="MaterialName" id="MaterialName" class="easyui-textbox" />
+                </div>
+                <div>
+                    <label>物料分类：</label>
+                    <input name="MaterialClassID" id="mClassID" hidden="hidden" />
+                    <input name="MaterialClassName" id="mClassName"  />
+                    <input type="button" value="..." id="btnHelpMClass" class="btn-search-help" />
+                </div>
+                <div>
+                    <label>物料类型：</label>
+                    <input name="MaterialTypeID" id="mTypeID" hidden="hidden" />
+                    <input name="MaterialTypeName" id="mTypeName"/>
+                    <input type="button" value="..." id="btnHelpMType" class="btn-search-help" />
+                </div>
+                <div>
+                    <a href="javascript:void(0);" id="btnSearch" class="easyui-linkbutton" iconcls="icon-search"
+                        style="width: 75px;">查询</a>
+                </div>
             </form>
         </div>
         <div region="center">

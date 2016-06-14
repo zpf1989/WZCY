@@ -134,7 +134,7 @@ namespace OA.DAL
             for (int i = 0; i < materialIds.Length; i++)
             {
                 sbSql.AppendFormat("@MaterialID{0}", i);
-                sqlParams.Add(new SqlParameter { ParameterName = "@MaterialID", Value = materialIds[i] });
+                sqlParams.Add(new SqlParameter { ParameterName = "@MaterialID" + i, Value = materialIds[i] });
                 if (i < materialIds.Length - 1)
                 {
                     sbSql.Append(",");

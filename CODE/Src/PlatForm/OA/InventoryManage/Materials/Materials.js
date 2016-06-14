@@ -4,13 +4,38 @@ var materials = {
     grid: $('#grid'),
     formSearch: $('#searchForm'),
     btnSearch: $('#btnSearch'),
+    txtMClassID: $('#mClassID'),
+    txtMClassName: $('#mClassName'),
+    btnHelpMClass: $('#btnHelpMClass'),
+    txtMTypeID: $('#mTypeID'),
+    txtMTypeName: $('#mTypeName'),
+    btnHelpMType: $('#btnHelpMType'),
     init: function () {
         materials.initgrid();
         materials.bindingEvents();
+        materials.formSearch.children('div').css({ 'float': 'left', 'padding-left': '8px' });
     },
     //绑定（注册）事件
     bindingEvents: function () {
         materials.btnSearch.click(materials.doSearch);
+        materials.btnHelpMClass.click(materials.onClickMaterialClass);
+        materials.btnHelpMType.click(materials.onClickMaterialType);
+        materials.txtMClassName.textbox({
+            onChange: function (newValue, oldValue) {
+                if (oldValue != newValue) {
+                    //手动输入时，id设置空
+                    materials.txtMClassID.val("");
+                }
+            }
+        });
+        materials.txtMTypeName.textbox({
+            onChange: function (newValue, oldValue) {
+                if (oldValue != newValue) {
+                    //手动输入时，id设置空
+                    materials.txtMTypeID.val("");
+                }
+            }
+        });
     },
     initgrid: function () {
         gFunc.initGridPublic(materials.grid, {
@@ -22,12 +47,12 @@ var materials = {
                 id: 'btnAdd',
                 text: '新增',
                 iconCls: 'icon-add',
-                handler: materials.insertRow
+                handler: materials.addMaterial
             }, "-", {
                 id: 'btnEdit',
                 text: '修改',
                 iconCls: 'icon-edit',
-                handler: materials.editRowBatch
+                handler: materials.editMaterial
             }, "-", {
                 id: 'btnDelete',
                 text: '删除',
@@ -41,131 +66,32 @@ var materials = {
                 { field: 'MaterialTypeID' },
                 { field: 'PrimaryUnitID' },
                 { field: 'Creator' },
-                {
-                    field: 'MaterialCode', title: '物料编号', width: 100, align: 'center',
-                    editor: {
-                        type: 'textbox',
-                        options: {
-                            required: true,
-                            validType: 'maxLength[30]'
-                        }
-                    }
-                },
-                {
-                    field: 'MaterialName', title: '物料名称', width: 100, align: 'center',
-                    editor: {
-                        type: 'textbox',
-                        options: {
-                            required: true,
-                            validType: 'maxLength[1024]'
-                        }
-                    }
-                },
-                {
-                    field: 'Specs', title: '规格型号', width: 100, align: 'center',
-                    editor: {
-                        type: 'textbox',
-                        options: {
-                            required: true,
-                            validType: 'maxLength[1024]'
-                        }
-                    }
-                },
-                {
-                    field: 'MaterialClass_Name', title: '物料分类', width: 100, align: 'center',
-                    editor: {
-                        type: 'textbox',
-                        options: {
-                            required: true
-                        }
-                    }
-                },
-                {
-                    field: 'MaterialType_Name', title: '物料类型', width: 100, align: 'center',
-                    editor: {
-                        type: 'textbox',
-                        options: {
-                            required: true
-                        }
-                    }
-                },
-                {
-                    field: 'PrimaryUnit_Name', title: '基本计量单位', width: 120, align: 'center',
-                    editor: {
-                        type: 'textbox',
-                        options: {
-                            required: true
-                        }
-                    }
-                },
-                {
-                    field: 'Price', title: '价格', width: 100, align: 'center',
-                    editor: {
-                        type: 'textbox',
-                        options: {
-                            required: true
-                        }
-                    }
-                },
-                {
-                    field: 'WasterRate', title: '废品率', width: 100, align: 'center',
-                    editor: {
-                        type: 'textbox',
-                        options: {
-                            required: true
-                        }
-                    }
-                },
-                {
-                    field: 'Remark', title: '备注', width: 100, align: 'center',
-                    editor: {
-                        type: 'textbox',
-                        options: {
-                            validType: 'maxLength[256]'
-                        }
-                    }
-                }, {
-                    field: 'Creator_Name', title: '创建人', width: 100, align: 'center',
-                    editor: {
-                        type: 'textbox',
-                        options: {
-                            required: true
-                        }
-                    }
-                },
-                 {
-                     field: 'CreateTime', title: '创建时间', width: 100, align: 'center',
-                     editor: {
-                         type: 'textbox',
-                         options: {
-                             required: true
-                         }
-                     }
-                 },
+                { field: 'MaterialCode', title: '物料编号', width: 100, align: 'center' },
+                { field: 'MaterialName', title: '物料名称', width: 100, align: 'center' },
+                { field: 'Specs', title: '规格型号', width: 100, align: 'center' },
+                { field: 'MaterialClass_Name', title: '物料分类', width: 100, align: 'center' },
+                { field: 'MaterialType_Name', title: '物料类型', width: 100, align: 'center' },
+                { field: 'PrimaryUnit_Name', title: '基本计量单位', width: 120, align: 'center' },
+                { field: 'Price', title: '价格', width: 100, align: 'center' },
+                { field: 'WasterRate', title: '废品率', width: 100, align: 'center' },
+                { field: 'Remark', title: '备注', width: 100, align: 'center' },
+                { field: 'Creator_Name', title: '创建人', width: 100, align: 'center' },
+                 { field: 'CreateTime', title: '创建时间', width: 100, align: 'center' }
             ]],
             hidecols: ['MaterialID', 'MaterialClassID', 'MaterialTypeID', 'PrimaryUnitID', 'Creator'],
         });
     },
-    getRowIndexByEditor: function (target) {
-        if (gFunc.isNull(target)) {
-            return null;
-        }
-        return materials.grid.datagrid('getRowIndexByEditor', { element: target });
-    },
-    editRowBatch: function () {
+    editMaterial: function () {
         var rows = materials.grid.datagrid('getChecked');
-        console.log(rows.length);
         if (gFunc.isNull(rows) || rows.length < 1) {
             $.messager.alert('提示', '请选择要修改的数据');
             return;
         }
-        for (var idx = 0; idx < rows.length; idx++) {
-            if (rows[idx].editing) {
-                continue;
-            }
-            var index = materials.grid.datagrid('getRowIndex', rows[idx]);
-            materials.grid.datagrid('beginEdit', index);
+        if (rows.length > 1) {
+            $.messager.alert('提示', '只能修改一条数据');
+            return;
         }
+        //弹出窗体
     },
     deleteRowBatch: function () {
         var checkedRows = materials.grid.datagrid('getChecked');
@@ -176,29 +102,10 @@ var materials = {
 
         $.messager.confirm('询问', '确定要删除所选数据吗？', function (result) {
             if (result) {
-                //1、删除选中行中新增的部分（这部分直接客户端删除即可）
-                while (true) {
-                    //因为删除一行后，checkedNewRows会变化，所以需要从checkedRows中重新筛选新增行，并且，每次只删除checkedRows[0]即可
-                    //$.grep是jquery的函数，用于过滤数组元素
-                    var checkedNewRows = $.grep(checkedRows, function (row, idx) {
-                        return gFunc.isNull(row.MaterialsID);//过滤条件：UserID为空
-                    });
-                    if (!gFunc.isNull(checkedNewRows) && checkedNewRows.length > 0) {
-                        materials.grid.datagrid('deleteRow', materials.grid.datagrid('getRowIndex', checkedNewRows[0]));
-                    } else {
-                        break;
-                    }
-                };
-                //2、删除选中行中以保存的部分（这部分提交到服务端删除，然后刷新列表）
-                var checkedSavedRows = $.grep(checkedRows, function (row, idx) {
-                    return !gFunc.isNull(row.MaterialsID);//过滤条件：UserID不为空
-                });
-                if (gFunc.isNull(checkedSavedRows) || checkedSavedRows.length < 1) {
-                    return;
-                }
+                //1、删除选中行中以保存的部分（这部分提交到服务端删除，然后刷新列表）
                 var ids = [];
-                $.each(checkedSavedRows, function (index, row) {
-                    ids.push(row.MaterialsID);
+                $.each(checkedRows, function (index, row) {
+                    ids.push(row.MaterialID);
                 });
                 //这里json序列化的目标一定是一个数组，否则，后台解析（解析为列表）时会出错
                 $.post('MaterialsService.asmx/Delete', JSON.stringify(ids), function (result) {
@@ -210,50 +117,30 @@ var materials = {
             }
         });
     },
-    saveRowBatch: function () {
-        //获取所有正在编辑的行
-        var selectedRows = materials.grid.datagrid('getChecked');
-        if (gFunc.isNull(selectedRows) || selectedRows.length < 1) {
-            return;
-        }
-        var editingRows = [];
-        //逐行校验
-        for (var idx = 0; idx < selectedRows.length; idx++) {
-            var row = selectedRows[idx];
-            if (!row.editing) {
-                continue;
-            }
-            var rowIdx = materials.grid.datagrid('getRowIndex', row);
-            if (!materials.grid.datagrid('validateRow', rowIdx)) {
-                $.messager.alert('提示', '数据校验失败，请检查输入！');
-                return;
-            }
-            materials.grid.datagrid('endEdit', rowIdx);//执行这句，否则下面的row数据不全
-            editingRows.push(row);
-            materials.grid.datagrid('beginEdit', rowIdx);
-        }
-        if (editingRows.length < 1) {
-            return;
-        }
-        //提交保存
-        //这里json序列化的目标一定是一个数组，否则，后台解析（解析为列表）时会出错
-        $.post('MaterialsService.asmx/Save', JSON.stringify(editingRows), function (result) {
-            if (result && result.code) {
-                //重新加载
-                materials.grid.datagrid('reload');
-            }
-        });
-    },
-    insertRow: function () {
-        var index = 0;
-        materials.grid.datagrid('insertRow', { index: index, row: {} });
-        materials.grid.datagrid('selectRow', index);
-        materials.grid.datagrid('beginEdit', index);
+    addMaterial: function () {
+        //弹出窗体
     },
     doSearch: function () {
         //收集查询条件
         var searchParams = materials.formSearch.serializeToJson(true);
         //重新查询
         materials.grid.datagrid("reload", searchParams);
+    },
+    helpReceiver: {
+        materialClass: function (classData) {
+            //注意：必须先给name赋值，因为它会触发onChange事件，会把id冲掉
+            materials.txtMClassName.textbox('setValue', classData.MaterialClassName);
+            materials.txtMClassID.val(classData.MaterialClassID);
+        },
+        materialType: function (classData) {
+            materials.txtMTypeName.textbox('setValue', classData.MaterialTypeName);
+            materials.txtMTypeID.val(classData.MaterialTypeID);
+        },
+    },
+    onClickMaterialClass: function () {
+        showPopGridHelp(400, 300, true, helpInitializer.materialClass, materials.helpReceiver.materialClass, null);
+    },
+    onClickMaterialType: function () {
+        showPopGridHelp(400, 300, true, helpInitializer.materialType, materials.helpReceiver.materialType, null);
     }
 }
