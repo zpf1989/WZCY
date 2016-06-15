@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.Services;
 using OA.GeneralClass.Extensions;
 using OA.Model;
+using OA.GeneralClass.Logger;
 
 /// <summary>
 /// UserManageService 的摘要说明
@@ -14,11 +15,11 @@ using OA.Model;
 [WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]
 // 若要允许使用 ASP.NET AJAX 从脚本中调用此 Web 服务，请取消注释以下行。 
 // [System.Web.Script.Services.ScriptService]
-public class UserManageService : System.Web.Services.WebService
+public class UserManageService : BaseService
 {
+    ILogHelper<UserManageService> logger = LoggerFactory.GetLogger<UserManageService>();
     OA.BLL.UserManageBLL userManageBLL = new OA.BLL.UserManageBLL();
     gentleyh.Class1 security = new gentleyh.Class1();
-
     public UserManageService()
     {
 
@@ -26,7 +27,7 @@ public class UserManageService : System.Web.Services.WebService
         //InitializeComponent(); 
     }
 
-    [WebMethod]
+    [WebMethod(EnableSession = true)]
     public void GetList()
     {
         //过滤条件
@@ -57,7 +58,7 @@ public class UserManageService : System.Web.Services.WebService
         Context.Response.WriteJson(json);
     }
 
-    [WebMethod]
+    [WebMethod(EnableSession = true)]
     public void Delete()
     {
         using (var reader = new System.IO.StreamReader(Context.Request.InputStream))
@@ -80,7 +81,7 @@ public class UserManageService : System.Web.Services.WebService
         Context.Response.WriteJson(OA.GeneralClass.ResultCode.Failure, "删除失败", null);
     }
 
-    [WebMethod]
+    [WebMethod(EnableSession = true)]
     public void Save()
     {
         //获取请求数据
@@ -92,13 +93,19 @@ public class UserManageService : System.Web.Services.WebService
                 var users = data.DeSerializeFromJson<List<UserInfo>>();
                 if (users != null && users.Count > 0)
                 {
+                    var currentUser = base.GetCurrentID();
                     //预处理
-                    //默认密码=用户编号
                     foreach (UserInfo user in users)
                     {
+                        //默认密码=用户编号
                         if (string.IsNullOrEmpty(user.UserPwd))
                         {
                             user.UserPwd = security.Encrypt(user.UserCode, security.se_yaoshi);
+                        }
+                        //创建人
+                        if (ValidateUtil.isBlank(user.UserID))
+                        {
+                            user.CreateUserID = currentUser;
                         }
                     }
                     bool rst = userManageBLL.Save(users.ToArray());
@@ -116,7 +123,7 @@ public class UserManageService : System.Web.Services.WebService
     /// <summary>
     /// 设置操作权限
     /// </summary>
-    [WebMethod]
+    [WebMethod(EnableSession = true)]
     public void SetOpt()
     {
         //获取请求数据

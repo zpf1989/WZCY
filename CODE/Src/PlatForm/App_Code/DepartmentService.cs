@@ -22,7 +22,7 @@ public class DepartmentService : System.Web.Services.WebService
         //InitializeComponent(); 
     }
 
-    [WebMethod]
+    [WebMethod(EnableSession = true)]
     public void GetForGridHelp()
     {
         List<OA.Model.DepartmentInfo> depts = departmentBLL.GetAllDepartmentsForGridHelp();
@@ -31,7 +31,7 @@ public class DepartmentService : System.Web.Services.WebService
     }
 
     public gentleyh.Class1 security = new gentleyh.Class1();
-    [WebMethod]
+    [WebMethod(EnableSession = true)]
     public void Decrypt(string str)
     {
         string _str = security.Decrypt(str, security.se_yaoshi);

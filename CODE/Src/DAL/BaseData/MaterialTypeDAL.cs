@@ -13,11 +13,11 @@ using OA.GeneralClass.Logger;
 
 namespace OA.DAL
 {
-    public class MaterialTypeDAL : IMaterialTypeDAL
+    public class MaterialTypeDAL : BaseDAL<MaterialType>, IMaterialTypeDAL
     {
         public const string TableName = "MaterialType";
         ILogHelper<MaterialTypeDAL> logger = LoggerFactory.GetLogger<MaterialTypeDAL>();
-        public List<MaterialType> GetEntitiesByPage(PageEntity pageEntity, string whereSql = null, string orderBySql = null)
+        public override List<MaterialType> GetEntitiesByPage(PageEntity pageEntity, string whereSql = null, string orderBySql = null)
         {
             if (string.IsNullOrEmpty(orderBySql))
             {
@@ -50,7 +50,7 @@ namespace OA.DAL
             return types;
         }
 
-        public bool Save(params MaterialType[] types)
+        public override bool Save(params MaterialType[] types)
         {
             if (types == null || types.Length < 1)
             {
@@ -99,7 +99,7 @@ namespace OA.DAL
             return rst > 0;
         }
 
-        public bool Delete(params string[] typeIds)
+        public override bool Delete(params string[] typeIds)
         {
             if (typeIds == null || typeIds.Length < 1)
             {
@@ -132,6 +132,20 @@ namespace OA.DAL
             }
             //3、返回成功或失败的标志
             return rst > 0;
+        }
+
+        protected override string GetTableName()
+        {
+            return TableName;
+        }
+
+        public bool Exists(params string[] codes)
+        {
+            if (codes == null || codes.Length < 1)
+            {
+                return false;
+            }
+            return base.Exists(string.Format(" and MaterialTypeCode in ('{0}')", string.Join("','", codes)));
         }
     }
 }

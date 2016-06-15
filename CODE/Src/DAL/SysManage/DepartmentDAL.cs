@@ -7,10 +7,11 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using OA.GeneralClass.Extensions;
+using OA.GeneralClass;
 
 namespace OA.DAL
 {
-    public class DepartmentDAL : IDepartmentDAL
+    public class DepartmentDAL : BaseDAL<DepartmentInfo>, IDepartmentDAL
     {
         public const string TableName = "OA_Dept";
         public List<DepartmentInfo> GetAllDepartmentsForGridHelp()
@@ -34,6 +35,38 @@ namespace OA.DAL
                 }
             }
             return depts;
+        }
+
+        public override List<DepartmentInfo> GetEntitiesByPage(PageEntity pageEntity, string whereSql = null, string orderBySql = null)
+        {
+            throw new NotImplementedException("尚未实现");
+        }
+
+        public override bool Save(params DepartmentInfo[] entities)
+        {
+            throw new NotImplementedException("尚未实现");
+
+        }
+
+        public override bool Delete(params string[] ids)
+        {
+            throw new NotImplementedException("尚未实现");
+
+        }
+
+        protected override string GetTableName()
+        {
+            return TableName;
+        }
+
+
+        public bool Exists(params string[] deptCodes)
+        {
+            if (deptCodes == null || deptCodes.Length < 1)
+            {
+                return false;
+            }
+            return base.Exists(string.Format(" and DeptCode in ('{0}')", string.Join("','", deptCodes)));
         }
     }
 }

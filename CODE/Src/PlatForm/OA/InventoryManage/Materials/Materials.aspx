@@ -14,11 +14,11 @@
     <script src="../../../js/help.js"></script>
     <script src="../../../css/easyui/locale/easyui-lang-zh_CN.js"></script>
     <style>
-        .btn-search-help {
+        .btn-help {
             position: relative;
             right: 25px;
             display: inline-block;
-            vertical-align: top;
+            vertical-align: middle;
             padding: 1px;
             border: 1px solid #ccc;
             border-radius: 0;
@@ -42,15 +42,15 @@
                 </div>
                 <div>
                     <label>物料分类：</label>
-                    <input name="MaterialClassID" id="mClassID" hidden="hidden" />
-                    <input name="MaterialClassName" id="mClassName"  />
-                    <input type="button" value="..." id="btnHelpMClass" class="btn-search-help" />
+                    <input name="MaterialClassID" id="txtSearchClassID" hidden="hidden" />
+                    <input name="MaterialClassName" id="txtSearchClassName"  />
+                    <input type="button" value="..." id="btnSearchHelpMClass" class="btn-help" />
                 </div>
                 <div>
                     <label>物料类型：</label>
-                    <input name="MaterialTypeID" id="mTypeID" hidden="hidden" />
-                    <input name="MaterialTypeName" id="mTypeName"/>
-                    <input type="button" value="..." id="btnHelpMType" class="btn-search-help" />
+                    <input name="MaterialTypeID" id="txtSearchTypeID" hidden="hidden" />
+                    <input name="MaterialTypeName" id="txtSearchTypeName"/>
+                    <input type="button" value="..." id="btnSearchHelpMType" class="btn-help" />
                 </div>
                 <div>
                     <a href="javascript:void(0);" id="btnSearch" class="easyui-linkbutton" iconcls="icon-search"

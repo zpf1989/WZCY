@@ -154,6 +154,17 @@ var gFunc = {
         var projectName = pathName.substring(0, pathName.substr(1).indexOf('/') + 1);
         return (localhostPaht + projectName);
     },
+    /*
+    初始化列表公共处理函数
+    options对象成员说明：
+        title:帮助标题
+        icon:标题对应图标
+        key:列表主键字段
+        url:获取列表数据的url
+        toolbar:列表工具栏配置
+        columns:列表列配置,
+        hidecols:列表中要隐藏的列数组，如各种id字段
+    */
     initGridPublic: function (grid, options) {
         $(grid).datagrid({
             title: options.title,
@@ -182,6 +193,11 @@ var gFunc = {
             onBeforeEdit: function (index, row) {
                 row.editing = true;
                 $(this).datagrid('refreshRow', index);
+                //if (!gFunc.isNull(row[options.key])) {
+                //    //主键不为空，说明是已保存的数据，则唯一列禁止修改
+                //    var cellEdit = $(grid).datagrid('getEditor', { index: index, field: 'MaterialClassCode' });
+                //    cellEdit.target.prop('readonly', true);
+                //}
             },
             onAfterEdit: function (index, row) {
                 row.editing = false;
@@ -194,6 +210,279 @@ var gFunc = {
         });
         for (var i = 0; i < options.hidecols.length; i++) {
             $(grid).datagrid('hideColumn', options.hidecols[i]);//隐藏列
+        }
+    },
+    /*
+    弹出窗口
+    options对象成员说明：
+        width,：宽
+        height：高
+        title：标题
+        url：窗口加载的页面
+        isModal：是否模态
+        funLoadCallback：弹出窗口加载后执行的操作（如给各个控件赋值等初始化页面内容操作）
+        funSubmitCallback：点击确定按钮后的操作,它需要①返回true或false用来指示是否继续后续操作②如果结果依赖http请求，则http只能是同步请求
+        target：触发弹出窗体的控件
+    */
+    showPopWindow: function (options) {
+        var id = "_tmpWin_" + Math.floor(Math.random() * 10000 + 1);
+        var win = $("<div id='" + id + "'></div>");
+
+        win.addClass("myOpenWindow");
+        win.appendTo($("body"));
+        $(win).dialog({
+            title: options.title,
+            href: options.url,
+            width: options.width,
+            height: options.height,
+            modal: options.isModal == true ? true : false,
+            iconCls: null,
+            buttons: [{
+                text: '确定',
+                iconCls: 'icon-ok',
+                width: 75,
+                handler: function () {
+                    var selData = null;
+                    //调用回调函数
+                    var rst = options.funSubmitCallback();
+                    console.log('base,funSubmitCallback result:' + rst);
+                    if (rst) {
+                        $(win).dialog("close");
+                    }
+                    console.log('base,btnok over');
+                }
+            }, {
+                text: '取消',
+                iconCls: 'icon-cancel',
+                width: 75,
+                handler: function () {
+                    $(win).dialog("close");
+                }
+            }],
+            onClose: function () {
+                $(win).dialog("destroy");
+            },
+            onLoad: function () {
+                options.funLoadCallback();
+                $("#" + id).next().children("a").first().focus();
+                $(win).keydown(function (event) {
+                    if (event.keyCode == 13) {
+                        var b = options.funSubmitCallback();
+                        if (b != false) {
+                            $(win).dialog("close");
+                        }
+                    }
+                });
+            }
+        });
+        return id;
+    },
+    /*
+    表单函数
+    */
+    formFunc: {
+        // 验证控件
+        _validateControls: [
+            "easyui-validatebox",
+            "easyui-textbox",
+            "easyui-combobox",
+            "easyui-combotree",
+            "easyui-combogrid",
+            "easyui-numberbox",
+            "easyui-datebox",
+            "easyui-datetimebox",
+            "easyui-datetimespinner",
+            "easyui-numberspinner",
+            "easyui-timespinner",
+            "easyui-filebox"],
+
+        // 检查对象是否为Form
+        _getForm: function (formId) {
+            if (formId == null || typeof (formId) == "undefined") {
+                return null;
+            } else {
+                var form = $("#" + formId);
+                if (form == null || typeof (form) == "undefined" || form.length <= 0
+                    || form[0].tagName.toUpperCase() != "FORM") {
+                    return null;
+                }
+                return form;
+            }
+        },
+
+        // 将Form序列化为JSON对象
+        serializeToJson: function (formId) {
+            var formObj = gFunc.formFunc._getForm(formId);
+            if (formObj == null) {
+                return null;
+            }
+
+            var o = {};
+            var a = formObj.serializeArray();
+            $.each(a, function () {
+                if (o[this.name]) {
+                    if (!o[this.name].push) {
+                        o[this.name] = [o[this.name]];
+                    }
+                    o[this.name].push(this.value || '');
+                } else {
+                    o[this.name] = this.value || '';
+                }
+            });
+            return o;
+        },
+
+        // 清除表单中的所有验证
+        clearValidations: function (formId) {
+            var formObj = gFunc.formFunc._getForm(formId);
+            if (formObj == null) {
+                return false;
+            }
+            var ctrls = gFunc.formFunc._getFormValidateControls(formId);
+            var cls = null;
+            $(ctrls).each(function (index, item) {
+                for (var j in gFunc.formFunc._validateControls) {
+                    cls = gFunc.formFunc._validateControls[j];
+                    if (item.hasClass(cls)) {
+                        switch (cls) {
+                            case "easyui-validatebox":
+                                item.validatebox("disableValidation");
+                                break;
+                            case "easyui-textbox":
+                                item.textbox("disableValidation");
+                                break;
+                            case "easyui-combobox":
+                                item.combobox("disableValidation");
+                                break;
+                            case "easyui-combotree":
+                                item.combotree("disableValidation");
+                                break;
+                            case "easyui-combogrid":
+                                item.combogrid("disableValidation");
+                                break;
+                            case "easyui-numberbox":
+                                item.numberbox("disableValidation");
+                                break;
+                            case "easyui-datebox":
+                                item.datebox("disableValidation");
+                                break;
+                            case "easyui-datetimebox":
+                                item.datetimebox("disableValidation");
+                                break;
+                            case "easyui-datetimespinner":
+                                item.datetimespinner("disableValidation");
+                                break;
+                            case "easyui-numberspinner":
+                                item.numberspinner("disableValidation");
+                                break;
+                            case "easyui-timespinner":
+                                item.timespinner("disableValidation");
+                                break;
+                            case "easyui-filebox":
+                                item.filebox("disableValidation");
+                                break;
+                            default:
+                        }
+                        break;
+                    }
+                }
+            });
+            return true;
+        },
+
+        // 重建表单中的所有验证
+        reduceValidations: function (formId) {
+            var formObj = gFunc.formFunc._getForm(formId);
+            if (formObj == null) {
+                return false;
+            }
+            var ctrls = gFunc.formFunc._getFormValidateControls(formId);
+            var cls = null;
+            $(ctrls).each(function (index, item) {
+                for (var j in gFunc.formFunc._validateControls) {
+                    cls = gFunc.formFunc._validateControls[j];
+                    if (item.hasClass(cls)) {
+                        switch (cls) {
+                            case "easyui-validatebox":
+                                item.validatebox("enableValidation");
+                                break;
+                            case "easyui-textbox":
+                                item.textbox("enableValidation");
+                                break;
+                            case "easyui-combobox":
+                                item.combobox("enableValidation");
+                                break;
+                            case "easyui-combotree":
+                                item.combotree("enableValidation");
+                                break;
+                            case "easyui-combogrid":
+                                item.combogrid("enableValidation");
+                                break;
+                            case "easyui-numberbox":
+                                item.numberbox("enableValidation");
+                                break;
+                            case "easyui-datebox":
+                                item.datebox("enableValidation");
+                                break;
+                            case "easyui-datetimebox":
+                                item.datetimebox("enableValidation");
+                                break;
+                            case "easyui-datetimespinner":
+                                item.datetimespinner("enableValidation");
+                                break;
+                            case "easyui-numberspinner":
+                                item.numberspinner("enableValidation");
+                                break;
+                            case "easyui-timespinner":
+                                item.timespinner("enableValidation");
+                                break;
+                            case "easyui-filebox":
+                                item.filebox("enableValidation");
+                                break;
+                            default:
+                        }
+                        break;
+                    }
+                }
+            });
+            return true;
+        },
+
+        // 获得form中的所有验证控件
+        _getFormValidateControls: function (formId) {
+            var ctrls = [];
+            var formObj = gFunc.formFunc._getForm(formId);
+            if (formObj == null) {
+                return null;
+            }
+            var idPre = "#" + formId + " .";
+            $(gFunc.formFunc._validateControls).each(function (index, item) {
+                var tmpArr = $(idPre + item);
+                if (tmpArr.length > 0) ctrls = ctrls.concat(tmpArr);
+            });
+            return ctrls;
+        },
+
+        // 验证表单
+        validate: function (formId) {
+            var formObj = gFunc.formFunc._getForm(formId);
+            if (formObj == null) {
+                return false;
+            }
+            gFunc.formFunc.reduceValidations(formId);
+            var rst = formObj.form("validate");
+            return rst;
+        },
+
+        // 清除表单数据
+        clearData: function (formId) {
+            var formObj = gFunc.formFunc._getForm(formId);
+            if (formObj == null) {
+                return false;
+            }
+            formObj.form("clear");
+            gFunc.formFunc.clearValidations(formId);
+            return true;
         }
     }
 };
@@ -561,49 +850,5 @@ $.extend($.fn.datagrid.methods, {
         });
     }
 });
-
-/*easyui验证扩展：未完成*/
-var validateHelper = {
-    // 验证控件
-    _validateControls: [
-        "validatebox-text",
-        "easyui-validatebox",
-        "easyui-textbox",
-        "easyui-combobox",
-        "easyui-combotree",
-        "easyui-combogrid",
-        "easyui-numberbox",
-        "easyui-datebox",
-        "easyui-datetimebox",
-        "easyui-datetimespinner",
-        "easyui-numberspinner",
-        "easyui-timespinner",
-        "easyui-filebox"],
-    // 获得指定元素中的所有验证控件(返回jquery对象数组)
-    _getValidateControls: function (container) {
-        if (gFunc.isNull(container)) {
-            return null;
-        }
-
-        var ctrls = [];
-        $(validateHelper._validateControls).each(function (index, item) {
-            var tmpArr = $(container).find('.' + item);
-            if (tmpArr.length > 0) {
-                ctrls = $.merge(ctrls, tmpArr);
-            }
-        });
-        return ctrls;
-    },
-    validate: function (container) {
-        var validateCtrls = validateHelper._getValidateControls(container);
-        var succeed = true;
-        $(validateCtrls).each(function (index, item) {
-            if (!item.validatebox('validate')) {
-                succeed = false;
-            }
-        });
-        return succeed;
-    }
-};
 
 /*————————————————————————easyui扩展:end——————————————————————*/

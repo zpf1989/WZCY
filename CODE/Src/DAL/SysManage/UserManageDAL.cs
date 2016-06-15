@@ -13,11 +13,11 @@ using OA.GeneralClass.Logger;
 
 namespace OA.DAL
 {
-    public class UserManageDAL : IUserManageDAL
+    public class UserManageDAL : BaseDAL<UserInfo>, IUserManageDAL
     {
         public const string TableName = "OA_User";
         ILogHelper<UserManageDAL> logger = LoggerFactory.GetLogger<UserManageDAL>();
-        public List<UserInfo> GetEntitiesByPage(PageEntity pageEntity, string whereSql = null, string orderBySql = null)
+        public override List<UserInfo> GetEntitiesByPage(PageEntity pageEntity, string whereSql = null, string orderBySql = null)
         {
             if (string.IsNullOrEmpty(orderBySql))
             {
@@ -59,7 +59,7 @@ namespace OA.DAL
             return users;
         }
 
-        public bool Save(params UserInfo[] users)
+        public override bool Save(params UserInfo[] users)
         {
             if (users == null || users.Length < 1)
             {
@@ -117,7 +117,7 @@ namespace OA.DAL
             return rst > 0;
         }
 
-        public bool Delete(params string[] userIds)
+        public override bool Delete(params string[] userIds)
         {
             if (userIds == null || userIds.Length < 1)
             {
@@ -195,6 +195,21 @@ namespace OA.DAL
             }
             //3、返回成功或失败的标志
             return rst > 0;
+        }
+
+        protected override string GetTableName()
+        {
+            return TableName;
+        }
+
+
+        public bool Exists(params string[] userCodes)
+        {
+            if (userCodes == null || userCodes.Length < 1)
+            {
+                return false;
+            }
+            return base.Exists(string.Format(" and UserCode in ('{0}')", string.Join("','", userCodes)));
         }
     }
 }

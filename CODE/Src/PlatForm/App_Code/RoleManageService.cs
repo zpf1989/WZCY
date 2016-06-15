@@ -22,7 +22,7 @@ public class RoleManageService : System.Web.Services.WebService
         //InitializeComponent(); 
     }
 
-    [WebMethod]
+    [WebMethod(EnableSession = true)]
     public void GetForGridHelp()
     {
         List<OA.Model.RoleInfo> depts = roleManageBLL.GetRoleList();

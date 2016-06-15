@@ -10,10 +10,10 @@ namespace OA.IDAL
     public interface IMaterialsDAL : IBaseDAL<Materials>
     {
         /// <summary>
-        /// 指定条件的物料是否存在
+        /// 编号是否已存在
         /// </summary>
-        /// <param name="where"></param>
-        /// <returns></returns>
-        bool Exists(string where);
+        /// <param name="codes"></param>
+        /// <returns>true:存在，false：不存在</returns>
+        bool Exists(params string[] codes);
     }
 }

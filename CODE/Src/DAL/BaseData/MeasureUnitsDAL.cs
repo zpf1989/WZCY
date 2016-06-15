@@ -13,13 +13,13 @@ using OA.GeneralClass.Logger;
 
 namespace OA.DAL
 {
-    public class MeasureUnitsDAL : IMeasureUnitsDAL
+    public class MeasureUnitsDAL : BaseDAL<MeasureUnits>, IMeasureUnitsDAL
     {
         public const string TableName = "MeasureUnits";
 
         ILogHelper<MeasureUnitsDAL> logger = LoggerFactory.GetLogger<MeasureUnitsDAL>();
 
-        public List<MeasureUnits> GetEntitiesByPage(PageEntity pageEntity, string whereSql = null, string orderBySql = null)
+        public override List<MeasureUnits> GetEntitiesByPage(PageEntity pageEntity, string whereSql = null, string orderBySql = null)
         {
             if (string.IsNullOrEmpty(orderBySql))
             {
@@ -52,7 +52,7 @@ namespace OA.DAL
             return units;
         }
 
-        public bool Save(params MeasureUnits[] units)
+        public override bool Save(params MeasureUnits[] units)
         {
             if (units == null || units.Length < 1)
             {
@@ -100,7 +100,7 @@ namespace OA.DAL
             return rst > 0;
         }
 
-        public bool Delete(params string[] unitIds)
+        public override bool Delete(params string[] unitIds)
         {
             if (unitIds == null || unitIds.Length < 1)
             {
@@ -133,6 +133,20 @@ namespace OA.DAL
             }
             //3、返回成功或失败的标志
             return rst > 0;
+        }
+
+        protected override string GetTableName()
+        {
+            return TableName;
+        }
+
+        public bool Exists(params string[] codes)
+        {
+            if (codes == null || codes.Length < 1)
+            {
+                return false;
+            }
+            return base.Exists(string.Format(" and UnitCode in ('{0}')", string.Join("','", codes)));
         }
     }
 }

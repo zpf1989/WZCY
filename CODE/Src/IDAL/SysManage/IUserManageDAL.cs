@@ -16,5 +16,12 @@ namespace OA.IDAL
         /// <param name="optValues">操作权限数组</param>
         /// <returns></returns>
         bool SetOpt(string[] userIds, string[] optValues);
+
+        /// <summary>
+        /// 用户编号是否已存在
+        /// </summary>
+        /// <param name="userCodes"></param>
+        /// <returns>true:存在，false：不存在</returns>
+        bool Exists(params string[] userCodes);
     }
 }

@@ -25,7 +25,7 @@ public class MeasureUnitsService : System.Web.Services.WebService
         //InitializeComponent(); 
     }
 
-    [WebMethod]
+    [WebMethod(EnableSession = true)]
     public void GetList()
     {
         //过滤条件
@@ -56,7 +56,7 @@ public class MeasureUnitsService : System.Web.Services.WebService
         Context.Response.WriteJson(json);
     }
 
-    [WebMethod]
+    [WebMethod(EnableSession = true)]
     public void Save()
     {
         //获取请求数据
@@ -82,7 +82,7 @@ public class MeasureUnitsService : System.Web.Services.WebService
         Context.Response.WriteJson(OA.GeneralClass.ResultCode.Failure, "保存失败", null);
     }
 
-    [WebMethod]
+    [WebMethod(EnableSession = true)]
     public void Delete()
     {
         using (var reader = new System.IO.StreamReader(Context.Request.InputStream))

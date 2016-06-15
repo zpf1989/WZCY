@@ -1,0 +1,88 @@
+﻿<style>
+    .centent-table {
+        width: 100%;
+        height: 100%;
+        border: 0;
+    }
+
+        .centent-table td {
+            height: 35px;
+            line-height: 35px;
+            border: 1px solid #ccc;
+            padding-right: 2px;
+        }
+
+    .table-label {
+        text-align: right;
+        width: 20%;
+        background-color: #F6F6F6;
+    }
+
+    .table-centent {
+        padding: 0 10px;
+        position: relative;
+    }
+
+    .btn-help {
+        right: 10px;
+    }
+</style>
+<form id="editForm" style="padding: 10px 10px;">
+    <h3 style="text-align:center;">物料信息</h3>
+    <input id="txtMID" name="MaterialID" hidden="hidden" />
+    <table class="centent-table">
+        <tr>
+            <td class="table-label">物料编号</td>
+            <td class="table-centent"><input type="text" name="MaterialCode" id="txtCode" class="easyui-textbox" data-options="required:true,validType:'maxLength[30]'" /></td>
+            <td class="table-label">物料名称</td>
+            <td class="table-centent"><input type="text" name="MaterialName" id="txtName" class="easyui-textbox" data-options="required:true,validType:'maxLength[1024]'" /></td>
+        </tr>
+        <tr>
+            <td class="table-label">规格型号</td>
+            <td class="table-centent"><input type="text" name="Specs" id="txtSpecs" class="easyui-textbox" data-options="validType:'maxLength[1024]'" /></td>
+            <td class="table-label">物料分类</td>
+            <td class="table-centent">
+                <span style="width:100%;height:100%;">
+                    <input type="text" id="txtCardClassName" name="MaterialClassName" class="easyui-textbox" readonly="readonly" style="width: 94%" />
+                    <input type="button" value="..." id="btnCardHelpMClass" class="btn-help" />
+                    <input id="txtCardClassID" name="MaterialClassID" hidden="hidden" />
+                </span>
+            </td>
+        </tr>
+        <tr>
+            <td class="table-label">物料类型</td>
+            <td class="table-centent">
+                <span>
+                    <input type="text" id="txtCardTypeName" name="MaterialTypeName" class="easyui-textbox" readonly="readonly" style="width: 94%" />
+                    <input type="button" value="..." id="btnCardHelpMType" class="btn-help" />
+                    <input id="txtCardTypeID" name="MaterialTypeID" hidden="hidden" />
+                </span>
+            </td>
+            <td class="table-label">计量单位</td>
+            <td class="table-centent">
+                <span>
+                    <input type="text" id="txtCardUnitName" name="PrimaryUnitName" class="easyui-textbox" readonly="readonly" style="width: 94%" data-options="required:true" />
+                    <input type="button" value="..." id="btnCardHelpMUnit" class="btn-help" />
+                    <input id="txtCardUnitID" name="PrimaryUnitID" hidden="hidden" />
+                </span>
+            </td>
+        </tr>
+        <tr>
+            <td class="table-label">价格</td>
+            <td class="table-centent"><input type="text" id="txtPrice" name="Price" class="easyui-numberbox" precision="8" /></td>
+            <td class="table-label">废品率</td>
+            <td class="table-centent"><input type="text" id="txtWasterRate" name="WasterRate" class="easyui-numberbox" precision="8" /></td>
+        </tr>
+        <tr>
+            <td class="table-label">备注</td>
+            <td class="table-centent" colspan="3"><input type="text" id="txtRemark" name="Remark" class="easyui-textbox" style="width:100%;" data-options="validType:'maxLength[1024]'" /></td>
+        </tr>
+    </table>
+</form>
+<!-- 这里需要先引用Materials.js ，再调用initCardControls-->
+<script src="Materials.js"></script>
+<script>
+    $(function () {
+        materials.initCardControls();
+    });
+</script>

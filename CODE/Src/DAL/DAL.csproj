@@ -68,6 +68,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Accessories\AccessoriesDAL.cs" />
+    <Compile Include="BaseDAL.cs" />
     <Compile Include="BaseData\MeasureUnitsDAL.cs" />
     <Compile Include="BaseData\MaterialTypeDAL.cs" />
     <Compile Include="BaseData\MaterialsDAL.cs" />

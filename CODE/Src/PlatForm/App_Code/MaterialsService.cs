@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.Services;
 using OA.GeneralClass.Extensions;
 using OA.Model;
+using OA.GeneralClass.Logger;
 
 /// <summary>
 /// MaterialsService 的摘要说明
@@ -14,7 +15,7 @@ using OA.Model;
 [WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]
 // 若要允许使用 ASP.NET AJAX 从脚本中调用此 Web 服务，请取消注释以下行。 
 // [System.Web.Script.Services.ScriptService]
-public class MaterialsService : System.Web.Services.WebService
+public class MaterialsService : BaseService
 {
 
     OA.BLL.MaterialsBLL bll = new OA.BLL.MaterialsBLL();
@@ -26,7 +27,7 @@ public class MaterialsService : System.Web.Services.WebService
         //InitializeComponent(); 
     }
 
-    [WebMethod]
+    [WebMethod(EnableSession = true)]
     public void GetList()
     {
         //过滤条件
@@ -78,7 +79,7 @@ public class MaterialsService : System.Web.Services.WebService
         Context.Response.WriteJson(json);
     }
 
-    [WebMethod]
+    [WebMethod(EnableSession = true)]
     public void Save()
     {
         //获取请求数据
@@ -87,12 +88,17 @@ public class MaterialsService : System.Web.Services.WebService
             string data = reader.ReadToEnd();
             if (!string.IsNullOrEmpty(data))
             {
-                var materials = data.DeSerializeFromJson<List<Materials>>();
-                if (materials != null && materials.Count > 0)
+                var material = data.DeSerializeFromJson<Materials>();
+                if (material != null)
                 {
                     //预处理
+                    if (ValidateUtil.isBlank(material.MaterialID))
+                    {
+                        material.Creator = base.GetCurrentID();
+                        material.CreateTime = DateTime.Now;
+                    }
                     //保存
-                    bool rst = bll.Save(materials.ToArray());
+                    bool rst = bll.Save(material);
                     if (rst)
                     {
                         Context.Response.WriteJson(OA.GeneralClass.ResultCode.Success, null, null);
@@ -104,7 +110,7 @@ public class MaterialsService : System.Web.Services.WebService
         Context.Response.WriteJson(OA.GeneralClass.ResultCode.Failure, "保存失败", null);
     }
 
-    [WebMethod]
+    [WebMethod(EnableSession = true)]
     public void Delete()
     {
         using (var reader = new System.IO.StreamReader(Context.Request.InputStream))

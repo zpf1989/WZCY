@@ -66,7 +66,7 @@ var helpInitializer = {
             hidecols: ['MaterialTypeID']
         });
     },
-    measureUnits: function (grid) {
+    measureUnit: function (grid) {
         if (!grid) {
             return;
         }

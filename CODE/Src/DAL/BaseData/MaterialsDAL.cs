@@ -13,13 +13,13 @@ using OA.GeneralClass.Logger;
 
 namespace OA.DAL
 {
-    public class MaterialsDAL : IMaterialsDAL
+    public class MaterialsDAL : BaseDAL<Materials>, IMaterialsDAL
     {
         public const string TableName = "Materials";
 
         ILogHelper<MaterialsDAL> logger = LoggerFactory.GetLogger<MaterialsDAL>();
 
-        public List<Materials> GetEntitiesByPage(PageEntity pageEntity, string whereSql = null, string orderBySql = null)
+        public override List<Materials> GetEntitiesByPage(PageEntity pageEntity, string whereSql = null, string orderBySql = null)
         {
             if (string.IsNullOrEmpty(orderBySql))
             {
@@ -57,6 +57,7 @@ namespace OA.DAL
                         Remark = row["Remark"].ToString(),
                         Creator = row["Creator"].ToString(),
                         Creator_Name = row["Creator_Name"].ToString(),
+                        CreateTime = Convert.ToDateTime(row["CreateTime"])
                     });
                 }
             }
@@ -64,12 +65,13 @@ namespace OA.DAL
             return classes;
         }
 
-        public bool Save(params Materials[] materials)
+        public override bool Save(params Materials[] materials)
         {
             if (materials == null || materials.Length < 1)
             {
                 return false;
             }
+
             StringBuilder sbSql = new StringBuilder();
             List<SqlParameter> sqlParams = new List<SqlParameter>();
             Materials material = null;
@@ -81,8 +83,14 @@ namespace OA.DAL
                 {
                     //新增
                     material.MaterialID = Guid.NewGuid().ToString();
+                    //material.Creator=
                     sbSql.AppendFormat("insert into {0}(MaterialID,MaterialCode,MaterialName,Specs,MaterialClassID,MaterialTypeID,PrimaryUnitID,Price,Remark,Creator,CreateTime,WasterRate)", TableName);
                     sbSql.AppendFormat(" values (@MaterialID{0},@MaterialCode{0},@MaterialName{0},@Specs{0},@MaterialClassID{0},@MaterialTypeID{0},@PrimaryUnitID{0},@Price{0},@Remark{0},@Creator{0},@CreateTime{0},@WasterRate{0});", i);
+                    //新增独有的参数
+                    sqlParams.AddRange(new SqlParameter[] { 
+                        new SqlParameter{ParameterName="@Creator"+i,Value=material.Creator},
+                            new SqlParameter{ParameterName="@CreateTime"+i,Value=material.CreateTime}
+                    });
                 }
                 else
                 {
@@ -90,7 +98,7 @@ namespace OA.DAL
                     sbSql.AppendFormat("update {0} set MaterialCode=@MaterialCode{1},MaterialName=@MaterialName{1},Specs=@Specs{1},MaterialClassID=@MaterialClassID{1},MaterialTypeID=@MaterialTypeID{1},PrimaryUnitID=@PrimaryUnitID{1},Price=@Price{1},Remark=@Remark{1},WasterRate=@WasterRate{1}", TableName, i);
                     sbSql.AppendFormat(" where MaterialID=@MaterialID{0};", i);
                 }
-                //不管新增或修改， 参数都一样
+                //
                 sqlParams.AddRange(new SqlParameter[]{ 
                             new SqlParameter{ParameterName="@MaterialID"+i,Value=material.MaterialID},
                             new SqlParameter{ParameterName="@MaterialCode"+i,Value=material.MaterialCode},
@@ -101,9 +109,7 @@ namespace OA.DAL
                             new SqlParameter{ParameterName="@PrimaryUnitID"+i,Value=material.PrimaryUnitID},
                             new SqlParameter{ParameterName="@Price"+i,Value=material.Price},
                             new SqlParameter{ParameterName="@Remark"+i,Value=material.Remark},
-                            new SqlParameter{ParameterName="@Creator"+i,Value=material.Creator},
-                            new SqlParameter{ParameterName="@CreateTime"+i,Value=material.CreateTime},
-                            new SqlParameter{ParameterName="@WasterRate"+i,Value=material.WasterRate},
+                            new SqlParameter{ParameterName="@WasterRate"+i,Value=material.WasterRate}
                                             });
             }
             //2、执行sql
@@ -121,7 +127,7 @@ namespace OA.DAL
             return rst > 0;
         }
 
-        public bool Delete(params string[] materialIds)
+        public override bool Delete(params string[] materialIds)
         {
             if (materialIds == null || materialIds.Length < 1)
             {
@@ -156,25 +162,18 @@ namespace OA.DAL
             return rst > 0;
         }
 
-        public bool Exists(string where)
+        public bool Exists(params string[] codes)
         {
-            if (string.IsNullOrEmpty(where))
+            if (codes == null || codes.Length < 1)
             {
                 return false;
             }
+            return base.Exists(string.Format(" and MaterialCode in ('{0}')", string.Join("','", codes)));
+        }
 
-            string sql = string.Format("select count(1) from {0} where 1=1 {1}", TableName, where);
-
-            try
-            {
-                var data = DBAccess.ExecuteScalar(DB.Type, DB.ConnectionString, CommandType.Text, sql);
-                return Convert.ToInt32(data) > 0;
-            }
-            catch (Exception ex)
-            {
-                logger.LogError(ex);
-                return false;
-            }
+        protected override string GetTableName()
+        {
+            return TableName;
         }
     }
 }

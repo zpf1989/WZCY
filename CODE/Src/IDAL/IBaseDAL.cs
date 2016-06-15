@@ -31,5 +31,12 @@ namespace OA.IDAL
         /// <param name="ids"></param>
         /// <returns></returns>
         bool Delete(params string[] ids);
+
+        /// <summary>
+        /// 指定条件的数据是否存在
+        /// </summary>
+        /// <param name="where"></param>
+        /// <returns>true:存在，false：不存在</returns>
+        bool Exists(string where);
     }
 }
