@@ -8,6 +8,7 @@ using GentleUtil.DB;
 using OA.IDAL;
 using OA.Model;
 using System.Reflection;
+using OA.GeneralClass;
 
 namespace OA.DAL
 {
@@ -325,11 +326,11 @@ namespace OA.DAL
         public DataSet GetPageList(string UserCode, string UserName, int pageSize, int startRowIndex)
         {
             StringBuilder strSql = new StringBuilder();
-            if (!string.IsNullOrEmpty(UserCode))
+            if (!ValidateUtil.isBlank(UserCode))
             {
                 strSql.Append(" and UserCode like'%" + UserCode.Trim() + "%' ");
             }
-            if (!string.IsNullOrEmpty(UserName))
+            if (!ValidateUtil.isBlank(UserName))
             {
                 strSql.Append(" and UserName like'%" + UserName.Trim() + "%' ");
             }
@@ -363,11 +364,11 @@ namespace OA.DAL
             strSql.AppendLine(" select count(*) from OA_User ")
             .AppendLine(" where UserState=1 ");
 
-            if (!string.IsNullOrEmpty(UserCode))
+            if (!ValidateUtil.isBlank(UserCode))
             {
                 strSql.Append(" and UserCode like'%" + UserCode.Trim() + "%' ");
             }
-            if (!string.IsNullOrEmpty(UserName))
+            if (!ValidateUtil.isBlank(UserName))
             {
                 strSql.Append(" and UserName like'%" + UserName.Trim() + "%' ");
             }

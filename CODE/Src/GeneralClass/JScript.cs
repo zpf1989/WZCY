@@ -41,7 +41,7 @@ namespace OA.GeneralClass
         /// <param name="url"></param>
         public static void Redirect(string url)
         {
-            if (!string.IsNullOrEmpty(url))
+            if (!ValidateUtil.isBlank(url))
             {
                 HttpContext.Current.Response.Write("<script type='text/javascript'>window.open('" + url + "');</script>");
             }

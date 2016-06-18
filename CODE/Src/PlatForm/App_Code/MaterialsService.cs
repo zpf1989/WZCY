@@ -30,36 +30,45 @@ public class MaterialsService : BaseService
     [WebMethod(EnableSession = true)]
     public void GetList()
     {
+        GetListInner(false);
+    }
+    [WebMethod(EnableSession = true)]
+    public void GetListForHelp()
+    {
+        GetListInner(true);
+    }
+    public void GetListInner(bool isForHelp)
+    {
         //过滤条件
         //这里拼写过滤条件时，使用了很多sql，违背分层原则，为了省事儿先这样吧
         string whereSql = string.Empty;
         string code = Context.Request["MaterialCode"];
-        if (!string.IsNullOrEmpty(code))
+        if (!ValidateUtil.isBlank(code))
         {
             whereSql += string.Format(" and m.MaterialCode like '%{0}%'", code);
         }
         string name = Context.Request["MaterialName"];
-        if (!string.IsNullOrEmpty(name))
+        if (!ValidateUtil.isBlank(name))
         {
             whereSql += string.Format(" and m.MaterialName like '%{0}%'", name);
         }
         string materialClassID = Context.Request["MaterialClassID"];
         string materialClassName = Context.Request["MaterialClassName"];
-        if (!string.IsNullOrEmpty(materialClassID))
+        if (!ValidateUtil.isBlank(materialClassID))
         {
             whereSql += string.Format(" and m.MaterialClassID = '{0}'", materialClassID);
         }
-        else if (!string.IsNullOrEmpty(materialClassName))
+        else if (!ValidateUtil.isBlank(materialClassName))
         {
             whereSql += string.Format(" and c.MaterialClassName like '%{0}%' ", materialClassName);
         }
         string materialTypeID = Context.Request["MaterialTypeID"];
         string materialTypeName = Context.Request["MaterialTypeName"];
-        if (!string.IsNullOrEmpty(name))
+        if (!ValidateUtil.isBlank(name))
         {
             whereSql += string.Format(" and m.MaterialTypeID = '{0}'", materialTypeID);
         }
-        else if (!string.IsNullOrEmpty(materialTypeName))
+        else if (!ValidateUtil.isBlank(materialTypeName))
         {
             whereSql += string.Format(" and t.MaterialTypeName like '%{0}%' ", materialTypeName);
         }
@@ -69,7 +78,7 @@ public class MaterialsService : BaseService
         int pageSize = 10;
         Int32.TryParse(Context.Request["rows"], out pageSize);
         PageEntity pageEntity = new PageEntity(pageIndex, pageSize);
-        var users = bll.GetMaterialsByPage(pageEntity, whereSql, string.Empty);
+        var users = bll.GetMaterialsByPage(pageEntity, whereSql, string.Empty, isForHelp);
         //easyui分页查询，要求返回json数据，并且包含total和rows
         string json = new
         {
@@ -86,7 +95,7 @@ public class MaterialsService : BaseService
         using (var reader = new System.IO.StreamReader(Context.Request.InputStream))
         {
             string data = reader.ReadToEnd();
-            if (!string.IsNullOrEmpty(data))
+            if (!ValidateUtil.isBlank(data))
             {
                 var material = data.DeSerializeFromJson<Materials>();
                 if (material != null)
@@ -116,7 +125,7 @@ public class MaterialsService : BaseService
         using (var reader = new System.IO.StreamReader(Context.Request.InputStream))
         {
             string data = reader.ReadToEnd();
-            if (!string.IsNullOrEmpty(data))
+            if (!ValidateUtil.isBlank(data))
             {
                 var mIds = data.DeSerializeFromJson<List<string>>();
                 if (mIds != null && mIds.Count > 0)

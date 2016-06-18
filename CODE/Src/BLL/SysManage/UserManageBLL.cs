@@ -11,9 +11,9 @@ namespace OA.BLL
     {
         private readonly OA.IDAL.IUserManageDAL iUserManageDAL = DALFactory.Helper.GetIUserManageDAL();
 
-        public List<UserInfo> GetUsersByPage(PageEntity pageEntity, string whereSql = null, string orderBySql = null)
+        public List<UserInfo> GetUsersByPage(PageEntity pageEntity, string whereSql = null, string orderBySql = null, bool isForHelp = false)
         {
-            return iUserManageDAL.GetEntitiesByPage(pageEntity, whereSql, orderBySql);
+            return isForHelp ? iUserManageDAL.GetEntitiesByPageForHelp(pageEntity, whereSql, orderBySql) : iUserManageDAL.GetEntitiesByPage(pageEntity, whereSql, orderBySql);
         }
 
         public bool Save(params UserInfo[] users)

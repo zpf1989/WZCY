@@ -17,13 +17,11 @@ namespace OA.DAL
     {
         public const string TableName = "Materials";
 
-        ILogHelper<MaterialsDAL> logger = LoggerFactory.GetLogger<MaterialsDAL>();
-
         public override List<Materials> GetEntitiesByPage(PageEntity pageEntity, string whereSql = null, string orderBySql = null)
         {
-            if (string.IsNullOrEmpty(orderBySql))
+            if (ValidateUtil.isBlank(orderBySql))
             {
-                orderBySql = "MaterialCode";
+                orderBySql = "m.MaterialCode";
             }
             List<Materials> classes = new List<Materials>();
             DataSet ds = DB.GetDataByPage(new PageQueryEntity
@@ -79,7 +77,7 @@ namespace OA.DAL
             {
                 material = materials[i];
                 //1、组织sql
-                if (string.IsNullOrEmpty(material.MaterialID))
+                if (ValidateUtil.isBlank(material.MaterialID))
                 {
                     //新增
                     material.MaterialID = Guid.NewGuid().ToString();
@@ -120,7 +118,7 @@ namespace OA.DAL
             }
             catch (Exception ex)
             {
-                logger.LogError(ex);
+                base.Logger.LogError(ex);
                 return false;
             }
             //3、返回成功或失败的标志
@@ -155,7 +153,7 @@ namespace OA.DAL
             }
             catch (Exception ex)
             {
-                logger.LogError(ex);
+                base.Logger.LogError(ex);
                 return false;
             }
             //3、返回成功或失败的标志
@@ -174,6 +172,11 @@ namespace OA.DAL
         protected override string GetTableName()
         {
             return TableName;
+        }
+
+        public override List<Materials> GetEntitiesByPageForHelp(PageEntity pageEntity, string whereSql = null, string orderBySql = null)
+        {
+            return GetEntitiesByPage(pageEntity, whereSql, orderBySql);
         }
     }
 }

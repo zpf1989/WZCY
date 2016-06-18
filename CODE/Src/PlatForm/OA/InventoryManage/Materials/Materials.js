@@ -100,6 +100,7 @@ var materials = {
                  { field: 'CreateTime', title: '创建时间', width: 100, align: 'center' }
             ]],
             hidecols: ['MaterialID', 'MaterialClassID', 'MaterialTypeID', 'PrimaryUnitID', 'Creator'],
+            singleSelect: false
         });
     },
     editMaterial: function () {

@@ -19,9 +19,19 @@ namespace OA.DAL
         ILogHelper<UserManageDAL> logger = LoggerFactory.GetLogger<UserManageDAL>();
         public override List<UserInfo> GetEntitiesByPage(PageEntity pageEntity, string whereSql = null, string orderBySql = null)
         {
-            if (string.IsNullOrEmpty(orderBySql))
+            return GetEntitiesByPageInner(pageEntity, whereSql, orderBySql, false);
+        }
+        public override List<UserInfo> GetEntitiesByPageForHelp(PageEntity pageEntity, string whereSql = null, string orderBySql = null)
+        {
+            return GetEntitiesByPageInner(pageEntity, whereSql, orderBySql, true);
+
+        }
+
+        private List<UserInfo> GetEntitiesByPageInner(PageEntity pageEntity, string whereSql = null, string orderBySql = null, bool isForHelp = false)
+        {
+            if (ValidateUtil.isBlank(orderBySql))
             {
-                orderBySql = "UserCode";
+                orderBySql = "usr.UserCode";
             }
 
             List<UserInfo> users = new List<UserInfo>();
@@ -32,7 +42,7 @@ namespace OA.DAL
                     string.Format(" {0} as usr left join {1} as dept on usr.DeptID=dept.DeptID left join {2} as ur on usr.UserID=ur.UserID  left join {3} as role on ur.RoleID=role.RoleID ",
                     TableName, DepartmentDAL.TableName, URrelationDAL.TableName, RoleManageDAL.TableName),
                 PK = "usr.UserID",
-                Fields = "usr.*,dept.DeptName as Dept_Name,ur.RoleID,role.RoleName Role_Name",
+                Fields = isForHelp ? "usr.UserID,usr.UserCode,usr.UserName,usr.UserState,usr.DeptID,dept.DeptName as Dept_Name,ur.RoleID,role.RoleName Role_Name" : "usr.UserID,usr.UserCode,usr.UserName,usr.UserState,usr.DeptID,usr.Operator,usr.CreateTime,dept.DeptName as Dept_Name,ur.RoleID,role.RoleName Role_Name",
                 OrderBySql = orderBySql,
                 WhereSql = whereSql
             });
@@ -40,25 +50,35 @@ namespace OA.DAL
             {
                 foreach (DataRow row in ds.Tables[0].Rows)
                 {
-                    users.Add(new UserInfo
-                    {
-                        UserID = row["UserID"].ToString(),
-                        UserCode = row["UserCode"].ToString(),
-                        UserName = row["UserName"].ToString(),
-                        UserState = row["UserState"].ToString(),
-                        CreateTime = Convert.ToDateTime(row["CreateTime"]),
-                        DeptID = row["DeptID"].ToString(),
-                        Dept_Name = row["Dept_Name"].ToString(),
-                        Operator = row["Operator"].ToString(),
-                        RoleID = row["RoleID"].ToString(),
-                        Role_Name = row["Role_Name"].ToString()
-                    });
+                    users.Add(GetUserInfo(row, isForHelp));
                 }
             }
 
             return users;
         }
 
+        private UserInfo GetUserInfo(DataRow row, bool isForHelp)
+        {
+            if (row == null)
+            {
+                return null;
+            }
+            UserInfo usr = new UserInfo();
+            usr.UserID = row["UserID"].ToString();
+            usr.UserCode = row["UserCode"].ToString();
+            usr.UserName = row["UserName"].ToString();
+            usr.UserState = row["UserState"].ToString();
+            usr.DeptID = row["DeptID"].ToString();
+            usr.Dept_Name = row["Dept_Name"].ToString();
+            usr.RoleID = row["RoleID"].ToString();
+            usr.Role_Name = row["Role_Name"].ToString();
+            if (!isForHelp)
+            {
+                usr.CreateTime = Convert.ToDateTime(row["CreateTime"]);
+                usr.Operator = row["Operator"].ToString();
+            }
+            return usr;
+        }
         public override bool Save(params UserInfo[] users)
         {
             if (users == null || users.Length < 1)
@@ -72,13 +92,16 @@ namespace OA.DAL
             {
                 user = users[i];
                 //1、组织sql
-                if (string.IsNullOrEmpty(user.UserID))
+                if (ValidateUtil.isBlank(user.UserID))
                 {
                     //新增
                     user.UserID = Guid.NewGuid().ToString();
                     sbSql.AppendFormat("insert into {0}(UserID,UserCode,UserName,UserPwd,UserState,CreateTime,CreateUserID,DeptID)", TableName);
                     sbSql.AppendFormat(" values (@UserID{0},@UserCode{0},@UserName{0},@UserPwd{0},@UserState{0},@CreateTime{0},@CreateUserID{0},@DeptID{0});", i);
-                    sbSql.AppendFormat("insert into {0}(ID,UserID,RoleID)  values (NEWID(),@UserID{1},@RoleID{1});", URrelationDAL.TableName, i);
+                    if (!ValidateUtil.isBlank(user.RoleID))
+                    {
+                        sbSql.AppendFormat("insert into {0}(ID,UserID,RoleID)  values (NEWID(),@UserID{1},@RoleID{1});", URrelationDAL.TableName, i);
+                    }
                 }
                 else
                 {
@@ -86,7 +109,10 @@ namespace OA.DAL
                     sbSql.AppendFormat("update {0} set UserCode=@UserCode{1},UserName=@UserName{1},DeptID=@DeptID{1}", TableName, i);
                     sbSql.AppendFormat(" where UserID=@UserID{0};", i);
                     sbSql.AppendFormat("delete from {0} where UserID=@UserID{1};", URrelationDAL.TableName, i);
-                    sbSql.AppendFormat("insert into {0}(ID,UserID,RoleID)  values (NEWID(),@UserID{1},@RoleID{1});", URrelationDAL.TableName, i);
+                    if (!ValidateUtil.isBlank(user.RoleID))
+                    {
+                        sbSql.AppendFormat("insert into {0}(ID,UserID,RoleID)  values (NEWID(),@UserID{1},@RoleID{1});", URrelationDAL.TableName, i);
+                    }
                 }
                 //不管新增或修改， 参数都一样
                 sqlParams.AddRange(new SqlParameter[]{ 

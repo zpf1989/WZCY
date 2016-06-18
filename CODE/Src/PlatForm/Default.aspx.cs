@@ -91,7 +91,7 @@ public partial class _Default : PageBase
         //    strNews += "	<tr>                                   ";
         //    strNews += "		<td width=\"3%\"><img src=\"images/oa_58.jpg\" width=\"3\" height=\"7\" /></td>                             ";
         //    strNews += "		<td width=\"80%\" class=\"t12black\"><a href='OA/WorkFlow/ShowOfficeDoc.aspx?OfficeDocItemID=" + Convert.ToString(dr["OfficeDocItemID"]) + "' target='_blank'>" + Convert.ToString(dr["Title"]) + "</a></td>";
-        //    if (string.IsNullOrEmpty(dr["OperateTime"].ToString()))
+        //    if (ValidateUtil.isBlank(dr["OperateTime"].ToString()))
         //        strNews += "		<td width=\"17%\" class=\"t12black\"> </td>                         ";
         //    else
         //        strNews += "		<td width=\"17%\" class=\"t12black\">" + Convert.ToDateTime(dr["OperateTime"]).ToString("yyyy-MM-dd") + " </td>                         ";
@@ -127,7 +127,7 @@ public partial class _Default : PageBase
         //    strNews += "	<tr>                                   ";
         //    strNews += "		<td width=\"3%\"><img src=\"images/oa_58.jpg\" width=\"3\" height=\"7\" /></td>                                  ";
         //    strNews += "		<td width=\"80%\" class=\"t12black\"><a href='OA/WorkFlow/ShowOfficeDocYB.aspx?OfficeDocItemID=" + Convert.ToString(dr["OfficeDocItemID"]) + "' target='_blank'>" + Convert.ToString(dr["Title"]) + "</a></td>";
-        //    if (string.IsNullOrEmpty(dr["OperateTime"].ToString()))
+        //    if (ValidateUtil.isBlank(dr["OperateTime"].ToString()))
         //        strNews += "		<td width=\"17%\" class=\"t12black\"> </td>                ";
         //    else
         //        strNews += "		<td width=\"17%\" class=\"t12black\">" + Convert.ToDateTime(dr["OperateTime"]).ToString("yyyy-MM-dd") + " </td>                ";

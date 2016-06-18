@@ -18,7 +18,8 @@ var helpInitializer = {
                 { field: 'DeptName', title: '部门名称', width: 60, align: 'center' },
                 { field: 'Remark', title: '备注', width: 60, align: 'center' },
             ]],
-            hidecols: ['DeptId']
+            hidecols: ['DeptId'],
+            singleSelect: true
         });
     },
     role: function (grid) {
@@ -33,7 +34,28 @@ var helpInitializer = {
                 { field: 'RoleCode', title: '角色编号', width: 100, align: 'center' },
                 { field: 'RoleName', title: '角色名称', width: 60, align: 'center' }
             ]],
-            hidecols: ['RoleID']
+            hidecols: ['RoleID'],
+            singleSelect: true
+        });
+    },
+    user: function (grid) {
+        if (!grid) {
+            return;
+        }
+        gFunc.initGridPublic(grid, {
+            title: "用户帮助",
+            url: gFunc.getRootPath() + '/OA/SysManage/UserManage/UserManageService.asmx/GetListForHelp',
+            columns: [[
+                { field: 'UserID' },
+                { field: 'DeptID' },
+                { field: 'RoleID' },
+                { field: 'UserCode', title: '用户编号', width: 100, align: 'center' },
+                { field: 'UserName', title: '用户名称', width: 60, align: 'center' },
+                { field: 'Dept_Name', title: '所属部门', width: 60, align: 'center' },
+                { field: 'Role_Name', title: '用户角色', width: 60, align: 'center' },
+            ]],
+            hidecols: ['UserID', 'DeptID', 'RoleID'],
+            singleSelect: true
         });
     },
     materialClass: function (grid) {
@@ -42,13 +64,14 @@ var helpInitializer = {
         }
         gFunc.initGridPublic(grid, {
             title: "物料分类帮助",
-            url: gFunc.getRootPath() + '/OA/InventoryManage/MaterialClass/MaterialClassService.asmx/GetList',
+            url: gFunc.getRootPath() + '/OA/InventoryManage/MaterialClass/MaterialClassService.asmx/GetListForHelp',
             columns: [[
                 { field: 'MaterialClassID' },
                 { field: 'MaterialClassCode', title: '分类编号', width: 100, align: 'center' },
                 { field: 'MaterialClassName', title: '分类名称', width: 100, align: 'center' }
             ]],
-            hidecols: ['MaterialClassID']
+            hidecols: ['MaterialClassID'],
+            singleSelect: true
         });
     },
     materialType: function (grid) {
@@ -57,13 +80,14 @@ var helpInitializer = {
         }
         gFunc.initGridPublic(grid, {
             title: "物料类型帮助",
-            url: gFunc.getRootPath() + '/OA/InventoryManage/MaterialType/MaterialTypeService.asmx/GetList',
+            url: gFunc.getRootPath() + '/OA/InventoryManage/MaterialType/MaterialTypeService.asmx/GetListForHelp',
             columns: [[
                 { field: 'MaterialTypeID' },
                 { field: 'MaterialTypeCode', title: '类型编号', width: 100, align: 'center' },
                 { field: 'MaterialTypeName', title: '类型名称', width: 100, align: 'center' }
             ]],
-            hidecols: ['MaterialTypeID']
+            hidecols: ['MaterialTypeID'],
+            singleSelect: true
         });
     },
     measureUnit: function (grid) {
@@ -72,13 +96,14 @@ var helpInitializer = {
         }
         gFunc.initGridPublic(grid, {
             title: "计量单位帮助",
-            url: gFunc.getRootPath() + '/OA/InventoryManage/MeasureUnits/MeasureUnitsService.asmx/GetList',
+            url: gFunc.getRootPath() + '/OA/InventoryManage/MeasureUnits/MeasureUnitsService.asmx/GetListForHelp',
             columns: [[
                 { field: 'UnitID' },
                 { field: 'UnitCode', title: '单位编号', width: 100, align: 'center' },
                 { field: 'UnitName', title: '单位名称', width: 100, align: 'center' }
             ]],
-            hidecols: ['UnitID']
+            hidecols: ['UnitID'],
+            singleSelect: true
         });
     }
 };

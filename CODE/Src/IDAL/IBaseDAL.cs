@@ -20,6 +20,14 @@ namespace OA.IDAL
         /// <returns></returns>
         List<T> GetEntitiesByPage(PageEntity pageEntity, string whereSql = null, string orderBySql = null);
         /// <summary>
+        /// 分页获取（带过滤）：作为帮助时调用（提供帮助用精简信息）
+        /// </summary>
+        /// <param name="pageEntity"></param>
+        /// <param name="whereSql">格式： and Name like '%abc%'</param>
+        /// <param name="orderBySql">格式：Code asc,Name desc</param>
+        /// <returns></returns>
+        List<T> GetEntitiesByPageForHelp(PageEntity pageEntity, string whereSql = null, string orderBySql = null);
+        /// <summary>
         /// 新增或更新：支持单条和批量
         /// </summary>
         /// <param name="entities"></param>

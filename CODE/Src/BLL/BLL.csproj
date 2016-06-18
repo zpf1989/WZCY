@@ -69,10 +69,11 @@
   <ItemGroup>
     <Compile Include="Accessories\AccessoriesBLL.cs" />
     <Compile Include="BaseBLL.cs" />
-    <Compile Include="BaseData\MaterialsBLL.cs" />
-    <Compile Include="BaseData\MeasureUnitsBLL.cs" />
-    <Compile Include="BaseData\MaterialTypeBLL.cs" />
-    <Compile Include="BaseData\MaterialClassBLL.cs" />
+    <Compile Include="InventoryManage\BaseData\WareHouseBLL.cs" />
+    <Compile Include="InventoryManage\BaseData\MaterialsBLL.cs" />
+    <Compile Include="InventoryManage\BaseData\MeasureUnitsBLL.cs" />
+    <Compile Include="InventoryManage\BaseData\MaterialTypeBLL.cs" />
+    <Compile Include="InventoryManage\BaseData\MaterialClassBLL.cs" />
     <Compile Include="PageBase.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>

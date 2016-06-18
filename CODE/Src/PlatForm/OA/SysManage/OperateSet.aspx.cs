@@ -8,6 +8,7 @@ using OA.BLL;
 using System.Data;
 using System.Text;
 using OA.Model;
+using OA.GeneralClass;
 
 public partial class OA_SysManage_OperateSet : PageBase
 {
@@ -169,7 +170,7 @@ public partial class OA_SysManage_OperateSet : PageBase
     /// <param name="e"></param>
     protected void btnSave_Click(object sender, EventArgs e)
     {
-        if (string.IsNullOrEmpty(FunIDlist.Value))
+        if (ValidateUtil.isBlank(FunIDlist.Value))
         {
             StringBuilder JScript = new StringBuilder();
             JScript.Append("<script type='text/javascript'>alert('您没选择角色权限！');;</script>");
