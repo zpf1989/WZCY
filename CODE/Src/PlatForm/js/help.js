@@ -105,6 +105,22 @@ var helpInitializer = {
             hidecols: ['UnitID'],
             singleSelect: true
         });
+    },
+    payType: function (grid) {
+        if (!grid) {
+            return;
+        }
+        gFunc.initGridPublic(grid, {
+            title: "付款方式帮助",
+            url: gFunc.getRootPath() + '/OA/SalesManage/PayType/PayTypeService.asmx/GetListForHelp',
+            columns: [[
+                { field: 'PayTypeID' },
+                { field: 'PayTypeCode', title: '付款方式编号', width: 100, align: 'center' },
+                { field: 'PayTypeName', title: '付款方式名称', width: 100, align: 'center' }
+            ]],
+            hidecols: ['PayTypeID'],
+            singleSelect: true
+        });
     }
 };
 

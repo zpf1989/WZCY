@@ -292,5 +292,44 @@ namespace OA.DALFactory
             return idal;
         }
         #endregion
+
+        #region 销售管理——基础数据
+        public static OA.IDAL.IPayTypeDAL GetIPayTypeDAL()
+        {
+            OA.IDAL.IPayTypeDAL idal;
+            switch (dbType)
+            {
+                //case "Oracle":
+                //    iAffix = new Upload.DALORACLE.Affix();
+                //    break;
+                //case "GBase":
+                //    iAffix = new Upload.DALGBase.Affix();
+                //    break;
+                case "SQLServer":
+                default:
+                    idal = new OA.DAL.PayTypeDAL();
+                    break;
+            }
+            return idal;
+        }
+        public static OA.IDAL.IClientDAL GetIClientDAL()
+        {
+            OA.IDAL.IClientDAL idal;
+            switch (dbType)
+            {
+                //case "Oracle":
+                //    iAffix = new Upload.DALORACLE.Affix();
+                //    break;
+                //case "GBase":
+                //    iAffix = new Upload.DALGBase.Affix();
+                //    break;
+                case "SQLServer":
+                default:
+                    idal = new OA.DAL.ClientDAL();
+                    break;
+            }
+            return idal;
+        }
+        #endregion
     }
 }

@@ -77,6 +77,8 @@
     <Compile Include="PageBase.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="SalesManage\BaseData\PayTypeBLL.cs" />
+    <Compile Include="SalesManage\BaseData\ClientBLL.cs" />
     <Compile Include="SysManage\DepartmentBLL.cs" />
     <Compile Include="SysManage\FunctionBLL.cs" />
     <Compile Include="SysManage\RFRelationBLL.cs" />
