@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="Materials.aspx.cs" Inherits="OA_InventoryManage_Materials_Materials" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="SaleOrder.aspx.cs" Inherits="OA_SalesManage_SaleOrder_SaleOrder" %>
 
 <!DOCTYPE html>
 
@@ -20,22 +20,18 @@
         <div region="north" collapsible="true" title="查询条件" height="80px" style="padding: 10px;">
             <form id="searchForm" action="#" style="text-align: left">
                 <div>
-                    <label>物料编号：</label><input name="MaterialCode" id="MaterialCode" class="easyui-textbox" />
+                    <label>订单编号：</label><input name="SOCode" id="txtSearchSOCode" class="easyui-textbox" />
                 </div>
                 <div>
-                    <label>物料名称：</label><input name="MaterialName" id="MaterialName" class="easyui-textbox" />
+                    <label>单据类型：</label>
+                    <input name="BillTypeID" id="txtSearchBillTypeID" hidden="hidden" />
+                    <input name="BillTypeName" id="txtSearchBillTypeName"  class="easyui-textbox"/>
+                    <input type="button" value="..." id="btnSearchBillType" class="btn-help" />
                 </div>
                 <div>
-                    <label>物料分类：</label>
-                    <input name="MaterialClassID" id="txtSearchClassID" hidden="hidden" />
-                    <input name="MaterialClassName" id="txtSearchClassName"/>
-                    <input type="button" value="..." id="btnSearchHelpMClass" class="btn-help" />
-                </div>
-                <div>
-                    <label>物料类型：</label>
-                    <input name="MaterialTypeID" id="txtSearchTypeID" hidden="hidden" />
-                    <input name="MaterialTypeName" id="txtSearchTypeName" />
-                    <input type="button" value="..." id="btnSearchHelpMType" class="btn-help" />
+                    <label>交货日期：</label>
+                    <input name="SaleDateBegin" id="dateSearchSaleDateBegin" class="easyui-datebox" />
+                    <input name="SaleDateEnd" id="dateSearchSaleDateEnd" class="easyui-datebox" />
                 </div>
                 <div>
                     <a href="javascript:void(0);" id="btnSearch" class="easyui-linkbutton" iconcls="icon-search"
@@ -47,9 +43,9 @@
             <table id="grid" style="width: 100%; height: 100%;"></table>
         </div>
     </div>
-    <script src="Materials.js"></script>
+    <script src="SaleOrder.js"></script>
     <script>
-        $(materials.init);
+        $(saleorder.init);
     </script>
 </body>
 </html>

@@ -1,0 +1,14 @@
+﻿.btn-help {
+    position: relative;
+    right: 25px;
+    display: inline-block;
+    vertical-align: middle;
+    padding: 1px;
+    border: 1px solid #ccc;
+    border-radius: 0;
+    font-size: 13px;
+    font-weight: 300;
+    text-decoration: none;
+    background-color: lightblue;
+    cursor: pointer;
+}

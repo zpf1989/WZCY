@@ -54,7 +54,7 @@ left join {5} uc on s.Creator=uc.UserID
 left join {5} uf on s.FirstChecker=uf.UserID",
 TableName, BillTypeDAL.TableName, MaterialsDAL.TableName, MeasureUnitsDAL.TableName, ClientDAL.TableName, UserManageDAL.TableName),
                 PK = "s.SaleOrderID",
-                Fields = "s.*,t.BillName BillType_Name,m.MaterialName Material_Name,mu.UnitID SaleUnit_Name,c.ClientName Client_Name,uc.UserName Creator_Name,ue.UserName Editor_Name,uf.UserName FirstChecker_Name",
+                Fields = "s.*,t.BillName BillType_Name,m.MaterialName Material_Name,mu.UnitName SaleUnit_Name,c.ClientName Client_Name,uc.UserName Creator_Name,ue.UserName Editor_Name,uf.UserName FirstChecker_Name",
                 OrderBySql = orderBySql,
                 WhereSql = whereSql
             });

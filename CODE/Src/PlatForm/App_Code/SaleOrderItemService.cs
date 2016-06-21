@@ -26,7 +26,7 @@ public class SaleOrderItemService : BaseService
     [WebMethod(EnableSession = true)]
     public void GetOrderItems()
     {
-        string saleOrderId = Context.Request["SaleOrderID"]; ;
+        string saleOrderId = Context.Request["SaleOrderID"]; 
         string json = string.Empty;
         if (ValidateUtil.isBlank(saleOrderId))
         {
