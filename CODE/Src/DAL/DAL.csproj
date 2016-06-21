@@ -75,6 +75,9 @@
     <Compile Include="InventoryManage\BaseData\MaterialClassDAL.cs" />
     <Compile Include="DB.cs" />
     <Compile Include="InventoryManage\BaseData\WareHouseDAL.cs" />
+    <Compile Include="SalesManage\SaleOrder\SaleOrderItemDAL.cs" />
+    <Compile Include="SalesManage\SaleOrder\SaleOrderDAL.cs" />
+    <Compile Include="SalesManage\BaseData\BillTypeDAL.cs" />
     <Compile Include="SalesManage\BaseData\PayTypeDAL.cs" />
     <Compile Include="SalesManage\BaseData\ClientDAL.cs" />
     <Compile Include="SysManage\DepartmentDAL.cs" />

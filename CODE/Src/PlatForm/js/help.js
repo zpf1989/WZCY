@@ -121,6 +121,23 @@ var helpInitializer = {
             hidecols: ['PayTypeID'],
             singleSelect: true
         });
+    },
+    billType: function (grid) {
+        if (!grid) {
+            return;
+        }
+        gFunc.initGridPublic(grid, {
+            title: "单据类型帮助",
+            url: gFunc.getRootPath() + '/OA/SalesManage/BillType/BillTypeService.asmx/GetListForHelp?BillType=sale',
+            columns: [[
+                { field: 'BillID' },
+                { field: 'BillCode', title: '单据类型编号', width: 100, align: 'center' },
+                { field: 'BillName', title: '单据类型名称', width: 100, align: 'center' },
+                { field: 'Remark', title: '备注', width: 100, align: 'center' }
+            ]],
+            hidecols: ['BillID'],
+            singleSelect: true
+        });
     }
 };
 

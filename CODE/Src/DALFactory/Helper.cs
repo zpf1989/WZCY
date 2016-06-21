@@ -330,6 +330,63 @@ namespace OA.DALFactory
             }
             return idal;
         }
+        public static OA.IDAL.IBillTypeDAL GetIBillTypeDAL()
+        {
+            OA.IDAL.IBillTypeDAL idal;
+            switch (dbType)
+            {
+                //case "Oracle":
+                //    iAffix = new Upload.DALORACLE.Affix();
+                //    break;
+                //case "GBase":
+                //    iAffix = new Upload.DALGBase.Affix();
+                //    break;
+                case "SQLServer":
+                default:
+                    idal = new OA.DAL.BillTypeDAL();
+                    break;
+            }
+            return idal;
+        }
+        #endregion
+
+        #region 销售管理——销售订单
+        public static OA.IDAL.ISaleOrderDAL GetISaleOrderDAL()
+        {
+            OA.IDAL.ISaleOrderDAL idal;
+            switch (dbType)
+            {
+                //case "Oracle":
+                //    iAffix = new Upload.DALORACLE.Affix();
+                //    break;
+                //case "GBase":
+                //    iAffix = new Upload.DALGBase.Affix();
+                //    break;
+                case "SQLServer":
+                default:
+                    idal = new OA.DAL.SaleOrderDAL();
+                    break;
+            }
+            return idal;
+        }
+        public static OA.IDAL.ISaleOrderItemDAL GetISaleOrderItemDAL()
+        {
+            OA.IDAL.ISaleOrderItemDAL idal;
+            switch (dbType)
+            {
+                //case "Oracle":
+                //    iAffix = new Upload.DALORACLE.Affix();
+                //    break;
+                //case "GBase":
+                //    iAffix = new Upload.DALGBase.Affix();
+                //    break;
+                case "SQLServer":
+                default:
+                    idal = new OA.DAL.SaleOrderItemDAL();
+                    break;
+            }
+            return idal;
+        }
         #endregion
     }
 }
