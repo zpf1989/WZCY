@@ -1,0 +1,517 @@
+.l_font{
+	color:#039;
+}
+span.yzm {
+	font-size: 14px;
+	color: #8097B6;
+	font-weight: bold;
+}
+input.enter {
+	font-size: 12px;
+	color: #546C95;
+	background-color: transparent;
+	background-image: url("../images/login_enter_B1.gif");
+	background-repeat: no-repeat;
+	height: 22px;
+	width: 100px;
+	letter-spacing: 2px;
+	border:0;
+	padding: 2px 0 0 20px;
+}
+input.sq {
+	font-size: 12px;
+	color: #546C95;
+	background-color: transparent;
+	background-image: url("../images/login_enter_B2.gif");
+	background-repeat: no-repeat;
+	height: 22px;
+	width: 73px;
+	letter-spacing: 2px;
+	border:0;
+	padding: 2px 0 0 20px;
+	margin: 0 3px;
+}
+input.login_1{
+	background-color: #FFFFFF;
+	border-top-width: 1px;
+	border-right-width: 1px;
+	border-bottom-width: 1px;
+	border-left-width: 1px;
+	border-top-style: solid;
+	border-right-style: solid;
+	border-bottom-style: solid;
+	border-left-style: solid;
+	border-top-color: #B1C2DA;
+	border-left-color: #B1C2DA;
+	border-bottom-color: #FFFFFF;
+	border-right-color: #FFFFFF;
+	font-size: 12px;
+	width: 160px;
+}
+input.login_2 {
+	width:120px;
+}
+.FlatTextBoxView
+{
+	border-right: 0px;
+	border-top: 0px;
+	border-left: 0px;
+	border-bottom: #808080 1px solid;
+	font-family: "宋体","Arial Unicode MS", Tahoma;
+	font-size: 12px;
+	color: #333333;
+	font-weight: normal;
+	background-color: transparent;
+}
+.bg5_red {
+	background-color: #EEEEEE;
+	line-height: 22px;
+	text-align: right;
+	vertical-align: middle;
+	font-family: "宋体";
+	font-size: 12px;
+	font-weight: normal;
+	color: Red;
+	text-decoration: none;
+}
+.TableClick {
+    font-family: "Tahoma";
+    font-size: 11pt;
+    cursor : hand;
+    font-style: normal ;
+    color: #3878B5;
+    background-color:#E1E9EC;
+    background-image: url(imgs/contab1_r2_c4.jpg);
+}
+
+.TableOut {
+    font-family: "Tahoma";
+    font-size: 11pt;
+    font-style: normal ;
+    color:Black;
+    background-color:#EEEEEE;
+    background-image: url(imgs/contab1_r1_c8.jpg);
+}
+
+
+.notice1_e_m {
+	font-family: "Arial Unicode MS", Tahoma, Verdana, "Times New Roman";
+	font-size: 12px;
+	font-weight: normal;
+	color: #D0E7FD;
+	text-decoration: none;
+	text-align: center;
+	vertical-align: middle;
+	background-color: #0B2073;
+}
+.content13-gray1 {
+	font-size: 13px;
+	color:#333333;
+	font-family: "宋体";
+	text-align: right;
+	font-weight: normal;
+	background-image: url(../imgs/btn_bg2.jpg);
+	letter-spacing: 1pt;
+	text-decoration: none;
+	height: 22px;
+	line-height: 20px;
+	padding-right: 10px;
+}
+.content13-gray1 A:link{
+	color: #333333;
+	text-decoration:none;
+	height: 22px;
+	line-height: 22px;
+	}
+.content13-gray1 A:visited{
+	color: #333333;
+	text-decoration:none;
+	height: 22px;
+	line-height: 22px;
+	}
+.content13-gray1 A:hover{
+	color: #737373;
+	text-decoration:none;
+	height: 22px;
+	line-height: 22px;
+	}
+.content13-bu1 {
+	font-size: 13px;
+	color:#3878B5;
+	font-family: "宋体";
+	text-align: left;
+	font-weight: bold;
+	background-image: url(../imgs/contab1_r2_c4.jpg);
+	text-decoration: none;
+	height: 24px;
+	line-height: 24px;
+}
+.content13-bu1 A:link{
+	color: #3878B5;
+	text-decoration:none;
+	height: 24px;
+	line-height: 24px;
+	}
+.content13-bu1 A:visited{
+	color: #3878B5;
+	text-decoration:none;
+	height: 24px;
+	line-height: 24px;
+	}
+.content13-bu1 A:hover{
+	color: #FF6702;
+	text-decoration:none;
+	height: 24px;
+	line-height: 24px;
+	}
+.content13-wh1 {
+	font-size: 13px;
+	color:#FFFFFF;
+	font-family: "宋体";
+	text-align: right;
+	font-weight: bold;
+	background-image: url(../imgs/btn_bg1.jpg);
+	letter-spacing: 1pt;
+	text-decoration: none;
+	height: 24px;
+	line-height: 24px;
+	padding-right: 10px;
+}
+.content13-wh1 A:link{
+	color: #FFFFFF;
+	text-decoration:none;
+	height: 24px;
+	line-height: 24px;
+	}
+.content13-wh1 A:visited{
+	color: #FFFFFF;
+	text-decoration:none;
+	height: 24px;
+	line-height: 24px;
+	}
+.content13-wh1 A:hover{
+	color: #FFFFFF;
+	text-decoration:none;
+	height: 24px;
+	line-height: 24px;
+	}
+.content-bk1 {
+	font-size: 13px;
+	color:#000000;
+	font-family: "宋体";
+	text-align: center;
+	font-weight: normal;
+	background-image: url(../imgs/btn_bg3.jpg);
+	text-decoration: none;
+	height: 24px;
+	line-height: 24px;
+	border-top-width: thin;
+	border-right-width: thin;
+	border-bottom-width: thin;
+	border-left-width: thin;
+	border-top-style: solid;
+	border-right-style: solid;
+	border-bottom-style: solid;
+	border-left-style: solid;
+	border-top-color: #EAEAEA;
+	border-right-color: #AFAFAF;
+	border-bottom-color: #AFAFAF;
+	border-left-color: #EAEAEA;
+	padding-right: 5px;
+	padding-left: 5px;
+	letter-spacing: 1pt;
+	vertical-align: middle;
+}
+.content-bk1 A:link{
+	color: #000000;
+	text-decoration:none;
+	height: 24px;
+	line-height: 24px;
+	}
+.content-bk1 A:visited{
+	color: #000000;
+	text-decoration:none;
+	height: 24px;
+	line-height: 24px;
+	}
+.content-bk1 A:hover{
+	color: #666666;
+	text-decoration:none;
+	height: 24px;
+	line-height: 24px;
+	}
+.content13-wh2 {
+	font-size: 13px;
+	color:#666666;
+	font-family: "宋体";
+	text-align: center;
+	font-weight: normal;
+	text-decoration: none;
+	height: 22px;
+	line-height: 22px;
+	border: 1px solid #999999;
+	padding-right: 2px;
+	padding-left: 2px;
+	background-color: #FFFFFF;
+}
+.content13-wh2 A:link{
+	color: #666666;
+	text-decoration:none;
+	height: 22px;
+	line-height: 22px;
+	}
+.content13-wh2 A:visited{
+	color: #666666;
+	text-decoration:none;
+	height: 22px;
+	line-height: 22px;
+	}
+.content13-wh2 A:hover{
+	color: #000000;
+	text-decoration:none;
+	height: 22px;
+	line-height: 22px;
+	}
+.title1_16 {
+	font-family: "宋体";
+	font-size: 16px;
+	font-weight: bold;
+	color: #333333;
+	text-decoration: none;
+	padding-left: 15px;
+	letter-spacing: 1pt;
+}
+.title2_15 {
+	font-family: "宋体";
+	font-size: 15px;
+	font-weight: bold;
+	color: #3878B5;
+	text-decoration: none;
+	padding-left: 5px;
+	text-align: left;
+	padding-right: 5px;
+}
+.text1_13 {
+	font-family: "宋体","Arial Unicode MS", Tahoma;
+	font-size: 13px;
+	font-weight: normal;
+	color: #000000;
+	text-decoration: none;
+	text-align: right;
+}
+.text2_13 {
+	font-family: "宋体","Arial Unicode MS", Tahoma;
+	font-size: 13px;
+	font-weight: normal;
+	color: #990000;
+	text-decoration: none;
+	text-align: left;
+	
+}
+.text3_13 {
+	font-family: "宋体";
+	font-size: 13px;
+	font-weight: normal;
+	color: #990000;
+	text-decoration: none;
+	text-align: right;
+}
+.text2_12 {
+	font-family: "宋体";
+	font-size: 12px;
+	font-weight: normal;
+	color: #333333;
+	text-decoration: none;
+	text-align: left;
+}
+.text4_13 {
+	font-family: "宋体";
+	font-size: 13px;
+	font-weight: normal;
+	color: #000066;
+	text-decoration: none;
+	text-align: center;
+}
+.text6_13_22 {
+	font-family: "宋体";
+	font-size: 13px;
+	font-weight: normal;
+	color: #000066;
+	text-decoration: none;
+	text-align: right;
+	line-height: 22px;
+}
+.text7_13_22 {
+	font-family: "宋体";
+	font-size: 13px;
+	font-weight: normal;
+	color: #000066;
+	text-decoration: none;
+	text-align: left;
+	line-height: 22px;
+}
+.form_t1_m {
+	font-family: "宋体";
+	font-size: 13px;
+	font-weight:normal;
+	color: #000066;
+	text-decoration: none;
+	text-align: center;
+	vertical-align: middle;
+	background-color: #eeeeee;
+	line-height: 22px;
+}
+.bg1 {
+	background-image: url(../imgs/contab1_r1_c3.jpg);
+	height: 24px;
+	width: 20px;
+}
+.bg2 {
+	background-color: #E1E9EC;
+	line-height: 22px;
+	text-align: center;
+	vertical-align: middle;
+	font-family: "宋体";
+	font-size: 12px;
+	font-weight: normal;
+	color: #000000;
+	text-decoration: none;
+}
+.bg3 {
+	background-color: #C1CAD9;
+	line-height: 22px;
+	text-align: center;
+	vertical-align: middle;
+	font-family: "宋体";
+	font-size: 12px;
+	font-weight: normal;
+	color: #000000;
+	text-decoration: none;
+}
+.bg4 {
+	background-color: #EEEEEE;
+	line-height: 22px;
+	text-align: center;
+	vertical-align: middle;
+	font-family: "宋体";
+	font-size: 12px;
+	font-weight: normal;
+	color: #000000;
+	text-decoration: none;
+}
+.bg5 {
+	background-color: #EEEEEE;
+	line-height: 22px;
+	text-align: right;
+	vertical-align: middle;
+	font-family: "宋体";
+	font-size: 12px;
+	font-weight: normal;
+	color: #000000;
+	text-decoration: none;
+}
+.bg6 {
+	background-color: #E1E9EC;
+	line-height: 22px;
+	vertical-align: middle;
+	font-family: "宋体";
+	font-size: 12px;
+	font-weight: normal;
+	color: #000000;
+	text-decoration: none;
+}
+.content13-bu2 {
+	font-family: "宋体";
+	font-size: 13px;
+	font-style: normal;
+	line-height: normal;
+	font-weight: normal;
+	color: #0000CC;
+	text-decoration: underline;
+}
+.content13-bu2 A:link {
+	font-weight: normal;
+	color: #0000CC;
+	text-decoration: underline;
+}
+.content13-bu2 A:visited {
+	font-weight: normal;
+	color: #0000CC;
+	text-decoration: underline;
+}
+.content13-bu2 A:hover {
+	font-weight: normal;
+	color: #CC0000;
+	text-decoration: none;
+}
+.content13-bu3 {
+	font-family: "宋体";
+	font-size: 13px;
+	line-height: 22px;
+	font-weight: normal;
+	color: #FFFFFF;
+	text-decoration: none;
+	height: 22px;
+	border-top-width: thin;
+	border-right-width: thin;
+	border-bottom-width: thin;
+	border-left-width: thin;
+	border-top-style: solid;
+	border-right-style: solid;
+	border-bottom-style: solid;
+	border-left-style: solid;
+	border-top-color: #DBE2F7;
+	border-right-color: #5071C7;
+	border-bottom-color: #5071C7;
+	border-left-color: #DBE2F7;
+	padding-right: 2px;
+	padding-left: 2px;
+	text-align: center;
+	vertical-align: middle;
+	background-color: #81ABDA;
+}
+.content13-bu3 A:link {
+	font-weight: normal;
+	color: #FFFFFF;
+	text-decoration: none;
+	}
+.content13-bu3 A:visited {
+	font-weight: normal;
+	color: #FFFFFF;
+	text-decoration: none;
+	}
+.content13-bu3 A:hover {
+	font-weight: normal;
+	color: #152260;
+	text-decoration: none;
+	}
+.login_t1 {
+	text-align: right;
+	font-family: "宋体";
+	font-size: 13px;
+	font-weight: normal;
+	color: #FFFFFF;
+	text-decoration: none;
+}
+.login_pw2 {
+	text-align: left;
+	font-family: "宋体","Arial Unicode MS", Tahoma;
+	font-size: 13px;
+	font-weight: normal;
+	color: #000000;
+	text-decoration: none;
+	background-color: #D9E4FF;
+	border: 1px solid #FFFFFF;
+	vertical-align: middle;
+}
+body{ background:#1067b7; margin:0; padding:0;font-size:12px;}
+.TxtUserNameCssClass {
+	BACKGROUND: url(../images/login-image/user_login_name.gif) no-repeat;padding-left:18px;BORDER: #b4b8bb 1px solid;WIDTH: 190px; height:17px; 
+}
+.TxtPasswordCssClass {
+	BACKGROUND: url(../images/login-image/user_login_password.gif) no-repeat;padding-left:18px;BORDER: #b4b8bb 1px solid;  WIDTH: 190px; height:17px; 
+}
+.button {
+	BACKGROUND: url(../images/login-image/buttom_bg1.gif) no-repeat; WIDTH: 72px; CURSOR: pointer; COLOR: #395366; BORDER-TOP-STYLE: none; LINE-HEIGHT: 17px; PADDING-TOP: 3px; BORDER-RIGHT-STYLE: none; BORDER-LEFT-STYLE: none; HEIGHT: 20px; BORDER-BOTTOM-STYLE: none;
+}
+a:link{ list-style:none;}
