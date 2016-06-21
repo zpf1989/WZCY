@@ -1,0 +1,112 @@
+﻿<div class="easyui-layout" fit="true">
+    <div region="north" title="基本信息" height="400px;">
+        <form id="editForm" style="padding:0px;">
+            <input id="txtSOID" name="SaleOrderID" hidden="hidden" />
+            <table class="card-centent-table">
+                <tr>
+                    <td class="card-table-label">订单编号</td>
+                    <td class="card-table-centent"><input type="text" name="SaleOrderCode" id="txtSOCode" class="easyui-textbox" data-options="required:true,validType:'maxLength[60]'" /></td>
+                    <td class="card-table-label">订单类型</td>
+                    <td class="card-table-centent">
+                        <span>
+                            <input type="text" id="txtCardBillTypeName" class="easyui-textbox help-text" readonly="readonly" data-options="required:true" />
+                            <input type="button" value="..." id="btnCardHelpBillType" class="btn-help" />
+                            <input id="txtCardSOTypeID" name="BillTypeID" hidden="hidden" />
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="card-table-label">订单物料</td>
+                    <td class="card-table-centent">
+                        <span>
+                            <input type="text" id="txtCardMName" class="easyui-textbox help-text" readonly="readonly" data-options="required:true" />
+                            <input type="button" value="..." id="btnCardHelpMaterial" class="btn-help" />
+                            <input id="txtCardMID" name="MaterialID" hidden="hidden" />
+                        </span>
+                    </td>
+                    <td class="card-table-label">计量单位</td>
+                    <td class="card-table-centent">
+                        <span>
+                            <input type="text" id="txtCardUName" class="easyui-textbox help-text" readonly="readonly" data-options="required:true" />
+                            <input type="button" value="..." id="btnCardHelpUnit" class="btn-help" />
+                            <input id="txtCardUID" name="SaleUnitID" hidden="hidden" />
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="card-table-label">客户</td>
+                    <td class="card-table-centent">
+                        <span>
+                            <input type="text" id="txtCardClientName" class="easyui-textbox help-text" readonly="readonly" />
+                            <input type="button" value="..." id="btnCardHelpClient" class="btn-help" />
+                            <input id="txtCardClientID" name="ClientID" hidden="hidden" />
+                        </span>
+                    </td>
+                    <td class="card-table-label">销售日期</td>
+                    <td class="card-table-centent"><input type="text" id="txtCardSaleDate" name="SaleDate" class="easyui-datebox" data-options="required:true" /></td>
+                </tr>
+                <tr>
+                    <td class="card-table-label">订单状态</td>
+                    <td class="card-table-centent"><input type="text" id="txtCardSOState" name="SaleState" class="easyui-textbox" readonly="readonly" /></td>
+                    <td class="card-table-label">生产工艺</td>
+                    <td class="card-table-centent"><input type="text" id="txtCardRouting" name="Routing" class="easyui-textbox" /></td>
+                </tr>
+                <tr>
+                    <td class="card-table-label">销售数量</td>
+                    <td class="card-table-centent"><input type="text" id="txtCardSaleQty" name="SaleQty" class="easyui-numberbox" precision="2" /></td>
+                    <td class="card-table-label">销售单价</td>
+                    <td class="card-table-centent"><input type="text" id="txtCardPrice" name="SalePrice" class="easyui-numberbox" precision="2" /></td>
+                </tr>
+                <tr>
+                    <td class="card-table-label">销售金额</td>
+                    <td class="card-table-centent"><input type="text" id="txtCardSaleCost" name="SaleCost" class="easyui-numberbox" precision="2" /></td>
+                    <td class="card-table-label">交货日期</td>
+                    <td class="card-table-centent"><input type="text" id="txtCardFinishDate" name="FinishDate" class="easyui-datebox" data-options="required:true" /></td>
+                </tr>
+                <tr>
+                    <td class="card-table-label">创建人</td>
+                    <td class="card-table-centent"><input type="text" id="txtCardCreatorName" class="easyui-textbox" readonly="readonly" /></td>
+                    <td class="card-table-label">创建时间</td>
+                    <td class="card-table-centent"><input type="text" id="txtCardCreateTime" class="easyui-textbox" readonly="readonly" /></td>
+                </tr>
+                <tr>
+                    <td class="card-table-label">修改人</td>
+                    <td class="card-table-centent"><input type="text" id="txtCardEditorName" class="easyui-textbox" readonly="readonly" /></td>
+                    <td class="card-table-label">修改时间</td>
+                    <td class="card-table-centent"><input type="text" id="txtCardEditTime" class="easyui-textbox" readonly="readonly" /></td>
+                </tr>
+                <tr>
+                    <td class="card-table-label">初审人</td>
+                    <td class="card-table-centent"><input type="text" id="txtFirstCheckerName" class="easyui-textbox" readonly="readonly" /></td>
+                    <td class="card-table-label">初审时间</td>
+                    <td class="card-table-centent"><input type="text" id="txtFirstCheckTime" class="easyui-textbox" readonly="readonly" /></td>
+                </tr>
+                <tr>
+                    <td class="card-table-label">初审意见</td>
+                    <td colspan="3" class="card-table-centent"><input type="text" id="txtFirstCheckView" class="easyui-textbox" style="width:480px;" readonly="readonly" /></td>
+                </tr>
+                <tr>
+                    <td class="card-table-label">复核人</td>
+                    <td class="card-table-centent"><input type="text" id="txtSecondCheckerName" class="easyui-textbox" readonly="readonly" /></td>
+                    <td class="card-table-label">分阅人</td>
+                    <td class="card-table-centent"><input type="text" id="txtReaderName" class="easyui-textbox" readonly="readonly" /></td>
+                </tr>
+                <tr>
+                    <td class="card-table-label">备注</td>
+                    <td class="card-table-centent" colspan="3"><input type="text" id="txtCardRemark" name="Remark" class="easyui-textbox" style="width: 480px;" data-options="validType:'maxLength[1024]'" /></td>
+                </tr>
+            </table>
+        </form>
+    </div>
+    <div region="center" title="订单行信息">
+        <table id="grid" style="width: 100%; height: 100%;"></table>
+    </div>
+</div>
+<!-- 这里需要先引用SaleOrder.js ，再调用initCardControls-->
+<script src="SaleOrder.js"></script>
+<script>
+    $(function () {
+        saleorder.initCardControls();
+        $('.help-text').css({ 'width': '146px' });
+    });
+</script>

@@ -21,7 +21,7 @@ var materials = {
     txtCardUnitID: $('#txtCardUnitID'),
     txtCardPrice: $('#txtPrice'),
     txtCardWasterRate: $('#txtWasterRate'),
-    cardFormWidth: 600,
+    cardFormWidth: 680,
     cardFormHeight: 360,
     cardFormUrl: 'MaterialsAdd.html',
     saveUrl: 'MaterialsService.asmx/Save',

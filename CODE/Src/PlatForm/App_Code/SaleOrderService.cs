@@ -38,7 +38,7 @@ public class SaleOrderService : BaseService
     [WebMethod(EnableSession = true)]
     public void GetSaleOrderWithItems()
     {
-        string orderId = Context.Request["SaleOrderID"];
+        string orderId = Context.Request["SOID"];
         string json = string.Empty;
         if (ValidateUtil.isBlank(orderId))
         {
@@ -62,12 +62,22 @@ public class SaleOrderService : BaseService
         //过滤条件
         //这里拼写过滤条件时，使用了很多sql，违背分层原则，为了省事儿先这样吧
         string whereSql = string.Empty;
-        string code = Context.Request["SaleOrderCode"];
+        string code = Context.Request["SOCode"];
         if (!ValidateUtil.isBlank(code))
         {
-            whereSql += string.Format(" and si.SaleOrderCode like '%{0}%'", code);
+            whereSql += string.Format(" and s.SaleOrderCode like '%{0}%'", code);
         }
-
+        DateTime dtTemp;
+        string saleDateBegin = Context.Request["SaleDateBegin"];
+        if (!ValidateUtil.isBlank(saleDateBegin) && DateTime.TryParse(saleDateBegin, out dtTemp))
+        {
+            whereSql += string.Format(" and CONVERT(DATE,s.SaleDate,112) >='{0}'", saleDateBegin);
+        }
+        string saleDateEnd = Context.Request["SaleDateEnd"];
+        if (!ValidateUtil.isBlank(saleDateEnd) && DateTime.TryParse(saleDateEnd, out dtTemp))
+        {
+            whereSql += string.Format(" and CONVERT(DATE,s.SaleDate,112) <='{0}'", saleDateEnd);
+        }
         //分页参数：easyui分页查询时，page、rows
         int pageIndex = 1;
         Int32.TryParse(Context.Request["page"], out pageIndex);
