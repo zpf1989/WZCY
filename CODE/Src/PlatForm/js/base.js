@@ -163,13 +163,14 @@ var gFunc = {
         url:获取列表数据的url
         toolbar:列表工具栏配置
         columns:列表列配置,
-        hidecols:列表中要隐藏的列数组，如各种id字段
+        hidecols:列表中要隐藏的列数组，如各种id字段,
+        singleSelect:是否多选（帮助一般单选）
     */
     initGridPublic: function (grid, options) {
         $(grid).datagrid({
             title: options.title,
             iconCls: options.icon,
-            singleSelect: false,
+            singleSelect: options.singleSelect,
             idField: options.key,//列表主键，必须
             url: options.url,
             remoteSort: false,

@@ -6,6 +6,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using OA.BLL;
 using OA.Model;
+using OA.GeneralClass;
 
 public partial class LogIn : System.Web.UI.Page
 {
@@ -36,12 +37,12 @@ public partial class LogIn : System.Web.UI.Page
     /// </summary>
     private void GetModelByCode()
     {
-        if (string.IsNullOrEmpty(txtID.Value.Trim()))
+        if (ValidateUtil.isBlank(txtID.Value.Trim()))
         {
             Response.Write("<script>alert('请输入用户名！')</script>");
             return;
         }
-        if (string.IsNullOrEmpty(txtPwd.Value.Trim()))
+        if (ValidateUtil.isBlank(txtPwd.Value.Trim()))
         {
             Response.Write("<script>alert('请输入密码！')</script>");
             return;

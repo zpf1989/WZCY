@@ -197,7 +197,7 @@ namespace OA.DALFactory
         }
         #endregion
 
-        #region 基础数据
+        #region 库存管理—— 基础数据
         public static OA.IDAL.IMaterialClassDAL GetIMaterialClassDAL()
         {
             OA.IDAL.IMaterialClassDAL idal;
@@ -269,6 +269,63 @@ namespace OA.DALFactory
                 case "SQLServer":
                 default:
                     idal = new OA.DAL.MaterialsDAL();
+                    break;
+            }
+            return idal;
+        }
+        public static OA.IDAL.IWareHouseDAL GetIWareHouseDAL()
+        {
+            OA.IDAL.IWareHouseDAL idal;
+            switch (dbType)
+            {
+                //case "Oracle":
+                //    iAffix = new Upload.DALORACLE.Affix();
+                //    break;
+                //case "GBase":
+                //    iAffix = new Upload.DALGBase.Affix();
+                //    break;
+                case "SQLServer":
+                default:
+                    idal = new OA.DAL.WareHouseDAL();
+                    break;
+            }
+            return idal;
+        }
+        #endregion
+
+        #region 销售管理——基础数据
+        public static OA.IDAL.IPayTypeDAL GetIPayTypeDAL()
+        {
+            OA.IDAL.IPayTypeDAL idal;
+            switch (dbType)
+            {
+                //case "Oracle":
+                //    iAffix = new Upload.DALORACLE.Affix();
+                //    break;
+                //case "GBase":
+                //    iAffix = new Upload.DALGBase.Affix();
+                //    break;
+                case "SQLServer":
+                default:
+                    idal = new OA.DAL.PayTypeDAL();
+                    break;
+            }
+            return idal;
+        }
+        public static OA.IDAL.IClientDAL GetIClientDAL()
+        {
+            OA.IDAL.IClientDAL idal;
+            switch (dbType)
+            {
+                //case "Oracle":
+                //    iAffix = new Upload.DALORACLE.Affix();
+                //    break;
+                //case "GBase":
+                //    iAffix = new Upload.DALGBase.Affix();
+                //    break;
+                case "SQLServer":
+                default:
+                    idal = new OA.DAL.ClientDAL();
                     break;
             }
             return idal;

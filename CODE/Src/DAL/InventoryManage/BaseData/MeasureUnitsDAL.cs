@@ -17,11 +17,9 @@ namespace OA.DAL
     {
         public const string TableName = "MeasureUnits";
 
-        ILogHelper<MeasureUnitsDAL> logger = LoggerFactory.GetLogger<MeasureUnitsDAL>();
-
         public override List<MeasureUnits> GetEntitiesByPage(PageEntity pageEntity, string whereSql = null, string orderBySql = null)
         {
-            if (string.IsNullOrEmpty(orderBySql))
+            if (ValidateUtil.isBlank(orderBySql))
             {
                 orderBySql = "UnitCode";
             }
@@ -65,7 +63,7 @@ namespace OA.DAL
             {
                 cls = units[i];
                 //1、组织sql
-                if (string.IsNullOrEmpty(cls.UnitID))
+                if (ValidateUtil.isBlank(cls.UnitID))
                 {
                     //新增
                     cls.UnitID = Guid.NewGuid().ToString();
@@ -93,7 +91,7 @@ namespace OA.DAL
             }
             catch (Exception ex)
             {
-                logger.LogError(ex);
+                base.Logger.LogError(ex);
                 return false;
             }
             //3、返回成功或失败的标志
@@ -128,7 +126,7 @@ namespace OA.DAL
             }
             catch (Exception ex)
             {
-                logger.LogError(ex);
+                base.Logger.LogError(ex);
                 return false;
             }
             //3、返回成功或失败的标志
@@ -147,6 +145,11 @@ namespace OA.DAL
                 return false;
             }
             return base.Exists(string.Format(" and UnitCode in ('{0}')", string.Join("','", codes)));
+        }
+
+        public override List<MeasureUnits> GetEntitiesByPageForHelp(PageEntity pageEntity, string whereSql = null, string orderBySql = null)
+        {
+            return GetEntitiesByPage(pageEntity, whereSql, orderBySql);
         }
     }
 }

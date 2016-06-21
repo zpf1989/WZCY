@@ -69,11 +69,14 @@
   <ItemGroup>
     <Compile Include="Accessories\AccessoriesDAL.cs" />
     <Compile Include="BaseDAL.cs" />
-    <Compile Include="BaseData\MeasureUnitsDAL.cs" />
-    <Compile Include="BaseData\MaterialTypeDAL.cs" />
-    <Compile Include="BaseData\MaterialsDAL.cs" />
-    <Compile Include="BaseData\MaterialClassDAL.cs" />
+    <Compile Include="InventoryManage\BaseData\MeasureUnitsDAL.cs" />
+    <Compile Include="InventoryManage\BaseData\MaterialTypeDAL.cs" />
+    <Compile Include="InventoryManage\BaseData\MaterialsDAL.cs" />
+    <Compile Include="InventoryManage\BaseData\MaterialClassDAL.cs" />
     <Compile Include="DB.cs" />
+    <Compile Include="InventoryManage\BaseData\WareHouseDAL.cs" />
+    <Compile Include="SalesManage\BaseData\PayTypeDAL.cs" />
+    <Compile Include="SalesManage\BaseData\ClientDAL.cs" />
     <Compile Include="SysManage\DepartmentDAL.cs" />
     <Compile Include="SysManage\FunctionDAL.cs" />
     <Compile Include="SysManage\RFRelationDAL.cs" />
@@ -109,6 +112,7 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

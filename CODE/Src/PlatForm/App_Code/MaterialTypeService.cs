@@ -25,19 +25,28 @@ public class MaterialTypeService : System.Web.Services.WebService
         //如果使用设计的组件，请取消注释以下行 
         //InitializeComponent(); 
     }
-
     [WebMethod(EnableSession = true)]
     public void GetList()
+    {
+        GetListInner(false);
+    }
+    [WebMethod(EnableSession = true)]
+    public void GetListForHelp()
+    {
+        GetListInner(true);
+
+    }
+    public void GetListInner(bool isForHelp)
     {
         //过滤条件
         string whereSql = string.Empty;
         string code = Context.Request["MaterialTypeCode"];
-        if (!string.IsNullOrEmpty(code))
+        if (!ValidateUtil.isBlank(code))
         {
             whereSql += string.Format(" and MaterialTypeCode like '%{0}%'", code);
         }
         string name = Context.Request["MaterialTypeName"];
-        if (!string.IsNullOrEmpty(name))
+        if (!ValidateUtil.isBlank(name))
         {
             whereSql += string.Format(" and MaterialTypeName like '%{0}%'", name);
         }
@@ -47,7 +56,7 @@ public class MaterialTypeService : System.Web.Services.WebService
         int pageSize = 10;
         Int32.TryParse(Context.Request["rows"], out pageSize);
         PageEntity pageEntity = new PageEntity(pageIndex, pageSize);
-        var users = bll.GetTypesByPage(pageEntity, whereSql, string.Empty);
+        var users = bll.GetTypesByPage(pageEntity, whereSql, string.Empty, isForHelp);
         //easyui分页查询，要求返回json数据，并且包含total和rows
         string json = new
         {
@@ -64,7 +73,7 @@ public class MaterialTypeService : System.Web.Services.WebService
         using (var reader = new System.IO.StreamReader(Context.Request.InputStream))
         {
             string data = reader.ReadToEnd();
-            if (!string.IsNullOrEmpty(data))
+            if (!ValidateUtil.isBlank(data))
             {
                 var types = data.DeSerializeFromJson<List<MaterialType>>();
                 if (types != null && types.Count > 0)
@@ -89,7 +98,7 @@ public class MaterialTypeService : System.Web.Services.WebService
         using (var reader = new System.IO.StreamReader(Context.Request.InputStream))
         {
             string data = reader.ReadToEnd();
-            if (!string.IsNullOrEmpty(data))
+            if (!ValidateUtil.isBlank(data))
             {
                 var typeIds = data.DeSerializeFromJson<List<string>>();
                 if (typeIds != null && typeIds.Count > 0)

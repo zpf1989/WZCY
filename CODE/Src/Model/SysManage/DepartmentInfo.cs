@@ -27,6 +27,10 @@ namespace OA.Model
         /// </summary>
         public string ParentDeptID { get; set; }
         /// <summary>
+        /// 上级部门名称
+        /// </summary>
+        public string ParentDeptName { get; set; }
+        /// <summary>
         /// 备注
         /// </summary>
         public string Remark { get; set; }

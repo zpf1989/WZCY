@@ -16,10 +16,9 @@ namespace OA.DAL
     public class MaterialClassDAL : BaseDAL<MaterialClass>, IMaterialClassDAL
     {
         public const string TableName = "MaterialClass";
-        ILogHelper<MaterialClassDAL> logger = LoggerFactory.GetLogger<MaterialClassDAL>();
         public override List<MaterialClass> GetEntitiesByPage(PageEntity pageEntity, string whereSql = null, string orderBySql = null)
         {
-            if (string.IsNullOrEmpty(orderBySql))
+            if (ValidateUtil.isBlank(orderBySql))
             {
                 orderBySql = "MaterialClassCode";
             }
@@ -63,7 +62,7 @@ namespace OA.DAL
             {
                 cls = classes[i];
                 //1、组织sql
-                if (string.IsNullOrEmpty(cls.MaterialClassID))
+                if (ValidateUtil.isBlank(cls.MaterialClassID))
                 {
                     //新增
                     cls.MaterialClassID = Guid.NewGuid().ToString();
@@ -92,7 +91,7 @@ namespace OA.DAL
             }
             catch (Exception ex)
             {
-                logger.LogError(ex);
+                base.Logger.LogError(ex);
                 return false;
             }
             //3、返回成功或失败的标志
@@ -127,7 +126,7 @@ namespace OA.DAL
             }
             catch (Exception ex)
             {
-                logger.LogError(ex);
+                base.Logger.LogError(ex);
                 return false;
             }
             //3、返回成功或失败的标志
@@ -146,6 +145,11 @@ namespace OA.DAL
         protected override string GetTableName()
         {
             return TableName;
+        }
+
+        public override List<MaterialClass> GetEntitiesByPageForHelp(PageEntity pageEntity, string whereSql = null, string orderBySql = null)
+        {
+            return GetEntitiesByPage(pageEntity, whereSql, orderBySql);
         }
     }
 }

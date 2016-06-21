@@ -66,11 +66,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Accessories\IAccessoriesDAL.cs" />
-    <Compile Include="BaseData\IMaterialsDAL.cs" />
-    <Compile Include="BaseData\IMaterialClassDAL.cs" />
-    <Compile Include="BaseData\IMaterialTypeDAL.cs" />
-    <Compile Include="BaseData\IMeasureUnitsDAL.cs" />
+    <Compile Include="InventoryManage\BaseData\IMaterialsDAL.cs" />
+    <Compile Include="InventoryManage\BaseData\IMaterialClassDAL.cs" />
+    <Compile Include="InventoryManage\BaseData\IMaterialTypeDAL.cs" />
+    <Compile Include="InventoryManage\BaseData\IMeasureUnitsDAL.cs" />
     <Compile Include="IBaseDAL.cs" />
+    <Compile Include="InventoryManage\BaseData\IWareHouseDAL.cs" />
+    <Compile Include="SalesManage\BaseData\IPayTypeDAL.cs" />
+    <Compile Include="SalesManage\BaseData\IClientDAL.cs" />
     <Compile Include="SysManage\IDepartmentDAL.cs" />
     <Compile Include="SysManage\IFunctionDAL.cs" />
     <Compile Include="SysManage\IRFRelationDAL.cs" />

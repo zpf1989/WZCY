@@ -7,34 +7,34 @@ using System.Text;
 
 namespace OA.BLL
 {
-    public class MeasureUnitsBLL : BaseBLL<MeasureUnits>
+    public class MaterialTypeBLL : BaseBLL<MaterialType>
     {
-        private readonly OA.IDAL.IMeasureUnitsDAL idal = DALFactory.Helper.GetIMeasureUnitsDAL();
+        private readonly OA.IDAL.IMaterialTypeDAL idal = DALFactory.Helper.GetIMaterialTypeDAL();
 
-        public List<MeasureUnits> GetUnitsByPage(PageEntity pageEntity, string whereSql = null, string orderBySql = null)
+        public List<MaterialType> GetTypesByPage(PageEntity pageEntity, string whereSql = null, string orderBySql = null, bool isForHelp = false)
         {
-            return idal.GetEntitiesByPage(pageEntity, whereSql, orderBySql);
+            return isForHelp ? idal.GetEntitiesByPageForHelp(pageEntity, whereSql, orderBySql) : idal.GetEntitiesByPage(pageEntity, whereSql, orderBySql);
         }
 
-        public bool Save(params MeasureUnits[] units)
+        public bool Save(params MaterialType[] types)
         {
-            if (!RepeatCheck(units))
+            if (!RepeatCheck(types))
             {
                 return false;
             }
-            return idal.Save(units);
+            return idal.Save(types);
         }
 
-        public bool Delete(params string[] unitIds)
+        public bool Delete(params string[] typeIds)
         {
-            return idal.Delete(unitIds);
+            return idal.Delete(typeIds);
         }
         /// <summary>
         /// 编号重复检查
         /// </summary>
         /// <param name="entities"></param>
         /// <returns>true:无重复；false：有重复</returns>
-        public override bool RepeatCheck(MeasureUnits[] entities)
+        public override bool RepeatCheck(MaterialType[] entities)
         {
             if (entities == null || entities.Length < 1)
             {
@@ -42,15 +42,15 @@ namespace OA.BLL
             }
 
             //"客户端"校验
-            var sameCode = entities.ToLookup(m => m.UnitCode).Count;
+            var sameCode = entities.ToLookup(m => m.MaterialTypeCode).Count;
             if (sameCode != entities.Length)
             {
                 return false;
             }
             //服务端校验，只校验id为空的（即新增数据）
             var newCodes = (from m in entities
-                            where ValidateUtil.isBlank(m.UnitID)
-                            select m.UnitCode).ToArray();
+                            where ValidateUtil.isBlank(m.MaterialTypeID)
+                            select m.MaterialTypeCode).ToArray();
             if (newCodes == null || newCodes.Length < 1)
             {
                 return true;

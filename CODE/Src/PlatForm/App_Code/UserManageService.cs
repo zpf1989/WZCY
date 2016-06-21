@@ -30,15 +30,26 @@ public class UserManageService : BaseService
     [WebMethod(EnableSession = true)]
     public void GetList()
     {
+        GetListInner(false);
+    }
+
+    [WebMethod(EnableSession = true)]
+    public void GetListForHelp()
+    {
+        GetListInner(true);
+
+    }
+    public void GetListInner(bool isForHelp)
+    {
         //过滤条件
         string whereSql = string.Empty;
         string name = Context.Request["UserName"];
-        if (!string.IsNullOrEmpty(name))
+        if (!ValidateUtil.isBlank(name))
         {
             whereSql += string.Format(" and UserName like '%{0}%'", name);//待定，需加表前缀
         }
         string deptName = Context.Request["DeptName"];
-        if (!string.IsNullOrEmpty(deptName))
+        if (!ValidateUtil.isBlank(deptName))
         {
             whereSql += string.Format(" and DeptName like '%{0}%'", deptName);//待定，需加表前缀
         }
@@ -48,7 +59,7 @@ public class UserManageService : BaseService
         int pageSize = 10;
         Int32.TryParse(Context.Request["rows"], out pageSize);
         PageEntity pageEntity = new PageEntity(pageIndex, pageSize);
-        var users = userManageBLL.GetUsersByPage(pageEntity, whereSql, null);
+        var users = userManageBLL.GetUsersByPage(pageEntity, whereSql, null, isForHelp);
         //easyui分页查询，要求返回json数据，并且包含total和rows
         string json = new
         {
@@ -64,7 +75,7 @@ public class UserManageService : BaseService
         using (var reader = new System.IO.StreamReader(Context.Request.InputStream))
         {
             string data = reader.ReadToEnd();
-            if (!string.IsNullOrEmpty(data))
+            if (!ValidateUtil.isBlank(data))
             {
                 var empIds = data.DeSerializeFromJson<List<string>>();
                 if (empIds != null && empIds.Count > 0)
@@ -88,7 +99,7 @@ public class UserManageService : BaseService
         using (var reader = new System.IO.StreamReader(Context.Request.InputStream))
         {
             string data = reader.ReadToEnd();
-            if (!string.IsNullOrEmpty(data))
+            if (!ValidateUtil.isBlank(data))
             {
                 var users = data.DeSerializeFromJson<List<UserInfo>>();
                 if (users != null && users.Count > 0)
@@ -98,7 +109,7 @@ public class UserManageService : BaseService
                     foreach (UserInfo user in users)
                     {
                         //默认密码=用户编号
-                        if (string.IsNullOrEmpty(user.UserPwd))
+                        if (ValidateUtil.isBlank(user.UserPwd))
                         {
                             user.UserPwd = security.Encrypt(user.UserCode, security.se_yaoshi);
                         }
@@ -130,7 +141,7 @@ public class UserManageService : BaseService
         using (var reader = new System.IO.StreamReader(Context.Request.InputStream))
         {
             string dataStr = reader.ReadToEnd();
-            if (!string.IsNullOrEmpty(dataStr))
+            if (!ValidateUtil.isBlank(dataStr))
             {
                 var dataList = dataStr.DeSerializeFromJson<List<string[]>>();
                 if (dataList == null || dataList.Count < 2)

@@ -80,6 +80,7 @@ var classes = {
                 }
             ]],
             hidecols: ['MaterialClassID'],
+            singleSelect: false
         });
     },
     getRowIndexByEditor: function (target) {

@@ -181,6 +181,7 @@ var users = {
                 }
             ]],
             hidecols: ['UserID', 'DeptID', 'RoleID'],
+            singleSelect: false
         });
     },
     getRowIndexByEditor: function (target) {

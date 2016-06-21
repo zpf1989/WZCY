@@ -12,8 +12,15 @@ namespace OA.DAL
 {
     public abstract class BaseDAL<T> : IBaseDAL<T> where T : class
     {
-        ILogHelper<MaterialsDAL> logger = LoggerFactory.GetLogger<MaterialsDAL>();
+        public ILogHelper<T> Logger
+        {
+            get
+            {
+                return LoggerFactory.GetLogger<T>();
+            }
+        }
         public abstract List<T> GetEntitiesByPage(PageEntity pageEntity, string whereSql = null, string orderBySql = null);
+        public abstract List<T> GetEntitiesByPageForHelp(PageEntity pageEntity, string whereSql = null, string orderBySql = null);
         public abstract bool Save(params T[] entities);
 
         public abstract bool Delete(params string[] ids);
@@ -22,7 +29,7 @@ namespace OA.DAL
 
         public bool Exists(string where)
         {
-            if (string.IsNullOrEmpty(where))
+            if (ValidateUtil.isBlank(where))
             {
                 return false;
             }
@@ -36,9 +43,12 @@ namespace OA.DAL
             }
             catch (Exception ex)
             {
-                logger.LogError(ex);
+                Logger.LogError(ex);
                 return false;
             }
         }
+
+
+
     }
 }

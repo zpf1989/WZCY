@@ -161,11 +161,11 @@ namespace OA.DAL
         public DataSet GetPageList(string RoleCode, string RoleName, int pageSize, int startRowIndex)
         {
             StringBuilder strSql = new StringBuilder();
-            if (!string.IsNullOrEmpty(RoleCode))
+            if (!ValidateUtil.isBlank(RoleCode))
             {
                 strSql.Append(" and RoleCode like'%" + RoleCode.Trim() + "%' ");
             }
-            if (!string.IsNullOrEmpty(RoleName))
+            if (!ValidateUtil.isBlank(RoleName))
             {
                 strSql.Append(" and RoleName like'%" + RoleName.Trim() + "%' ");
             }
@@ -194,11 +194,11 @@ namespace OA.DAL
             strSql.AppendLine(" select count(*) from OA_Role ")
             .AppendLine(" where 1=1 ");
 
-            if (!string.IsNullOrEmpty(RoleCode))
+            if (!ValidateUtil.isBlank(RoleCode))
             {
                 strSql.Append(" and RoleCode like'%" + RoleCode.Trim() + "%' ");
             }
-            if (!string.IsNullOrEmpty(RoleName))
+            if (!ValidateUtil.isBlank(RoleName))
             {
                 strSql.Append(" and RoleName like'%" + RoleName.Trim() + "%' ");
             }

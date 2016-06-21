@@ -66,10 +66,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Accessories\Accessories.cs" />
-    <Compile Include="BaseData\MaterialClass.cs" />
-    <Compile Include="BaseData\Materials.cs" />
-    <Compile Include="BaseData\MaterialType.cs" />
-    <Compile Include="BaseData\MeasureUnits.cs" />
+    <Compile Include="InventoryManage\BaseData\MaterialClass.cs" />
+    <Compile Include="InventoryManage\BaseData\Materials.cs" />
+    <Compile Include="InventoryManage\BaseData\MaterialType.cs" />
+    <Compile Include="InventoryManage\BaseData\MeasureUnits.cs" />
+    <Compile Include="InventoryManage\BaseData\WareHouse.cs" />
+    <Compile Include="SalesManage\BaseData\Client.cs" />
+    <Compile Include="SalesManage\BaseData\PayType.cs" />
     <Compile Include="SysManage\DepartmentInfo.cs" />
     <Compile Include="SysManage\FunctionInfo.cs" />
     <Compile Include="SysManage\RFRelation.cs" />
@@ -90,6 +93,7 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -14,32 +14,45 @@ namespace OA.DAL
     public class DepartmentDAL : BaseDAL<DepartmentInfo>, IDepartmentDAL
     {
         public const string TableName = "OA_Dept";
-        public List<DepartmentInfo> GetAllDepartmentsForGridHelp()
+
+        public override List<DepartmentInfo> GetEntitiesByPage(PageEntity pageEntity, string whereSql = null, string orderBySql = null)
         {
+            if (ValidateUtil.isBlank(orderBySql))
+            {
+                orderBySql = "d1.DeptCode";
+            }
             List<DepartmentInfo> depts = new List<DepartmentInfo>();
-            //1、从数据库查询数据
-            string sql = string.Format("select * from {0}", TableName);
-            //2、DataSet转换成List<DepartmentInfo>
-            DataSet ds = DBAccess.ExecuteDataset(DB.Type, DB.ConnectionString, CommandType.Text, sql, null);
+            DataSet ds = DB.GetDataByPage(new PageQueryEntity
+            {
+                PageEntity = pageEntity,
+                TableName = string.Format(" {0} d1 left join {1} d2 on d1.ParentDeptID=d2.DeptID ", TableName, TableName),
+                PK = "d1.DeptID",
+                Fields = "d1.DeptID,d1.DeptCode,d1.DeptName,d1.ParentDeptID,d1.Remark,d2.DeptName ParentDeptName",
+                OrderBySql = orderBySql,
+                WhereSql = whereSql
+            });
             if (ds.HasRow())
             {
                 foreach (DataRow row in ds.Tables[0].Rows)
                 {
-                    depts.Add(new DepartmentInfo()
+                    depts.Add(new DepartmentInfo
                     {
-                        DeptID = row["DeptId"].ToString(),
+                        DeptID = row["DeptID"].ToString(),
                         DeptCode = row["DeptCode"].ToString(),
                         DeptName = row["DeptName"].ToString(),
-                        Remark = row["Remark"].ToString(),
+                        ParentDeptID = row["ParentDeptID"].ToString(),
+                        ParentDeptName = row["ParentDeptName"].ToString(),
+                        Remark = row["Remark"].ToString()
                     });
                 }
             }
+
             return depts;
         }
 
-        public override List<DepartmentInfo> GetEntitiesByPage(PageEntity pageEntity, string whereSql = null, string orderBySql = null)
+        public override List<DepartmentInfo> GetEntitiesByPageForHelp(PageEntity pageEntity, string whereSql = null, string orderBySql = null)
         {
-            throw new NotImplementedException("尚未实现");
+            return GetEntitiesByPage(pageEntity, whereSql, orderBySql);
         }
 
         public override bool Save(params DepartmentInfo[] entities)
@@ -68,5 +81,6 @@ namespace OA.DAL
             }
             return base.Exists(string.Format(" and DeptCode in ('{0}')", string.Join("','", deptCodes)));
         }
+
     }
 }

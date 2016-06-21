@@ -12,11 +12,6 @@ namespace OA.IDAL
     public interface IDepartmentDAL : IBaseDAL<DepartmentInfo>
     {
         /// <summary>
-        /// 针对列表帮助，获取所有部门信息（精简信息）
-        /// </summary>
-        /// <returns></returns>
-        List<DepartmentInfo> GetAllDepartmentsForGridHelp();
-        /// <summary>
         /// 部门编号是否已存在
         /// </summary>
         /// <param name="deptCodes"></param>

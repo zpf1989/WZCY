@@ -4,6 +4,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Services;
 using OA.GeneralClass.Extensions;
+using OA.GeneralClass;
+using OA.Model;
 
 /// <summary>
 /// DepartmentService 的摘要说明
@@ -14,8 +16,8 @@ using OA.GeneralClass.Extensions;
 // [System.Web.Script.Services.ScriptService]
 public class DepartmentService : System.Web.Services.WebService
 {
-     OA.BLL.DepartmentBLL departmentBLL = new OA.BLL.DepartmentBLL();
-     public DepartmentService()
+    OA.BLL.DepartmentBLL departmentBLL = new OA.BLL.DepartmentBLL();
+    public DepartmentService()
     {
 
         //如果使用设计的组件，请取消注释以下行 
@@ -25,8 +27,31 @@ public class DepartmentService : System.Web.Services.WebService
     [WebMethod(EnableSession = true)]
     public void GetForGridHelp()
     {
-        List<OA.Model.DepartmentInfo> depts = departmentBLL.GetAllDepartmentsForGridHelp();
-        string json = depts.SerializeToJson();
+        //过滤条件
+        string whereSql = string.Empty;
+        string code = Context.Request["DeptCode"];
+        if (!ValidateUtil.isBlank(code))
+        {
+            whereSql += string.Format(" and DeptCode like '%{0}%'", code);
+        }
+        string name = Context.Request["DeptName"];
+        if (!ValidateUtil.isBlank(name))
+        {
+            whereSql += string.Format(" and DeptName like '%{0}%'", name);
+        }
+        //分页参数：easyui分页查询时，page、rows
+        int pageIndex = 1;
+        Int32.TryParse(Context.Request["page"], out pageIndex);
+        int pageSize = 10;
+        Int32.TryParse(Context.Request["rows"], out pageSize);
+        PageEntity pageEntity = new PageEntity(pageIndex, pageSize);
+        List<DepartmentInfo> depts = departmentBLL.GetEntitiesByPageForHelp(pageEntity, whereSql, string.Empty);
+        //easyui分页查询，要求返回json数据，并且包含total和rows
+        string json = new
+        {
+            total = pageEntity.TotalRecords,//总记录数已被更新
+            rows = depts
+        }.SerializeToJson();
         Context.Response.WriteJson(json);
     }
 

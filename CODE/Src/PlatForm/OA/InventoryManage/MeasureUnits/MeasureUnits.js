@@ -71,6 +71,7 @@ var units = {
                 }
             ]],
             hidecols: ['UnitID'],
+            singleSelect: false
         });
     },
     getRowIndexByEditor: function (target) {
