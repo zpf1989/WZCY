@@ -16,7 +16,7 @@ using OA.Model;
 // [System.Web.Script.Services.ScriptService]
 public class SaleOrderService : BaseService
 {
-    OA.BLL.SaleOrderBLL soBLL = new OA.BLL.SaleOrderBLL();
+    OA.BLL.SaleOrderBLL bll = new OA.BLL.SaleOrderBLL();
     public SaleOrderService()
     {
 
@@ -49,7 +49,7 @@ public class SaleOrderService : BaseService
             Context.Response.WriteJson(json);
             return;
         }
-        var so = soBLL.GetSaleOrderWithItems(orderId);
+        var so = bll.GetSaleOrderWithItems(orderId);
         json = new
         {
             saleorder = so
@@ -66,6 +66,11 @@ public class SaleOrderService : BaseService
         if (!ValidateUtil.isBlank(code))
         {
             whereSql += string.Format(" and s.SaleOrderCode like '%{0}%'", code);
+        }
+        string billType = Context.Request["BillTypeID"];
+        if (!ValidateUtil.isBlank(billType))
+        {
+            whereSql += string.Format(" and s.BillTypeID = '{0}'", billType);
         }
         DateTime dtTemp;
         string saleDateBegin = Context.Request["SaleDateBegin"];
@@ -84,7 +89,7 @@ public class SaleOrderService : BaseService
         int pageSize = 10;
         Int32.TryParse(Context.Request["rows"], out pageSize);
         PageEntity pageEntity = new PageEntity(pageIndex, pageSize);
-        var soList = soBLL.GetSaleOrdersByPage(pageEntity, whereSql, string.Empty, isForHelp);
+        var soList = bll.GetSaleOrdersByPage(pageEntity, whereSql, string.Empty, isForHelp);
         //easyui分页查询，要求返回json数据，并且包含total和rows
         string json = new
         {
@@ -94,4 +99,62 @@ public class SaleOrderService : BaseService
         Context.Response.WriteJson(json);
     }
 
+    [WebMethod(EnableSession = true)]
+    public void Save()
+    {
+        //获取请求数据
+        using (var reader = new System.IO.StreamReader(Context.Request.InputStream))
+        {
+            string data = reader.ReadToEnd();
+            if (!ValidateUtil.isBlank(data))
+            {
+                var saleorder = data.DeSerializeFromJson<SaleOrder>();
+                if (saleorder != null)
+                {
+                    //预处理
+                    if (ValidateUtil.isBlank(saleorder.SaleOrderID))
+                    {
+                        saleorder.Creator = base.GetCurrentID();
+                        saleorder.CreateTime = DateTime.Now;
+                        saleorder.SaleState = "1";//编制
+                    }
+                    else
+                    {
+                        saleorder.Editor = base.GetCurrentID();
+                        saleorder.EditTime = DateTime.Now;
+                    }
+                    //保存
+                    bool rst = bll.Save(saleorder);
+                    if (rst)
+                    {
+                        Context.Response.WriteJson(OA.GeneralClass.ResultCode.Success, null, null);
+                        return;
+                    }
+                }
+            }
+        }
+        Context.Response.WriteJson(OA.GeneralClass.ResultCode.Failure, "保存失败", null);
+    }
+    [WebMethod(EnableSession = true)]
+    public void Delete()
+    {
+        using (var reader = new System.IO.StreamReader(Context.Request.InputStream))
+        {
+            string data = reader.ReadToEnd();
+            if (!ValidateUtil.isBlank(data))
+            {
+                var soIds = data.DeSerializeFromJson<List<string>>();
+                if (soIds != null && soIds.Count > 0)
+                {
+                    bool rst = bll.Delete(soIds.ToArray());
+                    if (rst)
+                    {
+                        Context.Response.WriteJson(OA.GeneralClass.ResultCode.Success, null, null);
+                        return;
+                    }
+                }
+            }
+        }
+        Context.Response.WriteJson(OA.GeneralClass.ResultCode.Failure, "删除失败", null);
+    }
 }

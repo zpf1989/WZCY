@@ -21,7 +21,13 @@ var soFormatter = {
 
 //订单列表对象
 var saleorder = {
+    stateConf: {
+        add: 0,
+        edit: 1,
+        view: 2
+    },
     grid: $('#grid'),
+    gridSOItem: $('#gridSOItem'),
     formSearch: $('#searchForm'),
     btnSearch: $('#btnSearch'),
     txtSearchBillTypeName: $('#txtSearchBillTypeName'),
@@ -30,34 +36,14 @@ var saleorder = {
     btnSearchBillType: $('#btnSearchBillType'),
     dateSearchSaleDateBegin: $('#dateSearchSaleDateBegin'),
     dateSearchSaleDateEnd: $('#dateSearchSaleDateEnd'),
-    btnCardBillType: $('#btnCardHelpBillType'),
-    txtCardBillTypeName: $('#txtCardBillTypeName'),
-    txtCardBillTypeID: $('#txtCardSOTypeID'),
-    btnCardMaterial: $('#btnCardHelpMaterial'),
-    txtCardMName: $('#txtCardMName'),
-    txtCardMID: $('#txtCardMID'),
-    btnCardUnit: $('#btnCardHelpUnit'),
-    txtCardUName: $('#txtCardUName'),
-    txtCardUID: $('#txtCardUID'),
-    btnCardClient: $('#btnCardHelpClient'),
-    txtCardClientName: $('#txtCardClientName'),
-    txtCardClientID: $('#txtCardClientID'),
     cardFormWidth: 700,
-    cardFormHeight: 640,
+    cardFormHeight: 600,
     cardFormUrl: 'SaleOrderAdd.html',
-    saveUrl: 'SaleOrderService.asmx/Save',
     searchUrl: 'SaleOrderService.asmx/GetList',
     init: function () {
         saleorder.initgrid();
         saleorder.bindingEvents();
         saleorder.formSearch.children('div').css({ 'float': 'left', 'padding-left': '8px' });
-    },
-    initCardControls: function () {
-        //注册卡片按钮事件
-        saleorder.btnCardBillType.click(saleorder.cardHandler.onClickHelpBillType);
-        saleorder.btnCardMaterial.click(saleorder.cardHandler.onClickHelpMaterial);
-        saleorder.btnCardUnit.click(saleorder.cardHandler.onClickHelpUnit);
-        saleorder.btnCardClient.click(saleorder.cardHandler.onClickHelpClient);
     },
     //绑定（注册）事件
     bindingEvents: function () {
@@ -105,9 +91,9 @@ var saleorder = {
                 { field: 'SaleOrderCode', title: '订单编号', width: 100, align: 'center' },
                 { field: 'BillTypeID' },
                 { field: 'BillType_Name', title: '订单类型', width: 80, align: 'center' },
+                { field: 'SaleDate', title: '销售日期', align: 'center', width: 80, formatter: formatHandler.date.format },
+                { field: 'FinishDate', title: '交货日期', align: 'center', width: 80, formatter: formatHandler.date.format },
                 { field: 'MaterialID' },
-                { field: 'SaleDate', title: '销售日期', align: 'center', width: 80 },
-                { field: 'FinishDate', title: '交货日期', align: 'center', width: 80 },
                 { field: 'Material_Name', title: '物料', align: 'center', width: 100 },
                 { field: 'SaleUnitID' },
                 { field: 'SaleUnit_Name', title: '计量单位', align: 'center', width: 60 },
@@ -130,7 +116,7 @@ var saleorder = {
                 { field: 'SecondCheckerName', title: '复审人', align: 'center', width: 80 },
                 { field: 'ReaderName', title: '分阅人', align: 'center', width: 60 },
                 {
-                    field: 'SaleState', title: '状态', width: 80, align: 'center',
+                    field: 'SaleState', title: '订单状态', width: 80, align: 'center',
                     formatter: function (value, row, index) { return soFormatter.soState.format(value); }
                 },
                 { field: 'Remark', title: '备注', width: 100, align: 'center' }
@@ -138,12 +124,6 @@ var saleorder = {
             hidecols: ['SaleOrderID', 'BillTypeID', 'MaterialID', 'SaleUnitID', 'ClientID', 'Creator', 'Editor', 'FirstChecker'],
             singleSelect: false
         });
-    },
-    getRowIndexByEditor: function (target) {
-        if (gFunc.isNull(target)) {
-            return null;
-        }
-        return saleorder.grid.datagrid('getRowIndexByEditor', { element: target });
     },
     addSaleOrder: function () {
         //弹出窗体
@@ -154,7 +134,8 @@ var saleorder = {
             url: saleorder.cardFormUrl,
             isModal: true,
             funLoadCallback: function () {
-                //卡片初始化
+                //初始化弹出界面
+                soCard.initCardForm(null, saleorder.stateConf.add);
             },
             funSubmitCallback: function () {
                 return saleorder.doSave();
@@ -180,7 +161,7 @@ var saleorder = {
             isModal: true,
             funLoadCallback: function () {
                 //初始化弹出界面
-                saleorder.doSetForm(checkedRows[0], 2);
+                soCard.initCardForm(checkedRows[0], saleorder.stateConf.view);
             }
         });
     },
@@ -204,7 +185,7 @@ var saleorder = {
             isModal: true,
             funLoadCallback: function () {
                 //初始化弹出界面
-                saleorder.doSetForm(checkedRows[0], 1);
+                soCard.initCardForm(rows[0], saleorder.stateConf.edit);
             },
             funSubmitCallback: function () {
                 return saleorder.doSave();
@@ -222,7 +203,7 @@ var saleorder = {
             if (result) {
                 //2、删除选中行中以保存的部分（这部分提交到服务端删除，然后刷新列表）
                 var ids = [];
-                $.each(checkedSavedRows, function (index, row) {
+                $.each(delCheckedRows, function (index, row) {
                     ids.push(row.SaleOrderID);
                 });
                 //这里json序列化的目标一定是一个数组，否则，后台解析（解析为列表）时会出错
@@ -241,99 +222,21 @@ var saleorder = {
         //重新查询
         saleorder.grid.datagrid("reload", searchParams);
     },
-    doSetForm: function (data, state) {
-        gFunc.formFunc.clearValidations('editForm');//清除表单验证
-        switch (state) {
-            case 1://修改
-            case 2://查看
-                //赋值
-                //设置只读
-                var boolReadOnly = state == 2 ? true : false;
-
-                break;
-            case 0://添加
-            default:
-                break;
-        }
-    },
     doSave: function () {
-        //验证数据
-        var valRst = gFunc.formFunc.validate("editForm");
-        console.log('valresult:' + valRst);
-        if (!valRst) {
-            return false;
+        var result = soCard.doSave();
+        if (result) {
+            saleorder.grid.datagrid('reload');
         }
-        //收集数据
-        var formData = gFunc.formFunc.serializeToJson("editForm");
-
-        //提交保存
-        //这里json序列化的目标一定是一个数组，否则，后台解析（解析为列表）时会出错
-        var ajaxResult = false;
-        $.ajax({
-            type: 'post',
-            url: saleorder.saveUrl,
-            data: JSON.stringify(formData),
-            async: false,//同步请求
-            success: function (result) {
-                if (result && result.code) {
-                    //重新加载
-                    saleorder.grid.datagrid('reload');
-                    ajaxResult = true;
-                    console.log('saleorder,ajax succeed');
-                } else {
-                    console.log('saleorder,ajax fail');
-                    ajaxResult = false;
-                }
-            },
-            error: function () {
-                console.log('saleorder,ajax error');
-                ajaxResult = false;
-            }
-        });
-        console.log('saleorder,doSave over');
-        return ajaxResult;
+        return result;
     },
     onClickSearchBillType: function () {
         showPopGridHelp(400, 300, true, helpInitializer.billType, saleorder.helpReceiver.searchBillType, null);
-    },
-    cardHandler: {
-        onClickHelpBillType: function () {
-            showPopGridHelp(400, 300, true, helpInitializer.billType, saleorder.helpReceiver.cardBillType, null);
-        },
-        onClickHelpMaterial: function () {
-            showPopGridHelp(500, 400, true, helpInitializer.materials, saleorder.helpReceiver.cardMaterial, null);
-
-        },
-        onClickHelpUnit: function () {
-            showPopGridHelp(400, 300, true, helpInitializer.measureUnit, saleorder.helpReceiver.cardUnit, null);
-
-        },
-        onClickHelpClient: function () {
-            showPopGridHelp(400, 300, true, helpInitializer.client, saleorder.helpReceiver.cardClient, null);
-
-        },
     },
     helpReceiver: {
         searchBillType: function (typeData) {
             //注意：必须先给name赋值，因为它会触发onChange事件，会把id冲掉
             saleorder.txtSearchBillTypeName.textbox('setValue', typeData.BillName);
             saleorder.txtSearchBillTypeID.val(typeData.BillID);
-        },
-        cardBillType: function (typeData) {
-            saleorder.txtCardBillTypeName.textbox('setValue', typeData.BillName);
-            saleorder.txtCardBillTypeID.val(typeData.BillID);
-        },
-        cardMaterial: function (mData) {
-            saleorder.txtCardMName.textbox('setValue', mData.MaterialName);
-            saleorder.txtCardMID.val(mData.MaterialID);
-        },
-        cardUnit: function (uData) {
-            saleorder.txtCardUName.textbox('setValue', uData.UnitName);
-            saleorder.txtCardUID.val(uData.UnitID);
-        },
-        cardClient: function (cData) {
-            saleorder.txtCardClientName.textbox('setValue', cData.ClientName);
-            saleorder.txtCardClientID.val(cData.ClientID);
         }
     }
 }

@@ -15,7 +15,7 @@ using OA.GeneralClass.Extensions;
 // [System.Web.Script.Services.ScriptService]
 public class SaleOrderItemService : BaseService
 {
-    OA.BLL.SaleOrderItemBLL soItemBll = new OA.BLL.SaleOrderItemBLL();
+    OA.BLL.SaleOrderItemBLL bll = new OA.BLL.SaleOrderItemBLL();
     public SaleOrderItemService()
     {
 
@@ -26,20 +26,54 @@ public class SaleOrderItemService : BaseService
     [WebMethod(EnableSession = true)]
     public void GetOrderItems()
     {
-        string saleOrderId = Context.Request["SaleOrderID"]; 
+        string saleOrderId = Context.Request["SOID"];
+        //分页参数：easyui分页查询时，page、rows
+        int pageIndex = 1;
+        Int32.TryParse(Context.Request["page"], out pageIndex);
+        int pageSize = 10;
+        Int32.TryParse(Context.Request["rows"], out pageSize);
+        PageEntity pageEntity = new PageEntity(pageIndex, pageSize);
         string json = string.Empty;
         if (ValidateUtil.isBlank(saleOrderId))
         {
             json = new
             {
-                items = new { }
+                total = 0,
+                rows = new { }
             }.SerializeToJson();
             Context.Response.WriteJson(json);
             return;
         }
-        var soItems = soItemBll.GetOrderItems(saleOrderId);
-        json = new { items = soItems }.SerializeToJson();
+        var soItems = bll.GetOrderItems(pageEntity, saleOrderId);
+        json = new
+        {
+            total = pageEntity.TotalRecords,
+            rows = soItems
+        }.SerializeToJson();
         Context.Response.WriteJson(json);
+    }
+
+    [WebMethod(EnableSession = true)]
+    public void Delete()
+    {
+        using (var reader = new System.IO.StreamReader(Context.Request.InputStream))
+        {
+            string data = reader.ReadToEnd();
+            if (!ValidateUtil.isBlank(data))
+            {
+                var soIds = data.DeSerializeFromJson<List<string>>();
+                if (soIds != null && soIds.Count > 0)
+                {
+                    bool rst = bll.Delete(soIds.ToArray());
+                    if (rst)
+                    {
+                        Context.Response.WriteJson(OA.GeneralClass.ResultCode.Success, null, null);
+                        return;
+                    }
+                }
+            }
+        }
+        Context.Response.WriteJson(OA.GeneralClass.ResultCode.Failure, "删除失败", null);
     }
 
 }

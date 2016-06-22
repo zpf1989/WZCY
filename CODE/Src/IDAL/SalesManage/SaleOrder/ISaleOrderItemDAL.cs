@@ -12,8 +12,16 @@ namespace OA.IDAL
         /// <summary>
         /// 获取指定销售订单的行
         /// </summary>
+        /// <param name="pageEntity"></param>
         /// <param name="soId"></param>
         /// <returns></returns>
-        IList<SaleOrderItem> GetOrderItems(string soId);
+        IList<SaleOrderItem> GetOrderItems(PageEntity pageEntity, string soId);
+
+        /// <summary>
+        /// 根据删除指定订单下的所有行
+        /// </summary>
+        /// <param name="soIds"></param>
+        /// <returns></returns>
+        bool DeleteBySOIds(params string[] soIds);
     }
 }

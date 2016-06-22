@@ -5,13 +5,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using OA.GeneralClass.Extensions;
 
 namespace OA.BLL
 {
     public class SaleOrderBLL : BaseBLL<SaleOrder>
     {
         private readonly ISaleOrderDAL idal = DALFactory.Helper.GetISaleOrderDAL();
-
         public List<SaleOrder> GetSaleOrdersByPage(PageEntity pageEntity, string whereSql = null, string orderBySql = null, bool isForHelp = false)
         {
 
@@ -30,6 +30,11 @@ namespace OA.BLL
 
         public bool Save(params SaleOrder[] entites)
         {
+            if (entites == null || entites.Length < 1)
+            {
+                return false;
+            }
+            //Logger.LogInfo(entites.SerializeToJson());
             if (!RepeatCheck(entites))
             {
                 return false;
@@ -60,9 +65,9 @@ namespace OA.BLL
                 return false;
             }
             //服务端校验，只校验id为空的（即新增数据）
-            var newCodes = (from m in entities
-                            where ValidateUtil.isBlank(m.SaleOrderCode)
-                            select m.SaleOrderCode).ToArray();
+            var newCodes = (from e in entities
+                            where ValidateUtil.isBlank(e.SaleOrderID)
+                            select e.SaleOrderCode).ToArray();
             if (newCodes == null || newCodes.Length < 1)
             {
                 return true;

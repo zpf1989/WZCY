@@ -60,9 +60,10 @@ TableName, BillTypeDAL.TableName, MaterialsDAL.TableName, MeasureUnitsDAL.TableN
             });
             if (ds.HasRow())
             {
+                SaleOrder order = null;
                 foreach (DataRow row in ds.Tables[0].Rows)
                 {
-                    orders.Add(new SaleOrder
+                    order = new SaleOrder
                     {
                         SaleOrderID = row["SaleOrderID"].ToString(),
                         SaleOrderCode = row["SaleOrderCode"].ToString(),
@@ -81,28 +82,40 @@ TableName, BillTypeDAL.TableName, MaterialsDAL.TableName, MeasureUnitsDAL.TableN
                         FinishDate = row["FinishDate"].ToString(),
                         Creator = row["Creator"].ToString(),
                         Creator_Name = row["Creator_Name"].ToString(),
-                        CreateTime = Convert.ToDateTime(row["CreateTime"]),
                         Editor = row["Editor"].ToString(),
                         Editor_Name = row["Editor_Name"].ToString(),
-                        EditTime = Convert.ToDateTime(row["EditTime"]),
                         FirstChecker = row["FirstChecker"].ToString(),
                         FirstChecker_Name = row["FirstChecker_Name"].ToString(),
                         FirstCheckView = row["FirstCheckView"].ToString(),
-                        FirstCheckTime = Convert.ToDateTime(row["FirstCheckTime"]),
                         RoutingID = row["RoutingID"].ToString(),
                         Routing = row["Routing"].ToString(),
                         SaleState = row["SaleState"].ToString(),
                         Remark = row["Remark"].ToString(),
                         SecondCheckerName = row["SecondCheckerName"].ToString(),
                         ReaderName = row["ReaderName"].ToString()
-                    });
+                    };
+                    DateTime dtTemp;
+                    if (DateTime.TryParse(row["CreateTime"].ToString(), out dtTemp))
+                    {
+                        order.CreateTime = dtTemp;
+                    }
+                    if (DateTime.TryParse(row["EditTime"].ToString(), out dtTemp))
+                    {
+                        order.EditTime = dtTemp;
+                    }
+                    if (DateTime.TryParse(row["FirstCheckTime"].ToString(), out dtTemp))
+                    {
+                        order.FirstCheckTime = dtTemp;
+                    }
+
+                    orders.Add(order);
                 }
             }
             if (containItems && orders != null && orders.Count > 0)
             {
                 foreach (var order in orders)
                 {
-                    order.Items = soItemDAL.GetOrderItems(order.SaleOrderID);
+                    order.Items = soItemDAL.GetOrderItems(new PageEntity(1, 1000), order.SaleOrderID);
                 }
             }
 
@@ -115,6 +128,7 @@ TableName, BillTypeDAL.TableName, MaterialsDAL.TableName, MeasureUnitsDAL.TableN
             {
                 return false;
             }
+            //Logger.LogInfo(entities.SerializeToJson());
             StringBuilder sbSqlSaleOrder = new StringBuilder();
             List<Func<bool>> saveItemsFuncs = new List<Func<bool>>();
             List<SqlParameter> sqlParams = new List<SqlParameter>();
@@ -126,16 +140,25 @@ TableName, BillTypeDAL.TableName, MaterialsDAL.TableName, MeasureUnitsDAL.TableN
                 //①销售订单
                 if (ValidateUtil.isBlank(entity.SaleOrderID))
                 {
-                    //新增
+                    //新增，保存部分字段
                     entity.SaleOrderID = Guid.NewGuid().ToString();
-                    sbSqlSaleOrder.AppendFormat("insert into {0}(SaleOrderID,SaleOrderCode,BillTypeID,MaterialID,SaleUnitID,ClientID,SaleDate,SaleQty,SalePrice,SaleCost,FinishDate,Creator,CreateTime,Editor,EditTime,FirstChecker,FirstCheckTime,FirstCheckView,RoutingID,SaleState,Remark,Routing,SecondCheckerName,ReaderName)", TableName);
-                    sbSqlSaleOrder.AppendFormat(" values (@SaleOrderID{0},@SaleOrderCode{0},@BillTypeID{0},@MaterialID{0},@SaleUnitID{0},@ClientID{0},@SaleDate{0},@SaleQty{0},@SalePrice{0},@SaleCost{0},@FinishDate{0},@Creator{0},@CreateTime{0},@Editor{0},@EditTime{0},@FirstChecker{0},@FirstCheckTime{0},@FirstCheckView{0},@RoutingID{0},@SaleState{0},@Remark{0},@Routing{0},@SecondCheckerName{0},@ReaderName{0};", i);
+                    sbSqlSaleOrder.AppendFormat("insert into {0}(SaleOrderID,SaleOrderCode,BillTypeID,MaterialID,SaleUnitID,ClientID,SaleDate,SaleQty,SalePrice,SaleCost,FinishDate,Creator,CreateTime,SaleState,Remark,Routing)", TableName);
+                    sbSqlSaleOrder.AppendFormat(" values (@SaleOrderID{0},@SaleOrderCode{0},@BillTypeID{0},@MaterialID{0},@SaleUnitID{0},@ClientID{0},@SaleDate{0},@SaleQty{0},@SalePrice{0},@SaleCost{0},@FinishDate{0},@Creator{0},@CreateTime{0},@SaleState{0},@Remark{0},@Routing{0});", i);
+                    sqlParams.AddRange(new SqlParameter[]{
+                            new SqlParameter{ParameterName="@Creator"+i, Value=entity.Creator},
+                            new SqlParameter{ParameterName="@CreateTime"+i, Value=entity.CreateTime},
+                            new SqlParameter{ParameterName="@SaleState"+i, Value=entity.SaleState},
+                    });
                 }
                 else
                 {
-                    //修改
-                    sbSqlSaleOrder.AppendFormat("update {0} set SaleOrderCode=@SaleOrderCode{0},BillTypeID=@BillTypeID{0},MaterialID=@MaterialID{0},SaleUnitID=@SaleUnitID{0},ClientID=@ClientID{0},SaleDate=@SaleDate{0},SaleQty=@SaleQty{0},SalePrice=@SalePrice{0},SaleCost=@SaleCost{0},FinishDate=@FinishDate{0},Editor=@Editor{0},EditTime=@EditTime{0},FirstChecker=@FirstChecker{0},FirstCheckTime=@FirstCheckTime{0},FirstCheckView=@FirstCheckView{0},RoutingID=@RoutingID{0},SaleState=@SaleState{0},Remark=@Remark{0},Routing=@Routing{0},SecondCheckerName=@SecondCheckerName{0},ReaderName=@ReaderName{0};", TableName, i);
+                    //修改，只更新部分字段
+                    sbSqlSaleOrder.AppendFormat("update {0} set BillTypeID=@BillTypeID{1},MaterialID=@MaterialID{1},SaleUnitID=@SaleUnitID{1},ClientID=@ClientID{1},SaleDate=@SaleDate{1},SaleQty=@SaleQty{1},SalePrice=@SalePrice{1},SaleCost=@SaleCost{1},FinishDate=@FinishDate{1},Editor=@Editor{1},EditTime=@EditTime{1},Remark=@Remark{1},Routing=@Routing{1}", TableName, i);
                     sbSqlSaleOrder.AppendFormat(" where SaleOrderID=@SaleOrderID{0};", i);
+                    sqlParams.AddRange(new SqlParameter[]{
+                            new SqlParameter{ParameterName="@Editor"+i, Value=entity.Editor},
+                            new SqlParameter{ParameterName="@EditTime"+i, Value=entity.EditTime},
+                    });
                 }
                 //不管新增或修改， 参数都一样
                 sqlParams.AddRange(new SqlParameter[]{ 
@@ -145,24 +168,13 @@ TableName, BillTypeDAL.TableName, MaterialsDAL.TableName, MeasureUnitsDAL.TableN
                             new SqlParameter{ParameterName="@MaterialID"+i, Value=entity.MaterialID},
                             new SqlParameter{ParameterName="@SaleUnitID"+i, Value=entity.SaleUnitID},
                             new SqlParameter{ParameterName="@ClientID"+i, Value=entity.ClientID},
-                            new SqlParameter{ParameterName="@SaleDate"+i, Value=entity.SaleDate},
+                            new SqlParameter{ParameterName="@SaleDate"+i, Value=entity.SaleDate.Replace("-","")},
                             new SqlParameter{ParameterName="@SaleQty"+i, Value=entity.SaleQty},
                             new SqlParameter{ParameterName="@SalePrice"+i, Value=entity.SalePrice},
                             new SqlParameter{ParameterName="@SaleCost"+i, Value=entity.SaleCost},
-                            new SqlParameter{ParameterName="@FinishDate"+i, Value=entity.Remark},
-                            new SqlParameter{ParameterName="@Creator"+i, Value=entity.Remark},
-                            new SqlParameter{ParameterName="@CreateTime"+i, Value=entity.CreateTime},
-                            new SqlParameter{ParameterName="@Editor"+i, Value=entity.Editor},
-                            new SqlParameter{ParameterName="@EditTime"+i, Value=entity.EditTime},
-                            new SqlParameter{ParameterName="@FirstChecker"+i, Value=entity.FirstChecker},
-                            new SqlParameter{ParameterName="@FirstCheckTime"+i, Value=entity.FirstCheckTime},
-                            new SqlParameter{ParameterName="@FirstCheckView"+i, Value=entity.FirstCheckView},
-                            new SqlParameter{ParameterName="@RoutingID"+i, Value=entity.RoutingID},
-                            new SqlParameter{ParameterName="@SaleState"+i, Value=entity.SaleState},
+                            new SqlParameter{ParameterName="@FinishDate"+i, Value=entity.FinishDate.Replace("-","")},
                             new SqlParameter{ParameterName="@Remark"+i, Value=entity.Remark},
-                            new SqlParameter{ParameterName="@Routing"+i, Value=entity.Routing},
-                            new SqlParameter{ParameterName="@SecondCheckerName"+i, Value=entity.SecondCheckerName},
-                            new SqlParameter{ParameterName="@ReaderName"+i, Value=entity.ReaderName},
+                            new SqlParameter{ParameterName="@Routing"+i, Value=entity.Routing}
                                             });
                 //②销售订单行
                 if (entity.Items != null && entity.Items.Count > 0)
@@ -213,34 +225,37 @@ TableName, BillTypeDAL.TableName, MaterialsDAL.TableName, MeasureUnitsDAL.TableN
             }
             //1、组织sql
             StringBuilder sbSqlSO = new StringBuilder();//删除销售订单的sql
-            StringBuilder sbSqlSOItem = new StringBuilder();//删除销售订单行的sql
             sbSqlSO.AppendFormat("delete from {0} where SaleOrderID in (", TableName);
-            sbSqlSOItem.AppendFormat("delete from {1} where SaleOrderID in (", SaleOrderItemDAL.TableName);
             List<SqlParameter> sqlParams = new List<SqlParameter>();
             for (int i = 0; i < saleOrderIds.Length; i++)
             {
                 sbSqlSO.AppendFormat("@SaleOrderID{0}", i);
-                sbSqlSOItem.AppendFormat("@SaleOrderID{0}", i);
                 sqlParams.Add(new SqlParameter { ParameterName = "@SaleOrderID" + i, Value = saleOrderIds[i] });
                 if (i < saleOrderIds.Length - 1)
                 {
                     sbSqlSO.Append(",");
-                    sbSqlSOItem.Append(",");
                 }
             }
             sbSqlSO.Append(");");
-            sbSqlSOItem.Append(");");
             //2、执行sql
             int rst = 0;
+
+            IDbTransaction transaction = DBAccess.BeginDbTransaction(DB.Type, DB.ConnectionString);
             try
             {
                 //先删除订单行
-                rst = DBAccess.ExecuteNonQuery(DB.Type, DB.ConnectionString, CommandType.Text, sbSqlSOItem.ToString(), sqlParams.ToArray());
+                bool result = soItemDAL.DeleteBySOIds(saleOrderIds);
+                if (!result)
+                {
+                    throw new Exception("删除销售订单行失败");
+                }
                 //最后删除销售订单
                 rst = DBAccess.ExecuteNonQuery(DB.Type, DB.ConnectionString, CommandType.Text, sbSqlSO.ToString(), sqlParams.ToArray());
+                transaction.Commit();
             }
             catch (Exception ex)
             {
+                transaction.Rollback();
                 base.Logger.LogError(ex);
                 return false;
             }

@@ -30,8 +30,7 @@
                 </div>
                 <div>
                     <label>交货日期：</label>
-                    <input name="SaleDateBegin" id="dateSearchSaleDateBegin" class="easyui-datebox" />
-                    <input name="SaleDateEnd" id="dateSearchSaleDateEnd" class="easyui-datebox" />
+                    <input name="SaleDateBegin" id="dateSearchSaleDateBegin" class="easyui-datebox" />&nbsp;~&nbsp;<input name="SaleDateEnd" id="dateSearchSaleDateEnd" class="easyui-datebox" />
                 </div>
                 <div>
                     <a href="javascript:void(0);" id="btnSearch" class="easyui-linkbutton" iconcls="icon-search"

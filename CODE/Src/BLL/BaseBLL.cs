@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OA.GeneralClass.Logger;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,6 +8,13 @@ namespace OA.BLL
 {
     public abstract class BaseBLL<T> where T : class
     {
+        public ILogHelper<T> Logger
+        {
+            get
+            {
+                return LoggerFactory.GetLogger<T>();
+            }
+        }
         /// <summary>
         /// 重复检查
         /// </summary>

@@ -23,13 +23,13 @@ namespace OA.BLL
             return idal.GetEntitiesByPageForHelp(pageEntity, whereSql, orderBySql);
         }
 
-        public IList<SaleOrderItem> GetOrderItems(string soId)
+        public IList<SaleOrderItem> GetOrderItems(PageEntity pageEntity, string soId)
         {
             if (ValidateUtil.isBlank(soId))
             {
                 return null;
             }
-            return idal.GetOrderItems(soId);
+            return idal.GetOrderItems(pageEntity, soId);
         }
 
         public bool Save(params SaleOrderItem[] entites)

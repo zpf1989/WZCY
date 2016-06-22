@@ -78,7 +78,7 @@ namespace OA.DAL
                 else
                 {
                     //修改
-                    sbSql.AppendFormat("update {0} set MaterialID=@MaterialID{0},PlanQty=@PlanQty{0},ActualQty=@ActualQty{0},PlanCost=@PlanCost{0},PrimaryUnitID=@PrimaryUnitID{0},Remark=@Remark{0}", TableName, i);
+                    sbSql.AppendFormat("update {0} set MaterialID=@MaterialID{1},PlanQty=@PlanQty{1},ActualQty=@ActualQty{1},PlanCost=@PlanCost{1},PrimaryUnitID=@PrimaryUnitID{1},Remark=@Remark{1}", TableName, i);
                     sbSql.AppendFormat(" where SaleOrderItemID=@SaleOrderItemID{0};", i);
                 }
                 //不管新增或修改， 参数都一样
@@ -153,13 +153,49 @@ namespace OA.DAL
             return GetEntitiesByPage(pageEntity, whereSql, orderBySql);
         }
 
-        public IList<SaleOrderItem> GetOrderItems(string soId)
+        public IList<SaleOrderItem> GetOrderItems(PageEntity pageEntity, string soId)
         {
             if (ValidateUtil.isBlank(soId))
             {
                 return null;
             }
-            return GetEntitiesByPage(pageEntity: new PageEntity(1, 20), whereSql: string.Format(" and SaleOrderID='{0}'", soId), orderBySql: null);
+            return GetEntitiesByPage(pageEntity: pageEntity, whereSql: string.Format(" and SaleOrderID='{0}'", soId), orderBySql: null);
+        }
+
+
+        public bool DeleteBySOIds(params string[] soIds)
+        {
+            if (soIds == null || soIds.Length < 1)
+            {
+                return false;
+            }
+            //1、组织sql
+            StringBuilder sbSql = new StringBuilder();//删除用户的sql
+            sbSql.AppendFormat("delete from {0} where SaleOrderID in (", TableName);
+            List<SqlParameter> sqlParams = new List<SqlParameter>();
+            for (int i = 0; i < soIds.Length; i++)
+            {
+                sbSql.AppendFormat("@SaleOrderID{0}", i);
+                sqlParams.Add(new SqlParameter { ParameterName = "@SaleOrderID" + i, Value = soIds[i] });
+                if (i < soIds.Length - 1)
+                {
+                    sbSql.Append(",");
+                }
+            }
+            sbSql.Append(");");
+            //2、执行sql
+            int rst = 0;
+            try
+            {
+                rst = DBAccess.ExecuteNonQuery(DB.Type, DB.ConnectionString, CommandType.Text, sbSql.ToString(), sqlParams.ToArray());
+            }
+            catch (Exception ex)
+            {
+                base.Logger.LogError(ex);
+                return false;
+            }
+            //3、返回成功或失败的标志
+            return rst > 0;
         }
     }
 }
