@@ -240,22 +240,13 @@ TableName, BillTypeDAL.TableName, MaterialsDAL.TableName, MeasureUnitsDAL.TableN
             //2、执行sql
             int rst = 0;
 
-            IDbTransaction transaction = DBAccess.BeginDbTransaction(DB.Type, DB.ConnectionString);
             try
             {
-                //先删除订单行
-                bool result = soItemDAL.DeleteBySOIds(saleOrderIds);
-                if (!result)
-                {
-                    throw new Exception("删除销售订单行失败");
-                }
-                //最后删除销售订单
+                //删除销售订单
                 rst = DBAccess.ExecuteNonQuery(DB.Type, DB.ConnectionString, CommandType.Text, sbSqlSO.ToString(), sqlParams.ToArray());
-                transaction.Commit();
             }
             catch (Exception ex)
             {
-                transaction.Rollback();
                 base.Logger.LogError(ex);
                 return false;
             }
@@ -282,5 +273,233 @@ TableName, BillTypeDAL.TableName, MaterialsDAL.TableName, MeasureUnitsDAL.TableN
             return GetEntitiesByPage(pageEntity, whereSql, orderBySql);
         }
 
+        public bool SubmitToFirstChecker(string userId, params string[] soIds)
+        {
+            if (ValidateUtil.isBlank(userId) || soIds == null || soIds.Length < 1)
+            {
+                return false;
+            }
+            //1、组织sql
+            StringBuilder sbsql = new StringBuilder();//删除销售订单的sql
+            sbsql.AppendFormat("update {0} set FirstChecker=@checker,SaleState=@state where SaleOrderID in (", TableName);
+            List<SqlParameter> sqlParams = new List<SqlParameter>();
+            sqlParams.Add(new SqlParameter { ParameterName = "@checker", Value = userId });
+            sqlParams.Add(new SqlParameter { ParameterName = "@state", Value = '2' });//提交
+            for (int i = 0; i < soIds.Length; i++)
+            {
+                sbsql.AppendFormat("@SaleOrderID{0}", i);
+                sqlParams.Add(new SqlParameter { ParameterName = "@SaleOrderID" + i, Value = soIds[i] });
+                if (i < soIds.Length - 1)
+                {
+                    sbsql.Append(",");
+                }
+            }
+            sbsql.Append(");");
+            //2、执行sql
+            int rst = 0;
+
+            try
+            {
+                //更新初审人
+                rst = DBAccess.ExecuteNonQuery(DB.Type, DB.ConnectionString, CommandType.Text, sbsql.ToString(), sqlParams.ToArray());
+            }
+            catch (Exception ex)
+            {
+                base.Logger.LogError(ex);
+                return false;
+            }
+            //3、返回成功或失败的标志
+            return rst > 0;
+        }
+
+        public bool SubmitToSecondChecker(string userId, params string[] soIds)
+        {
+            if (ValidateUtil.isBlank(userId) || soIds == null || soIds.Length < 1)
+            {
+                return false;
+            }
+            //1、组织sql
+            StringBuilder sbsql = new StringBuilder();//
+            sbsql.AppendFormat("update {0} set SecondCheckerName=(select UserName from {1} where UserID=@checker),SaleState=@state where SaleOrderID in (", TableName, UserManageDAL.TableName);
+            List<SqlParameter> sqlParams = new List<SqlParameter>();
+            sqlParams.Add(new SqlParameter { ParameterName = "@checker", Value = userId });
+            sqlParams.Add(new SqlParameter { ParameterName = "@state", Value = '5' });//提交复审
+            for (int i = 0; i < soIds.Length; i++)
+            {
+                sbsql.AppendFormat("@SaleOrderID{0}", i);
+                sqlParams.Add(new SqlParameter { ParameterName = "@SaleOrderID" + i, Value = soIds[i] });
+                if (i < soIds.Length - 1)
+                {
+                    sbsql.Append(",");
+                }
+            }
+            sbsql.Append(");");
+            //2、执行sql
+            int rst = 0;
+
+            try
+            {
+                //更新初审人
+                rst = DBAccess.ExecuteNonQuery(DB.Type, DB.ConnectionString, CommandType.Text, sbsql.ToString(), sqlParams.ToArray());
+            }
+            catch (Exception ex)
+            {
+                base.Logger.LogError(ex);
+                return false;
+            }
+            //3、返回成功或失败的标志
+            return rst > 0;
+        }
+
+        public bool SubmitToReader(string userId, params string[] soIds)
+        {
+            if (ValidateUtil.isBlank(userId) || soIds == null || soIds.Length < 1)
+            {
+                return false;
+            }
+            //1、组织sql
+            StringBuilder sbsql = new StringBuilder();//
+            sbsql.AppendFormat("update {0} set ReaderName=(select UserName from {1} where UserID=@reader) where SaleOrderID in (", TableName, UserManageDAL.TableName);
+            List<SqlParameter> sqlParams = new List<SqlParameter>();
+            sqlParams.Add(new SqlParameter { ParameterName = "@reader", Value = userId });
+            for (int i = 0; i < soIds.Length; i++)
+            {
+                sbsql.AppendFormat("@SaleOrderID{0}", i);
+                sqlParams.Add(new SqlParameter { ParameterName = "@SaleOrderID" + i, Value = soIds[i] });
+                if (i < soIds.Length - 1)
+                {
+                    sbsql.Append(",");
+                }
+            }
+            sbsql.Append(");");
+            //2、执行sql
+            int rst = 0;
+
+            try
+            {
+                //更新初审人
+                rst = DBAccess.ExecuteNonQuery(DB.Type, DB.ConnectionString, CommandType.Text, sbsql.ToString(), sqlParams.ToArray());
+            }
+            catch (Exception ex)
+            {
+                base.Logger.LogError(ex);
+                return false;
+            }
+            //3、返回成功或失败的标志
+            return rst > 0;
+        }
+
+        public bool FirstCheck(bool result, string checkView, params string[] soIds)
+        {
+            if (soIds == null || soIds.Length < 1)
+            {
+                return false;
+            }
+            //1、组织sql
+            StringBuilder sbSql = new StringBuilder();//
+            sbSql.AppendFormat("update {0} set SaleState=@state,FirstCheckView=@view,FirstCheckTime=@time where SaleOrderID in (", TableName);
+            List<SqlParameter> sqlParams = new List<SqlParameter>();
+            sqlParams.Add(new SqlParameter { ParameterName = "@state", Value = result ? "3" : "4" });
+            sqlParams.Add(new SqlParameter { ParameterName = "@view", Value = checkView });
+            sqlParams.Add(new SqlParameter { ParameterName = "@time", Value = DateTime.Now });
+            for (int i = 0; i < soIds.Length; i++)
+            {
+                sbSql.AppendFormat("@SaleOrderID{0}", i);
+                sqlParams.Add(new SqlParameter { ParameterName = "@SaleOrderID" + i, Value = soIds[i] });
+                if (i < soIds.Length - 1)
+                {
+                    sbSql.Append(",");
+                }
+            }
+            sbSql.Append(");");
+            //2、执行sql
+            int rst = 0;
+            try
+            {
+                rst = DBAccess.ExecuteNonQuery(DB.Type, DB.ConnectionString, CommandType.Text, sbSql.ToString(), sqlParams.ToArray());
+            }
+            catch (Exception ex)
+            {
+                base.Logger.LogError(ex);
+                return false;
+            }
+            //3、返回成功或失败的标志
+            return rst > 0;
+        }
+
+
+
+        public bool SecondCheck(bool checkResult, params string[] soIds)
+        {
+            if (soIds == null || soIds.Length < 1)
+            {
+                return false;
+            }
+            //1、组织sql
+            StringBuilder sbSql = new StringBuilder();//
+            sbSql.AppendFormat("update {0} set SaleState=@state where SaleOrderID in (", TableName);
+            List<SqlParameter> sqlParams = new List<SqlParameter>();
+            sqlParams.Add(new SqlParameter { ParameterName = "@state", Value = checkResult ? "6" : "7" });
+            for (int i = 0; i < soIds.Length; i++)
+            {
+                sbSql.AppendFormat("@SaleOrderID{0}", i);
+                sqlParams.Add(new SqlParameter { ParameterName = "@SaleOrderID" + i, Value = soIds[i] });
+                if (i < soIds.Length - 1)
+                {
+                    sbSql.Append(",");
+                }
+            }
+            sbSql.Append(");");
+            //2、执行sql
+            int rst = 0;
+            try
+            {
+                rst = DBAccess.ExecuteNonQuery(DB.Type, DB.ConnectionString, CommandType.Text, sbSql.ToString(), sqlParams.ToArray());
+            }
+            catch (Exception ex)
+            {
+                base.Logger.LogError(ex);
+                return false;
+            }
+            //3、返回成功或失败的标志
+            return rst > 0;
+        }
+
+
+        public bool Close(string[] soIds)
+        {
+            if (soIds == null || soIds.Length < 1)
+            {
+                return false;
+            }
+            //1、组织sql
+            StringBuilder sbSql = new StringBuilder();//
+            sbSql.AppendFormat("update {0} set SaleState=@state where SaleOrderID in (", TableName);
+            List<SqlParameter> sqlParams = new List<SqlParameter>();
+            sqlParams.Add(new SqlParameter { ParameterName = "@state", Value = "8" });
+            for (int i = 0; i < soIds.Length; i++)
+            {
+                sbSql.AppendFormat("@SaleOrderID{0}", i);
+                sqlParams.Add(new SqlParameter { ParameterName = "@SaleOrderID" + i, Value = soIds[i] });
+                if (i < soIds.Length - 1)
+                {
+                    sbSql.Append(",");
+                }
+            }
+            sbSql.Append(");");
+            //2、执行sql
+            int rst = 0;
+            try
+            {
+                rst = DBAccess.ExecuteNonQuery(DB.Type, DB.ConnectionString, CommandType.Text, sbSql.ToString(), sqlParams.ToArray());
+            }
+            catch (Exception ex)
+            {
+                base.Logger.LogError(ex);
+                return false;
+            }
+            //3、返回成功或失败的标志
+            return rst > 0;
+        }
     }
 }

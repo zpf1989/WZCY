@@ -80,6 +80,8 @@
     <Compile Include="SalesManage\BaseData\BillTypeDAL.cs" />
     <Compile Include="SalesManage\BaseData\PayTypeDAL.cs" />
     <Compile Include="SalesManage\BaseData\ClientDAL.cs" />
+    <Compile Include="SalesManage\SaleOrder\SOReaderDAL.cs" />
+    <Compile Include="SalesManage\SaleOrder\SOSecondCheckDAL.cs" />
     <Compile Include="SysManage\DepartmentDAL.cs" />
     <Compile Include="SysManage\FunctionDAL.cs" />
     <Compile Include="SysManage\RFRelationDAL.cs" />

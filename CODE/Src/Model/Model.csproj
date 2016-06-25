@@ -76,6 +76,8 @@
     <Compile Include="SalesManage\BaseData\PayType.cs" />
     <Compile Include="SalesManage\SaleOrder\SaleOrder.cs" />
     <Compile Include="SalesManage\SaleOrder\SaleOrderItem.cs" />
+    <Compile Include="SalesManage\SaleOrder\SOReader.cs" />
+    <Compile Include="SalesManage\SaleOrder\SOSecondCheck.cs" />
     <Compile Include="SysManage\DepartmentInfo.cs" />
     <Compile Include="SysManage\FunctionInfo.cs" />
     <Compile Include="SysManage\RFRelation.cs" />

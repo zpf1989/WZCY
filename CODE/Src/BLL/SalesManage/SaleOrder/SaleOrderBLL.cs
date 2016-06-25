@@ -12,6 +12,9 @@ namespace OA.BLL
     public class SaleOrderBLL : BaseBLL<SaleOrder>
     {
         private readonly ISaleOrderDAL idal = DALFactory.Helper.GetISaleOrderDAL();
+        private readonly ISaleOrderItemDAL idalSOItem = DALFactory.Helper.GetISaleOrderItemDAL();
+        private readonly ISOSecondCheckDAL idalSecondCheck = DALFactory.Helper.GetISOSecondCheckDAL();
+        private readonly ISOReaderDAL idalReader = DALFactory.Helper.GetISOReaderDAL();
         public List<SaleOrder> GetSaleOrdersByPage(PageEntity pageEntity, string whereSql = null, string orderBySql = null, bool isForHelp = false)
         {
 
@@ -44,6 +47,9 @@ namespace OA.BLL
 
         public bool Delete(params string[] entityIds)
         {
+            idalSOItem.DeleteBySOIds(entityIds);
+            idalReader.DeleteBySOIds(entityIds);
+            idalSecondCheck.DeleteBySOIds(entityIds);
             return idal.Delete(entityIds);
         }
         /// <summary>
@@ -73,6 +79,148 @@ namespace OA.BLL
                 return true;
             }
             return !idal.Exists(newCodes);
+        }
+
+        public bool SubmitToFirstChecker(string checker, params string[] soIds)
+        {
+            if (ValidateUtil.isBlank(checker) || soIds.Length < 1)
+            {
+                return false;
+            }
+            return idal.SubmitToFirstChecker(checker, soIds);
+        }
+
+        public bool SubmitToSecondChcker(string checker, params string[] soIds)
+        {
+            if (ValidateUtil.isBlank(checker) || soIds.Length < 1)
+            {
+                return false;
+            }
+            //1、插入复审记录
+            bool rst = false;
+            List<SOSecondCheck> list = new List<SOSecondCheck>();
+            foreach (string soId in soIds)
+            {
+                list.Add(new SOSecondCheck
+                {
+                    SOSecondCheckID = Guid.NewGuid().ToString(),
+                    SaleOrderID = soId,
+                    SecondChecker = checker,
+                    SecondCheckTime = DateTime.Now,
+                    SecondCheckView = "",
+                    CheckFlag = "0"
+                });
+            }
+            rst = idalSecondCheck.Save(list.ToArray());
+            if (rst)
+            {
+                //设置销售订单状态和复审人
+                rst = idal.SubmitToSecondChecker(checker, soIds);
+            }
+            return rst;
+        }
+
+        public bool SubmitToReader(string reader, params string[] soIds)
+        {
+            if (ValidateUtil.isBlank(reader) || soIds.Length < 1)
+            {
+                return false;
+            }
+            //1、新增分阅记录
+            bool rst = false;
+            List<SOReader> list = new List<SOReader>();
+            foreach (string soId in soIds)
+            {
+                list.Add(new SOReader
+                {
+                    SaleOrderID = soId,
+                    SOReadID = reader,
+                    ReadTime = DateTime.Now,
+                    ReadFlag = "0"
+                });
+            }
+            rst = idalReader.Save(list.ToArray());
+            if (rst)
+            {
+                //2、设置销售订单分阅人
+                rst = idal.SubmitToReader(reader, soIds);
+            }
+            return rst;
+        }
+
+        public bool FirstCheck(bool result, string checkView, params string[] soIds)
+        {
+            if (soIds == null || soIds.Length < 1)
+            {
+                return false;
+            }
+            return idal.FirstCheck(result, checkView, soIds);
+        }
+
+        public bool SecondCheck(bool result, string checker, string checkView, params string[] soIds)
+        {
+            if (ValidateUtil.isBlank(checker) || soIds == null || soIds.Length < 1)
+            {
+                return false;
+            }
+            if (ValidateUtil.isBlank(checker) || soIds == null || soIds.Length < 1)
+            {
+                return false;
+            }
+            //1、更改销售订单状态
+            bool rst = false;
+            rst = idal.SecondCheck(result, soIds);
+            if (rst)
+            {
+                List<SOSecondCheck> list = new List<SOSecondCheck>();
+                foreach (string soId in soIds)
+                {
+                    list.Add(new SOSecondCheck
+                    {
+                        SOSecondCheckID = Guid.NewGuid().ToString(),
+                        SaleOrderID = soId,
+                        SecondChecker = checker,
+                        SecondCheckTime = DateTime.Now,
+                        SecondCheckView = checkView,
+                        CheckFlag = result ? "2" : "1"
+                    });
+                }
+                //2、插入复审记录
+                rst = idalSecondCheck.Save(list.ToArray());
+            }
+            return rst;
+        }
+
+        public bool Read(string reader, params string[] soIds)
+        {
+            if (ValidateUtil.isBlank(reader) || soIds == null || soIds.Length < 1)
+            {
+                return false;
+            }
+            //1、插入分阅记录
+            List<SOReader> list = new List<SOReader>();
+            foreach (string id in soIds)
+            {
+                list.Add(new SOReader
+                {
+                    SOReadID = Guid.NewGuid().ToString(),
+                    SaleOrderID = id,
+                    ReaderID = reader,
+                    ReadTime = DateTime.Now,
+                    ReadFlag = "1"//已分阅
+                });
+            }
+            return idalReader.Save(list.ToArray());
+        }
+
+        public bool Close(string[] soIds)
+        {
+            if (soIds == null || soIds.Length < 1)
+            {
+                return false;
+            }
+
+            return idal.Close(soIds);
         }
     }
 }

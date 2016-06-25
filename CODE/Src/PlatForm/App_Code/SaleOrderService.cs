@@ -157,4 +157,181 @@ public class SaleOrderService : BaseService
         }
         Context.Response.WriteJson(OA.GeneralClass.ResultCode.Failure, "删除失败", null);
     }
+
+    #region 流程
+    [WebMethod(EnableSession = true)]
+    public void SubmitToFirstChecker(string userId, string soIds)
+    {
+        if (ValidateUtil.isBlank(userId))
+        {
+            Context.Response.WriteJson(OA.GeneralClass.ResultCode.Failure, "提交失败，请选择初审人", null);
+            return;
+        }
+        if (ValidateUtil.isBlank(soIds))
+        {
+            Context.Response.WriteJson(OA.GeneralClass.ResultCode.Failure, "提交失败，请选择销售订单", null);
+            return;
+        }
+        string[] soIdArr = soIds.DeSerializeFromJson<string[]>();
+        if (soIdArr == null || soIdArr.Length < 1)
+        {
+            Context.Response.WriteJson(OA.GeneralClass.ResultCode.Failure, "提交失败，销售订单数据格式不正确", null);
+            return;
+        }
+
+        bool rst = bll.SubmitToFirstChecker(userId, soIdArr);
+        if (rst)
+        {
+            Context.Response.WriteJson(OA.GeneralClass.ResultCode.Success, "提交成功", null);
+            return;
+        }
+        Context.Response.WriteJson(OA.GeneralClass.ResultCode.Failure, "提交失败，未知原因", null);
+    }
+
+    [WebMethod(EnableSession = true)]
+    public void SubmitToSecondChecker(string userId, string soIds)
+    {
+        if (ValidateUtil.isBlank(userId))
+        {
+            Context.Response.WriteJson(OA.GeneralClass.ResultCode.Failure, "提交失败，请选择复审人", null);
+            return;
+        }
+        if (ValidateUtil.isBlank(soIds))
+        {
+            Context.Response.WriteJson(OA.GeneralClass.ResultCode.Failure, "提交失败，请选择销售订单", null);
+            return;
+        }
+        string[] soIdArr = soIds.DeSerializeFromJson<string[]>();
+        if (soIdArr == null || soIdArr.Length < 1)
+        {
+            Context.Response.WriteJson(OA.GeneralClass.ResultCode.Failure, "提交失败，销售订单数据格式不正确", null);
+            return;
+        }
+
+        bool rst = bll.SubmitToSecondChcker(userId, soIdArr);
+        if (rst)
+        {
+            Context.Response.WriteJson(OA.GeneralClass.ResultCode.Success, "提交成功", null);
+            return;
+        }
+        Context.Response.WriteJson(OA.GeneralClass.ResultCode.Failure, "提交失败，未知原因", null);
+    }
+    [WebMethod(EnableSession = true)]
+    public void SubmitToReader(string userId, string soIds)
+    {
+        if (ValidateUtil.isBlank(userId))
+        {
+            Context.Response.WriteJson(OA.GeneralClass.ResultCode.Failure, "提交失败，请选择分阅人", null);
+            return;
+        }
+        if (ValidateUtil.isBlank(soIds))
+        {
+            Context.Response.WriteJson(OA.GeneralClass.ResultCode.Failure, "提交失败，请选择销售订单", null);
+            return;
+        }
+        string[] soIdArr = soIds.DeSerializeFromJson<string[]>();
+        if (soIdArr == null || soIdArr.Length < 1)
+        {
+            Context.Response.WriteJson(OA.GeneralClass.ResultCode.Failure, "提交失败，销售订单数据格式不正确", null);
+            return;
+        }
+
+        bool rst = bll.SubmitToReader(userId, soIdArr);
+        if (rst)
+        {
+            Context.Response.WriteJson(OA.GeneralClass.ResultCode.Success, "提交成功", null);
+            return;
+        }
+        Context.Response.WriteJson(OA.GeneralClass.ResultCode.Failure, "提交失败，未知原因", null);
+    }
+    [WebMethod(EnableSession = true)]
+    public void FirstCheck(bool result, string checkView, string soIds)
+    {
+        if (ValidateUtil.isBlank(soIds))
+        {
+            Context.Response.WriteJson(OA.GeneralClass.ResultCode.Failure, "初审失败，请选择销售订单", null);
+            return;
+        }
+        string[] soIdArr = soIds.DeSerializeFromJson<string[]>();
+        if (soIdArr == null || soIdArr.Length < 1)
+        {
+            Context.Response.WriteJson(OA.GeneralClass.ResultCode.Failure, "初审失败，销售订单数据格式不正确", null);
+            return;
+        }
+        bool rst = bll.FirstCheck(result, checkView, soIdArr);
+        if (rst)
+        {
+            Context.Response.WriteJson(OA.GeneralClass.ResultCode.Success, "初审成功", null);
+            return;
+        }
+        Context.Response.WriteJson(OA.GeneralClass.ResultCode.Failure, "初审失败，未知原因", null);
+    }
+    [WebMethod(EnableSession = true)]
+    public void SecondCheck(bool result, string checkView, string soIds)
+    {
+        if (ValidateUtil.isBlank(soIds))
+        {
+            Context.Response.WriteJson(OA.GeneralClass.ResultCode.Failure, "复审失败，请选择销售订单", null);
+            return;
+        }
+        string[] soIdArr = soIds.DeSerializeFromJson<string[]>();
+        if (soIdArr == null || soIdArr.Length < 1)
+        {
+            Context.Response.WriteJson(OA.GeneralClass.ResultCode.Failure, "复审失败，销售订单数据格式不正确", null);
+            return;
+        }
+        bool rst = bll.SecondCheck(result, base.GetCurrentID(), checkView, soIdArr);
+        if (rst)
+        {
+            Context.Response.WriteJson(OA.GeneralClass.ResultCode.Success, "复审成功", null);
+            return;
+        }
+        Context.Response.WriteJson(OA.GeneralClass.ResultCode.Failure, "复审失败，未知原因", null);
+    }
+    [WebMethod(EnableSession = true)]
+    public void Read(string soIds)
+    {
+        if (ValidateUtil.isBlank(soIds))
+        {
+            Context.Response.WriteJson(OA.GeneralClass.ResultCode.Failure, "分阅失败，请选择销售订单", null);
+            return;
+        }
+        string[] soIdArr = soIds.DeSerializeFromJson<string[]>();
+        if (soIdArr == null || soIdArr.Length < 1)
+        {
+            Context.Response.WriteJson(OA.GeneralClass.ResultCode.Failure, "分阅失败，销售订单数据格式不正确", null);
+            return;
+        }
+        bool rst = bll.Read(base.GetCurrentID(), soIdArr);
+        if (rst)
+        {
+            Context.Response.WriteJson(OA.GeneralClass.ResultCode.Success, "分阅成功", null);
+            return;
+        }
+        Context.Response.WriteJson(OA.GeneralClass.ResultCode.Failure, "分阅失败，未知原因", null);
+    }
+    [WebMethod(EnableSession = true)]
+    public void Close(string soIds)
+    {
+        if (ValidateUtil.isBlank(soIds))
+        {
+            Context.Response.WriteJson(OA.GeneralClass.ResultCode.Failure, "关闭失败，请选择销售订单", null);
+            return;
+        }
+        string[] soIdArr = soIds.DeSerializeFromJson<string[]>();
+        if (soIdArr == null || soIdArr.Length < 1)
+        {
+            Context.Response.WriteJson(OA.GeneralClass.ResultCode.Failure, "关闭失败，销售订单数据格式不正确", null);
+            return;
+        }
+        bool rst = bll.Close(soIdArr);
+        if (rst)
+        {
+            Context.Response.WriteJson(OA.GeneralClass.ResultCode.Success, "关闭成功", null);
+            return;
+        }
+        Context.Response.WriteJson(OA.GeneralClass.ResultCode.Failure, "关闭失败，未知原因", null);
+    }
+    #endregion
 }
+

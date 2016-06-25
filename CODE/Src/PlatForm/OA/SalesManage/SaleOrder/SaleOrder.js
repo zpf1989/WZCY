@@ -2,7 +2,7 @@
 var soFormatter = {
     //订单状态
     soState: {
-        src: [{ value: '1', text: '编制' }, { value: '2', text: '提交' }, { value: '3', text: '初审通过' }, { value: '4', text: '初审不通过' }, { value: '5', text: '复审通过' }, { value: '6', text: '复审不通过' }, { value: '7', text: '关闭' }],
+        src: [{ value: '1', text: '编制' }, { value: '2', text: '提交初审' }, { value: '3', text: '初审通过' }, { value: '4', text: '初审不通过' }, { value: '5', text: '提交复审' }, { value: '6', text: '复审通过' }, { value: '7', text: '复审不通过' }, { value: '8', text: '关闭' }],
         format: function (value) {
             if (gFunc.isNull(value)) {
                 return "";
@@ -38,9 +38,11 @@ var saleorder = {
     dateSearchSaleDateEnd: $('#dateSearchSaleDateEnd'),
     cardFormWidth: 700,
     cardFormHeight: 600,
+    approvalFormWidth: 400,
+    approvalFormHeight: 240,
     cardFormUrl: 'SaleOrderAdd.html',
     searchUrl: 'SaleOrderService.asmx/GetList',
-    init: function () {
+    init: function (funcType) {
         saleorder.initgrid();
         saleorder.bindingEvents();
         saleorder.formSearch.children('div').css({ 'float': 'left', 'padding-left': '8px' });
@@ -84,11 +86,30 @@ var saleorder = {
                 text: '删除',
                 iconCls: 'icon-remove',
                 handler: saleorder.deleteRowBatch
+            }, "-", {
+                id: 'btnSubmitToFirstCheck',
+                text: '提交初审',
+                iconCls: 'icon-search',
+                handler: saleorder.submitToFirstCheck
+            }, "-", {
+                id: 'btnSubmitToSecondCheck',
+                text: '提交复审',
+                iconCls: 'icon-edit',
+                handler: saleorder.submitToSecondCheck
+            }, "-", {
+                id: 'btnSubmitToReader',
+                text: '设置分阅人',
+                iconCls: 'icon-remove',
+                handler: saleorder.submitToRead
             }],
             columns: [[
                 { field: 'ck', title: '', width: 100, align: 'center', checkbox: true },
                 { field: 'SaleOrderID' },
                 { field: 'SaleOrderCode', title: '订单编号', width: 100, align: 'center' },
+                {
+                    field: 'SaleState', title: '订单状态', width: 80, align: 'center',
+                    formatter: function (value, row, index) { return soFormatter.soState.format(value); }
+                },
                 { field: 'BillTypeID' },
                 { field: 'BillType_Name', title: '订单类型', width: 80, align: 'center' },
                 { field: 'SaleDate', title: '销售日期', align: 'center', width: 80, formatter: formatHandler.date.format },
@@ -115,16 +136,13 @@ var saleorder = {
                 { field: 'FirstCheckView', title: '初审意见', align: 'center', width: 100 },
                 { field: 'SecondCheckerName', title: '复审人', align: 'center', width: 80 },
                 { field: 'ReaderName', title: '分阅人', align: 'center', width: 60 },
-                {
-                    field: 'SaleState', title: '订单状态', width: 80, align: 'center',
-                    formatter: function (value, row, index) { return soFormatter.soState.format(value); }
-                },
                 { field: 'Remark', title: '备注', width: 100, align: 'center' }
             ]],
             hidecols: ['SaleOrderID', 'BillTypeID', 'MaterialID', 'SaleUnitID', 'ClientID', 'Creator', 'Editor', 'FirstChecker'],
             singleSelect: false
         });
     },
+    //编辑
     addSaleOrder: function () {
         //弹出窗体
         gFunc.showPopWindow({
@@ -176,6 +194,11 @@ var saleorder = {
             $.messager.alert('提示', '只能修改一条数据');
             return;
         }
+        //
+        if (rows[0].SaleState !== '1' && rows[0].SaleState !== '4' && rows[0].SaleState !== '7') {
+            $.messager.alert('提示', '请选择编制、初审不通过或复审不通过状态的订单');
+            return;
+        }
         //弹出窗体
         gFunc.showPopWindow({
             title: '修改销售订单',
@@ -196,6 +219,14 @@ var saleorder = {
         var delCheckedRows = saleorder.grid.datagrid('getChecked');
         if (gFunc.isNull(delCheckedRows) || delCheckedRows.length < 1) {
             $.messager.alert('提示', '请选择要删除的数据');
+            return;
+        }
+        var illegalRows = $.grep(delCheckedRows, function (row, idx) {
+            return row.SaleState !== '1' && row.SaleState !== '4'
+                && row.SaleState !== '7' && row.SaleState !== '8';//过滤条件：非(编制、初审不通过、复审不通过、关闭)
+        });
+        if (illegalRows.length > 0) {
+            $.messager.alert('提示', '请选择编制、初审不通过、复审不通过或关闭状态的订单');
             return;
         }
 
@@ -229,6 +260,51 @@ var saleorder = {
         }
         return result;
     },
+    //提交
+    submitToFirstCheck: function () {
+        //获取选中行
+        var checkedRows = saleorder.grid.datagrid('getChecked');
+        if (gFunc.isNull(checkedRows) || checkedRows.length < 1) {
+            $.messager.alert('提示', '请选择数据');
+            return;
+        }
+        var illegalRows = $.grep(checkedRows, function (row, idx) {
+            return row.SaleState !== '1' && row.SaleState !== '4';
+        });
+        if (illegalRows.length > 0) {
+            $.messager.alert('提示', '请选择编制或初审不通过状态的订单');
+            return;
+        }
+        //提交初审
+        showPopGridHelp(400, 300, true, helpInitializer.user, saleorder.helpReceiver.submitToFirstChecker, null);
+    },
+    submitToSecondCheck: function () {
+        //获取选中行
+        var checkedRows = saleorder.grid.datagrid('getChecked');
+        if (gFunc.isNull(checkedRows) || checkedRows.length < 1) {
+            $.messager.alert('提示', '请选择数据');
+            return;
+        }
+        var illegalRows = $.grep(checkedRows, function (row, idx) {
+            return row.SaleState !== '3' && row.SaleState !== '7';
+        });
+        if (illegalRows.length > 0) {
+            $.messager.alert('提示', '请选择初审通过或复审不通过状态的订单');
+            return;
+        }
+        //提交初审
+        showPopGridHelp(400, 300, true, helpInitializer.user, saleorder.helpReceiver.submitToSecondChecker, null);
+    },
+    submitToRead: function () {
+        //获取选中行
+        var checkedRows = saleorder.grid.datagrid('getChecked');
+        if (gFunc.isNull(checkedRows) || checkedRows.length < 1) {
+            $.messager.alert('提示', '请选择数据');
+            return;
+        }
+        //提交分阅
+        showPopGridHelp(400, 300, true, helpInitializer.user, saleorder.helpReceiver.submitToReader, null);
+    },
     onClickSearchBillType: function () {
         showPopGridHelp(400, 300, true, helpInitializer.billType, saleorder.helpReceiver.searchBillType, null);
     },
@@ -237,6 +313,117 @@ var saleorder = {
             //注意：必须先给name赋值，因为它会触发onChange事件，会把id冲掉
             saleorder.txtSearchBillTypeName.textbox('setValue', typeData.BillName);
             saleorder.txtSearchBillTypeID.val(typeData.BillID);
-        }
+        },
+        submitToFirstChecker: function (userData) {
+            if (gFunc.isNull(userData) || gFunc.isNull(userData.UserID)) {
+                $.messager.alert('提示', '请选择初审人');
+                return;
+            }
+            //获取选中行
+            var checkedRows = saleorder.grid.datagrid('getChecked');
+            if (gFunc.isNull(checkedRows) || checkedRows.length < 1) {
+                $.messager.alert('提示', '请选择数据');
+                return;
+            }
+            var soIds = [];
+            $.each(checkedRows, function (index, row) {
+                soIds.push(row.SaleOrderID);
+            });
+            var ajaxResult = false;
+            $.ajax({
+                type: 'post',
+                url: 'SaleOrderService.asmx/SubmitToFirstChecker',
+                data: 'userId=' + userData.UserID + '&soIds=' + JSON.stringify(soIds),
+                async: false,//同步请求
+                success: function (result) {
+                    if (result && result.code) {
+                        ajaxResult = true;
+                        saleorder.grid.datagrid('reload');
+                        console.log('saleorder,ajax succeed');
+                    } else {
+                        console.log('saleorder,ajax fail');
+                        ajaxResult = false;
+                    }
+                },
+                error: function () {
+                    console.log('saleorder,ajax error');
+                    ajaxResult = false;
+                }
+            });
+        },
+        submitToSecondChecker: function (userData) {
+            if (gFunc.isNull(userData) || gFunc.isNull(userData.UserID)) {
+                $.messager.alert('提示', '请选择复审人');
+                return;
+            }
+            //获取选中行
+            var checkedRows = saleorder.grid.datagrid('getChecked');
+            if (gFunc.isNull(checkedRows) || checkedRows.length < 1) {
+                $.messager.alert('提示', '请选择数据');
+                return;
+            }
+            var soIds = [];
+            $.each(checkedRows, function (index, row) {
+                soIds.push(row.SaleOrderID);
+            });
+            var ajaxResult = false;
+            $.ajax({
+                type: 'post',
+                url: 'SaleOrderService.asmx/SubmitToSecondChecker',
+                data: 'userId=' + userData.UserID + '&soIds=' + JSON.stringify(soIds),
+                async: false,//同步请求
+                success: function (result) {
+                    if (result && result.code) {
+                        ajaxResult = true;
+                        saleorder.grid.datagrid('reload');
+                        console.log('saleorder,ajax succeed');
+                    } else {
+                        console.log('saleorder,ajax fail');
+                        ajaxResult = false;
+                    }
+                },
+                error: function () {
+                    console.log('saleorder,ajax error');
+                    ajaxResult = false;
+                }
+            });
+        },
+        submitToReader: function (userData) {
+            if (gFunc.isNull(userData) || gFunc.isNull(userData.UserID)) {
+                $.messager.alert('提示', '请选择分阅人');
+                return;
+            }
+            //获取选中行
+            var checkedRows = saleorder.grid.datagrid('getChecked');
+            if (gFunc.isNull(checkedRows) || checkedRows.length < 1) {
+                $.messager.alert('提示', '请选择数据');
+                return;
+            }
+            var soIds = [];
+            $.each(checkedRows, function (index, row) {
+                soIds.push(row.SaleOrderID);
+            });
+            var ajaxResult = false;
+            $.ajax({
+                type: 'post',
+                url: 'SaleOrderService.asmx/SubmitToReader',
+                data: 'userId=' + userData.UserID + '&soIds=' + JSON.stringify(soIds),
+                async: false,//同步请求
+                success: function (result) {
+                    if (result && result.code) {
+                        ajaxResult = true;
+                        saleorder.grid.datagrid('reload');
+                        console.log('saleorder,ajax succeed');
+                    } else {
+                        console.log('saleorder,ajax fail');
+                        ajaxResult = false;
+                    }
+                },
+                error: function () {
+                    console.log('saleorder,ajax error');
+                    ajaxResult = false;
+                }
+            });
+        },
     }
 }

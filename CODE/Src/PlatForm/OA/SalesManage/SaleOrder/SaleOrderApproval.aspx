@@ -42,7 +42,7 @@
             <table id="grid" style="width: 100%; height: 100%;"></table>
         </div>
     </div>
-    <script src="SaleOrder.js"></script>
+    <script src="SaleOrderApproval.js"></script>
     <script>
         $(saleorder.init());
     </script>

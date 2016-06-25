@@ -115,7 +115,7 @@ namespace OA.DAL
                 return false;
             }
             //1、组织sql
-            StringBuilder sbSql = new StringBuilder();//删除用户的sql
+            StringBuilder sbSql = new StringBuilder();//sql
             sbSql.AppendFormat("delete from {0} where SaleOrderItemID in (", TableName);
             List<SqlParameter> sqlParams = new List<SqlParameter>();
             for (int i = 0; i < itemIds.Length; i++)
@@ -170,7 +170,7 @@ namespace OA.DAL
                 return false;
             }
             //1、组织sql
-            StringBuilder sbSql = new StringBuilder();//删除用户的sql
+            StringBuilder sbSql = new StringBuilder();//
             sbSql.AppendFormat("delete from {0} where SaleOrderID in (", TableName);
             List<SqlParameter> sqlParams = new List<SqlParameter>();
             for (int i = 0; i < soIds.Length; i++)

@@ -366,30 +366,30 @@
             return false;
         }
         //2、列表验证
-        var allRows = soCard.gridSOItem.datagrid('getRows');
-        if (gFunc.isNull(allRows) || allRows.length < 1) {
-            return;
-        }
         var editingRows = [];
-        //逐行校验，只校验正在编辑的行
-        for (var idx = 0; idx < allRows.length; idx++) {
-            var row = allRows[idx];
-            if (!row.editing) {
-                continue;
+        var allRows = soCard.gridSOItem.datagrid('getRows');
+        if (!gFunc.isNull(allRows) && allRows.length > 0) {
+            //逐行校验，只校验正在编辑的行
+            for (var idx = 0; idx < allRows.length; idx++) {
+                var row = allRows[idx];
+                if (!row.editing) {
+                    continue;
+                }
+                var rowIdx = soCard.gridSOItem.datagrid('getRowIndex', row);
+                if (!soCard.gridSOItem.datagrid('validateRow', rowIdx)) {
+                    $.messager.alert('提示', '数据校验失败，请检查输入！');
+                    return false;
+                }
+                soCard.gridSOItem.datagrid('endEdit', rowIdx);//执行这句，否则下面的row数据不全
+                editingRows.push(row);
+                soCard.gridSOItem.datagrid('beginEdit', rowIdx);
             }
-            var rowIdx = soCard.gridSOItem.datagrid('getRowIndex', row);
-            if (!soCard.gridSOItem.datagrid('validateRow', rowIdx)) {
-                $.messager.alert('提示', '数据校验失败，请检查输入！');
-                return false;
-            }
-            soCard.gridSOItem.datagrid('endEdit', rowIdx);//执行这句，否则下面的row数据不全
-            editingRows.push(row);
-            soCard.gridSOItem.datagrid('beginEdit', rowIdx);
         }
+
         //3、组合数据
         var formData = gFunc.formFunc.serializeToJson("editForm");
         formData.Items = editingRows;
-        console.log(JSON.stringify(formData));
+        //console.log(JSON.stringify(formData));
         //提交保存
         //这里json序列化的目标一定是一个数组，否则，后台解析（解析为列表）时会出错
         var ajaxResult = false;

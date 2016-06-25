@@ -387,6 +387,42 @@ namespace OA.DALFactory
             }
             return idal;
         }
+        public static OA.IDAL.ISOSecondCheckDAL GetISOSecondCheckDAL()
+        {
+            OA.IDAL.ISOSecondCheckDAL idal;
+            switch (dbType)
+            {
+                //case "Oracle":
+                //    iAffix = new Upload.DALORACLE.Affix();
+                //    break;
+                //case "GBase":
+                //    iAffix = new Upload.DALGBase.Affix();
+                //    break;
+                case "SQLServer":
+                default:
+                    idal = new OA.DAL.SOSecondCheckDAL();
+                    break;
+            }
+            return idal;
+        }
+        public static OA.IDAL.ISOReaderDAL GetISOReaderDAL()
+        {
+            OA.IDAL.ISOReaderDAL idal;
+            switch (dbType)
+            {
+                //case "Oracle":
+                //    iAffix = new Upload.DALORACLE.Affix();
+                //    break;
+                //case "GBase":
+                //    iAffix = new Upload.DALGBase.Affix();
+                //    break;
+                case "SQLServer":
+                default:
+                    idal = new OA.DAL.SOReaderDAL();
+                    break;
+            }
+            return idal;
+        }
         #endregion
     }
 }

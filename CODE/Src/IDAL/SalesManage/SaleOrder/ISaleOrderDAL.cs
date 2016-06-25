@@ -22,5 +22,49 @@ namespace OA.IDAL
         /// <param name="orderId">销售订单id</param>
         /// <returns></returns>
         SaleOrder GetSaleOrderWithItems(string orderId);
+        /// <summary>
+        /// 提交到初审人
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="soIds"></param>
+        /// <returns></returns>
+        bool SubmitToFirstChecker(string userId, params string[] soIds);
+        /// <summary>
+        /// 提交到复审人
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="soIds"></param>
+        /// <returns></returns>
+        bool SubmitToSecondChecker(string userId, params string[] soIds);
+        /// <summary>
+        /// 设置分阅人
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="soIds"></param>
+        /// <returns></returns>
+        bool SubmitToReader(string userId, params string[] soIds);
+        /// <summary>
+        /// 初审
+        /// </summary>
+        /// <param name="result">初审结果</param>
+        /// <param name="checkView">初审意见</param>
+        /// <param name="soIds"></param>
+        /// <returns></returns>
+        bool FirstCheck(bool result, string checkView, params string[] soIds);
+
+        /// <summary>
+        /// 复审
+        /// </summary>
+        /// <param name="checkResult"></param>
+        /// <param name="soIds"></param>
+        /// <returns></returns>
+        bool SecondCheck( bool checkResult, params string[] soIds);
+
+        /// <summary>
+        /// 关闭
+        /// </summary>
+        /// <param name="soIds"></param>
+        /// <returns></returns>
+        bool Close(string[] soIds);
     }
 }
