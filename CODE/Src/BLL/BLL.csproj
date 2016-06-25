@@ -78,6 +78,7 @@
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="SalesManage\BaseData\BillTypeBLL.cs" />
+    <Compile Include="SalesManage\BaseData\ClientLevelBLL.cs" />
     <Compile Include="SalesManage\BaseData\PayTypeBLL.cs" />
     <Compile Include="SalesManage\BaseData\ClientBLL.cs" />
     <Compile Include="SalesManage\SaleOrder\SaleOrderItemBLL.cs" />

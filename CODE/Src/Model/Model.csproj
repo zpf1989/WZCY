@@ -72,6 +72,7 @@
     <Compile Include="InventoryManage\BaseData\MeasureUnits.cs" />
     <Compile Include="InventoryManage\BaseData\WareHouse.cs" />
     <Compile Include="SalesManage\BaseData\BillType.cs" />
+    <Compile Include="SalesManage\BaseData\ClientLevel.cs" />
     <Compile Include="SalesManage\BaseData\Client.cs" />
     <Compile Include="SalesManage\BaseData\PayType.cs" />
     <Compile Include="SalesManage\SaleOrder\SaleOrder.cs" />

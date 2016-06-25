@@ -330,6 +330,25 @@ namespace OA.DALFactory
             }
             return idal;
         }
+        public static IDAL.IClientLevelDAL GetIClientLevelDAL()
+        {
+            OA.IDAL.IClientLevelDAL idal;
+            switch (dbType)
+            {
+                //case "Oracle":
+                //    iAffix = new Upload.DALORACLE.Affix();
+                //    break;
+                //case "GBase":
+                //    iAffix = new Upload.DALGBase.Affix();
+                //    break;
+                case "SQLServer":
+                default:
+                    idal = new OA.DAL.ClientLevelDAL();
+                    break;
+            }
+            return idal;
+        }
+
         public static OA.IDAL.IBillTypeDAL GetIBillTypeDAL()
         {
             OA.IDAL.IBillTypeDAL idal;
@@ -424,5 +443,6 @@ namespace OA.DALFactory
             return idal;
         }
         #endregion
+
     }
 }
