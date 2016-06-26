@@ -348,6 +348,24 @@ namespace OA.DALFactory
             }
             return idal;
         }
+        public static IDAL.IClientClassificationDAL GetIClientClassificationDAL()
+        {
+            OA.IDAL.IClientClassificationDAL idal;
+            switch (dbType)
+            {
+                //case "Oracle":
+                //    iAffix = new Upload.DALORACLE.Affix();
+                //    break;
+                //case "GBase":
+                //    iAffix = new Upload.DALGBase.Affix();
+                //    break;
+                case "SQLServer":
+                default:
+                    idal = new OA.DAL.ClientClassificationDAL();
+                    break;
+            }
+            return idal;
+        }
 
         public static OA.IDAL.IBillTypeDAL GetIBillTypeDAL()
         {

@@ -72,6 +72,7 @@
     <Compile Include="InventoryManage\BaseData\IMeasureUnitsDAL.cs" />
     <Compile Include="IBaseDAL.cs" />
     <Compile Include="InventoryManage\BaseData\IWareHouseDAL.cs" />
+    <Compile Include="SalesManage\BaseData\IClientClassificationDAL.cs" />
     <Compile Include="SalesManage\BaseData\IClientLevelDAL.cs" />
     <Compile Include="SalesManage\SaleOrder\ISOReaderDAL.cs" />
     <Compile Include="SalesManage\SaleOrder\ISOSecondCheckDAL.cs" />

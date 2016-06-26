@@ -175,6 +175,24 @@ var helpInitializer = {
             singleSelect: true
         });
     },
+    clientLevel: function (grid) {
+        if (!grid) {
+            return;
+        }
+        gFunc.initGridPublic(grid, {
+            title: "客户等级设置帮助",
+            url: gFunc.getRootPath() + '/OA/SalesManage/ClientLevel/ClientLevelService.asmx/GetListForHelp',
+            columns: [[
+                { field: 'LevelId' },
+                { field: 'LevelName', title: '等级名称', width: 100, align: 'center' },
+                { field: 'LevelType', title: '等级分类', width: 100, align: 'center' },
+                { field: 'LevelMax', title: '上限', width: 100, align: 'center' },
+                { field: 'LevelMin', title: '下限', width: 100, align: 'center' },
+            ]],
+            hidecols: ['LevelId'],
+            singleSelect: true
+        });
+    },
 };
 
 /*
