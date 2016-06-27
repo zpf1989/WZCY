@@ -119,10 +119,24 @@ var gFunc = {
             return value;
         }
         var tempStrs = value.split(" ");
-        var dateStrs = tempStrs[0].split("-");
-        var year = parseInt(dateStrs[0], 10);
-        var month = parseInt(dateStrs[1], 10) - 1;
-        var day = parseInt(dateStrs[2], 10);
+        var year = 0, month = 0, day = 0;
+        var dateStrs = [];
+        if (tempStrs[0].indexOf("-") > 0) {
+            //2012-12-25
+            dateStrs = tempStrs[0].split("-");
+        } else if (tempStrs[0].indexOf("/") > 0) {
+            //2012/12/25
+            dateStrs = tempStrs[0].split("/");
+        } else if (tempStrs[0].length == 8) {
+            //20121225
+            dateStrs[0] = tempStrs[0].substring(0, 4);
+            dateStrs[1] = tempStrs[0].substring(4, 6);
+            dateStrs[2] = tempStrs[0].substring(6);
+        }
+        year = parseInt(dateStrs[0], 10);
+        month = parseInt(dateStrs[1], 10) - 1;
+        day = parseInt(dateStrs[2], 10);
+
         var hour = 0, minute = 0, second = 0;
         if (tempStrs[1]) {
             timeStrs = tempStrs[1].split(":");
@@ -245,7 +259,10 @@ var gFunc = {
                 handler: function () {
                     var selData = null;
                     //调用回调函数
-                    var rst = options.funSubmitCallback();
+                    var rst = true;
+                    if ($.isFunction(options.funSubmitCallback)) {
+                        rst = options.funSubmitCallback();
+                    }
                     console.log('base,funSubmitCallback result:' + rst);
                     if (rst) {
                         $(win).dialog("close");

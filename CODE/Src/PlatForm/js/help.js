@@ -121,7 +121,78 @@ var helpInitializer = {
             hidecols: ['PayTypeID'],
             singleSelect: true
         });
-    }
+    },
+    billType: function (grid) {
+        if (!grid) {
+            return;
+        }
+        gFunc.initGridPublic(grid, {
+            title: "单据类型帮助",
+            url: gFunc.getRootPath() + '/OA/SalesManage/BillType/BillTypeService.asmx/GetListForHelp?BillType=sale',
+            columns: [[
+                { field: 'BillID' },
+                { field: 'BillCode', title: '单据类型编号', width: 100, align: 'center' },
+                { field: 'BillName', title: '单据类型名称', width: 100, align: 'center' },
+                { field: 'Remark', title: '备注', width: 100, align: 'center' }
+            ]],
+            hidecols: ['BillID'],
+            singleSelect: true
+        });
+    },
+    client: function (grid) {
+        if (!grid) {
+            return;
+        }
+        gFunc.initGridPublic(grid, {
+            title: "客户信息帮助",
+            url: gFunc.getRootPath() + '/OA/SalesManage/Client/ClientService.asmx/GetListForHelp',
+            columns: [[
+                { field: 'ClientID' },
+                { field: 'ClientCode', title: '客户编号', width: 100, align: 'center' },
+                { field: 'ClientName', title: '客户名称', width: 100, align: 'center' },
+                { field: 'ClientAddress', title: '客户地址', width: 100, align: 'center' },
+            ]],
+            hidecols: ['ClientID'],
+            singleSelect: true
+        });
+    },
+    materials: function (grid) {
+        if (!grid) {
+            return;
+        }
+        gFunc.initGridPublic(grid, {
+            title: "物料帮助",
+            url: gFunc.getRootPath() + '/OA/InventoryManage/Materials/MaterialsService.asmx/GetListForHelp',
+            columns: [[
+                { field: 'MaterialID' },
+                { field: 'MaterialCode', title: '物料编号', width: 100, align: 'center' },
+                { field: 'MaterialName', title: '物料名称', width: 100, align: 'center' },
+                { field: 'Specs', title: '规格型号', width: 100, align: 'center' },
+                { field: 'Price', title: '价格', width: 100, align: 'center' },
+                { field: 'PrimaryUnit_Name', title: '计量单位', width: 100, align: 'center' },
+            ]],
+            hidecols: ['MaterialID'],
+            singleSelect: true
+        });
+    },
+    clientLevel: function (grid) {
+        if (!grid) {
+            return;
+        }
+        gFunc.initGridPublic(grid, {
+            title: "客户等级设置帮助",
+            url: gFunc.getRootPath() + '/OA/SalesManage/ClientLevel/ClientLevelService.asmx/GetListForHelp',
+            columns: [[
+                { field: 'LevelId' },
+                { field: 'LevelName', title: '等级名称', width: 100, align: 'center' },
+                { field: 'LevelType', title: '等级分类', width: 100, align: 'center' },
+                { field: 'LevelMax', title: '上限', width: 100, align: 'center' },
+                { field: 'LevelMin', title: '下限', width: 100, align: 'center' },
+            ]],
+            hidecols: ['LevelId'],
+            singleSelect: true
+        });
+    },
 };
 
 /*

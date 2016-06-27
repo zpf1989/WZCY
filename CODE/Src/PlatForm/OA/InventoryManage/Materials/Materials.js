@@ -21,7 +21,7 @@ var materials = {
     txtCardUnitID: $('#txtCardUnitID'),
     txtCardPrice: $('#txtPrice'),
     txtCardWasterRate: $('#txtWasterRate'),
-    cardFormWidth: 600,
+    cardFormWidth: 700,
     cardFormHeight: 360,
     cardFormUrl: 'MaterialsAdd.html',
     saveUrl: 'MaterialsService.asmx/Save',
@@ -97,7 +97,7 @@ var materials = {
                 { field: 'WasterRate', title: '废品率', width: 100, align: 'center' },
                 { field: 'Remark', title: '备注', width: 100, align: 'center' },
                 { field: 'Creator_Name', title: '创建人', width: 100, align: 'center' },
-                 { field: 'CreateTime', title: '创建时间', width: 100, align: 'center' }
+                 { field: 'CreateTime', title: '创建时间', width: 140, align: 'center' }
             ]],
             hidecols: ['MaterialID', 'MaterialClassID', 'MaterialTypeID', 'PrimaryUnitID', 'Creator'],
             singleSelect: false
