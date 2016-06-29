@@ -1,7 +1,37 @@
-﻿var soCard = {
+﻿var cardStateConf = {
+    add: '0',
+    edit: '1',
+    view: '2'
+};
+//订单信息格式化对象
+var soFormatter = {
+    //订单状态
+    soState: {
+        src: [{ value: '1', text: '编制' }, { value: '2', text: '提交初审' }, { value: '3', text: '初审通过' }, { value: '4', text: '初审不通过' }, { value: '5', text: '提交复审' }, { value: '6', text: '复审通过' }, { value: '7', text: '复审不通过' }, { value: '8', text: '关闭' }],
+        format: function (value) {
+            if (gFunc.isNull(value)) {
+                return "";
+            }
+            var rst = "";
+            for (var idx = 0; idx < this.src.length; idx++) {
+                if (value == this.src[idx].value) {
+                    rst = this.src[idx].text;
+                    break;
+                }
+            }
+            return rst;
+        }
+    },
+};
+var soCard = {
+    log: function (msg) {
+        console.log(msg);
+    },
     gridSOItem: $('#gridSOItem'),
     formSO: $('#editForm'),
-    cardState: saleorder.stateConf.add,
+    cardState: cardStateConf.add,
+    btnSave: $('#btnSave'),
+    btnBack: $('#btnBack'),
     btnCardBillType: $('#btnCardHelpBillType'),
     txtCardBillTypeName: $('#txtCardBillTypeName'),
     txtCardBillTypeID: $('#txtCardSOTypeID'),
@@ -17,15 +47,21 @@
     txtCardSOID: $('#txtSOID'),
     saveUrl: 'SaleOrderService.asmx/Save',
     searchUrlSOItem: 'SaleOrderItemService.asmx/GetOrderItems',
+    soManageUrl: 'SaleOrder.aspx',
     bindingEvents: function () {
         soCard.btnCardBillType.click(soCard.eventHandler.btnHelpBillType);
         soCard.btnCardMaterial.click(soCard.eventHandler.btnHelpMaterial);
         soCard.btnCardUnit.click(soCard.eventHandler.btnHelpUnit);
         soCard.btnCardClient.click(soCard.eventHandler.btnHelpClient);
+
+        soCard.btnSave.click(soCard.doSave);
+        soCard.btnBack.click(function () {
+            location.href = soCard.soManageUrl;
+        });
     },
     gridHandler: {
         insertRow: function () {
-            if (soCard.cardState == saleorder.stateConf.view) {
+            if (soCard.cardState == cardStateConf.view) {
                 return;
             }
             var index = 0;
@@ -43,7 +79,7 @@
             soCard.gridSOItem.datagrid('selectRow', index).datagrid('beginEdit', index);
         },
         editRowBatch: function () {
-            if (soCard.cardState == saleorder.stateConf.view) {
+            if (soCard.cardState == cardStateConf.view) {
                 return;
             }
             var rows = soCard.gridSOItem.datagrid('getChecked');
@@ -61,7 +97,7 @@
             }
         },
         deleteRowBatch: function () {
-            if (soCard.cardState == saleorder.stateConf.view) {
+            if (soCard.cardState == cardStateConf.view) {
                 return;
             }
             var checkedRows = soCard.gridSOItem.datagrid('getChecked');
@@ -171,13 +207,13 @@
         return soCard.gridSOItem.datagrid('getRowIndexByEditor', { element: target });
     },
     initCardForm: function (data, state) {
-        //gFunc.formFunc.clearValidations('editForm');//清除表单验证
         soCard.bindingEvents();
         soCard.cardState = state;
         switch (state) {
-            case saleorder.stateConf.edit://修改
-            case saleorder.stateConf.view://查看
+            case cardStateConf.edit://修改
+            case cardStateConf.view://查看
                 //赋值
+                //console.log(data);
                 soCard.txtCardSOID.val(data.SaleOrderID);
                 $('#txtCardSOCode').textbox('setValue', data.SaleOrderCode);
                 soCard.txtCardBillTypeName.textbox('setValue', data.BillType_Name);
@@ -193,7 +229,7 @@
                 $('#txtCardSOState').textbox('setValue', soFormatter.soState.format(data.SaleState));
                 $('#txtCardRouting').textbox('setValue', data.Routing);
                 $('#txtCardSaleQty').numberbox('setValue', data.SaleQty);
-                $('#txtCardPrice').numberbox('setValue', data.PriceSalePrice);
+                $('#txtCardPrice').numberbox('setValue', data.SalePrice);
                 $('#txtCardSaleCost').numberbox('setValue', data.SaleCost);
                 $('#txtCardCreatorName').textbox('setValue', data.Creator_Name);
                 $('#txtCardCreateTime').textbox('setValue', data.CreateTime);
@@ -207,7 +243,13 @@
                 $('#txtCardRemark').textbox('setValue', data.Remark);
                 //设置只读
                 $('#txtCardSOCode').textbox('readonly', true);//编号只读
-                var boolReadOnly = state == soCard.cardState.view ? true : false;
+                //console.log(typeof(state));
+                var boolReadOnly = state == cardStateConf.view ? true : false;
+                //console.log('boolReadOnly:' + boolReadOnly);
+                if (boolReadOnly) {
+                    //console.log('soCard.btnSave.hide();');
+                    soCard.btnSave.hide();
+                }
                 $('#txtCardSaleDate').datebox('readonly', boolReadOnly);
                 $('#txtCardFinishDate').datebox('readonly', boolReadOnly);
                 $('#txtCardRouting').textbox('readonly', boolReadOnly);
@@ -222,7 +264,7 @@
                     soCard.btnCardUnit.attr({ 'disabled': 'disabled' });
                 }
                 break;
-            case saleorder.stateConf.add://添加
+            case cardStateConf.add://添加
             default:
                 break;
         }
@@ -251,7 +293,7 @@
             title: '',
             icon: 'icon-edit',
             key: 'SaleOrderItemID',
-            url: (soCard.cardState != saleorder.stateConf.add) ? (soCard.searchUrlSOItem + '?SOID=' + soID) : "",
+            url: (soCard.cardState != cardStateConf.add) ? (soCard.searchUrlSOItem + '?SOID=' + soID) : "",
             toolbar: [{
                 id: 'btnAddItem',
                 text: '新增',
@@ -272,7 +314,7 @@
                 text: '取消',
                 iconCls: 'icon-cancel',
                 handler: function () {
-                    if (soCard.cardState == saleorder.stateConf.view) {
+                    if (soCard.cardState == cardStateConf.view) {
                         return;
                     }
                     soCard.gridSOItem.datagrid('rejectChanges').datagrid('clearChecked').datagrid('clearSelections');
@@ -402,6 +444,7 @@
                 if (result && result.code) {
                     ajaxResult = true;
                     console.log('saleorder,ajax succeed');
+                    location.href = soCard.soManageUrl;
                 } else {
                     console.log('saleorder,ajax fail');
                     ajaxResult = false;
@@ -415,4 +458,4 @@
         console.log('saleorder,doSave over');
         return ajaxResult;
     }
-};
+}
