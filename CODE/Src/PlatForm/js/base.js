@@ -168,6 +168,14 @@ var gFunc = {
         var projectName = pathName.substring(0, pathName.substr(1).indexOf('/') + 1);
         return (localhostPaht + projectName);
     },
+    //获取url中的参数
+    getUrlParam: function (name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+        var r = window.location.search.substr(1).match(reg);  //匹配目标参数
+        if (r != null)
+            return r[2];
+        return null; //返回参数值
+    },
     /*
     初始化列表公共处理函数
     options对象成员说明：

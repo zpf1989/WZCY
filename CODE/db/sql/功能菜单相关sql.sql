@@ -22,9 +22,13 @@ insert into OA_Function(FunID,FunName,ParentFunID,FunURL)values('1302','客户分级
 insert into OA_RFRelation(ID,RoleID,FunID)values(NEWID(),'5FE1155A-5920-47EC-99D9-CA7ACA8DC4BB','1302');
 --销售订单
 insert into OA_Function(FunID,FunName,ParentFunID)values('134','销售订单','13');
-insert into OA_Function(FunID,FunName,ParentFunID,FunURL)values('1341','销售订单管理','134','OA/SalesManage/SaleOrder/SaleOrder.aspx');
 insert into OA_RFRelation(ID,RoleID,FunID)values(NEWID(),'5FE1155A-5920-47EC-99D9-CA7ACA8DC4BB','134');
+insert into OA_Function(FunID,FunName,ParentFunID,FunURL)values('1340','销售订单编制','134','OA/SalesManage/SaleOrder/SaleOrderAdd.aspx');
+insert into OA_RFRelation(ID,RoleID,FunID)values(NEWID(),'5FE1155A-5920-47EC-99D9-CA7ACA8DC4BB','1340');
+insert into OA_Function(FunID,FunName,ParentFunID,FunURL)values('1341','销售订单管理','134','OA/SalesManage/SaleOrder/SaleOrder.aspx');
 insert into OA_RFRelation(ID,RoleID,FunID)values(NEWID(),'5FE1155A-5920-47EC-99D9-CA7ACA8DC4BB','1341');
+insert into OA_Function(FunID,FunName,ParentFunID,FunURL)values('1342','销售订单审阅','134','OA/SalesManage/SaleOrder/SaleOrderApproval.aspx');
+insert into OA_RFRelation(ID,RoleID,FunID)values(NEWID(),'5FE1155A-5920-47EC-99D9-CA7ACA8DC4BB','1342');
 --客户分级管理
 insert into OA_Function(FunID,FunName,ParentFunID,FunURL)values('1303','客户分级管理','130','OA/SalesManage/ClientClassification/ClientClassification.aspx');
 insert into OA_RFRelation(ID,RoleID,FunID)values(NEWID(),'5FE1155A-5920-47EC-99D9-CA7ACA8DC4BB','1303');

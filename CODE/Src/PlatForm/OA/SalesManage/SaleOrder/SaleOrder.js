@@ -22,9 +22,9 @@ var soFormatter = {
 //订单列表对象
 var saleorder = {
     stateConf: {
-        add: 0,
-        edit: 1,
-        view: 2
+        add: '0',
+        edit: '1',
+        view: '2'
     },
     grid: $('#grid'),
     gridSOItem: $('#gridSOItem'),
@@ -40,7 +40,7 @@ var saleorder = {
     cardFormHeight: 600,
     approvalFormWidth: 400,
     approvalFormHeight: 240,
-    cardFormUrl: 'SaleOrderAdd.html',
+    cardFormUrl: 'SaleOrderAdd.aspx',
     searchUrl: 'SaleOrderService.asmx/GetList',
     init: function (funcType) {
         saleorder.initgrid();
@@ -144,21 +144,7 @@ var saleorder = {
     },
     //编辑
     addSaleOrder: function () {
-        //弹出窗体
-        gFunc.showPopWindow({
-            title: '新增销售订单',
-            width: saleorder.cardFormWidth,
-            height: saleorder.cardFormHeight,
-            url: saleorder.cardFormUrl,
-            isModal: true,
-            funLoadCallback: function () {
-                //初始化弹出界面
-                soCard.initCardForm(null, saleorder.stateConf.add);
-            },
-            funSubmitCallback: function () {
-                return saleorder.doSave();
-            }
-        });
+        location.href = saleorder.cardFormUrl + '?state=0';
     },
     viewSaleOrder: function () {
         var checkedRows = saleorder.grid.datagrid('getChecked');
@@ -170,22 +156,11 @@ var saleorder = {
             $.messager.alert('提示', '请选择一条数据查看');
             return;
         }
-        //弹出窗体
-        gFunc.showPopWindow({
-            title: '查看销售订单',
-            width: saleorder.cardFormWidth,
-            height: saleorder.cardFormHeight,
-            url: saleorder.cardFormUrl,
-            isModal: true,
-            funLoadCallback: function () {
-                //初始化弹出界面
-                soCard.initCardForm(checkedRows[0], saleorder.stateConf.view);
-            }
-        });
+        location.href = saleorder.cardFormUrl + '?' + encodeURI('state=2&sodata=' + JSON.stringify(checkedRows[0]));//两次encodeURI
     },
     editSaleOrder: function () {
         var rows = saleorder.grid.datagrid('getChecked');
-        console.log(rows.length);
+        //console.log(rows.length);
         if (gFunc.isNull(rows) || rows.length < 1) {
             $.messager.alert('提示', '请选择要修改的数据');
             return;
@@ -199,21 +174,7 @@ var saleorder = {
             $.messager.alert('提示', '请选择编制、初审不通过或复审不通过状态的订单');
             return;
         }
-        //弹出窗体
-        gFunc.showPopWindow({
-            title: '修改销售订单',
-            width: saleorder.cardFormWidth,
-            height: saleorder.cardFormHeight,
-            url: saleorder.cardFormUrl,
-            isModal: true,
-            funLoadCallback: function () {
-                //初始化弹出界面
-                soCard.initCardForm(rows[0], saleorder.stateConf.edit);
-            },
-            funSubmitCallback: function () {
-                return saleorder.doSave();
-            }
-        });
+        location.href = saleorder.cardFormUrl + '?' + encodeURI('state=1&sodata=' + JSON.stringify(rows[0]));//两次encodeURI
     },
     deleteRowBatch: function () {
         var delCheckedRows = saleorder.grid.datagrid('getChecked');
@@ -252,13 +213,6 @@ var saleorder = {
         var searchParams = saleorder.formSearch.serializeToJson(true);
         //重新查询
         saleorder.grid.datagrid("reload", searchParams);
-    },
-    doSave: function () {
-        var result = soCard.doSave();
-        if (result) {
-            saleorder.grid.datagrid('reload');
-        }
-        return result;
     },
     //提交
     submitToFirstCheck: function () {
