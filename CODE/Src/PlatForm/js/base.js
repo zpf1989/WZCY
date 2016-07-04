@@ -80,7 +80,7 @@ var formatHandler = {
                 return "";
             }
             var date = gFunc.getDate(value);
-            return date.Format('yyyy-MM-dd');
+            return date.Format('yyyy-MM-dd hh:mm:ss');
         },
         parse: function (text) {
             return gFunc.getDate(text);
