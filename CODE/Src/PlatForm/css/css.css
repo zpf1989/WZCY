@@ -1,150 +1,289 @@
-*{margin:0px; padding:0px;
+td{
+	font-family:"??";
+	font-size:9pt;
+	line-height: 25px;
+	color: #787878;
 }
-body{
-	font-size:12px;
-	margin: 0px;
-	padding: 0px;
+a:link{text-decoration:none;color:#999999;line-height: 21px}
+a:visited{text-decoration:none;color:#999999;line-height: 21px}
+a:active{text-decoration:none;color:#999999;line-height: 21px}
+a:hover{color:#0094EC;line-height: 21px}
+.heng {
+	background-image: url(../images/line.gif);
+	background-repeat: repeat-x;
+	background-position: bottom;
 }
-a{ text-decoration:none;}
-img{border:0px;}
-img a { text-decoration:none;}
-p{margin:0px; padding:0px; list-style:none}
-ul{margin:0px; padding:0px; list-style:none}
-li{margin:0px; padding:0px; list-style:none}
-table{margin:0px auto;text-align:left;font-size:12px;
+.font_12c {
+	font-family: "??";
+	font-size: 12px;
+	font-weight: bold;
+	color: #666666;
+	text-decoration: none;
 }
-.tB22blue {
-	font-family: "Î¢ÈíÑÅºÚ";
-	font-size: 22px;
-	color: #c7cceb;
-}
-.tB16blue {
-	font-family: "Î¢ÈíÑÅºÚ";
-	font-size: 16px;
-	color: #c7cceb;
-}
-.table1 {
-	border: 1px solid #2c3899;
-}
-.bd {
-	background-color: #2C3899;
-	height: 23px;
-	width: 173px;
-	border: 1px solid #2C3899;
-	font-family: "Î¢ÈíÑÅºÚ";
-	font-size: 14px;
-	color: #CCCCCC;
-}
-.t14white {
-	font-family: "Î¢ÈíÑÅºÚ";
-	font-size: 14px;
-	color: #FFFFFF;
-}
-.t14blue {
-	font-family: "Î¢ÈíÑÅºÚ";
-	font-size: 15px;
-	color: #0e2d5d;
-}
-.table2 {
-	border-right-width: 5px;
-	border-right-style: solid;
-	border-right-color: #efeff0;
-}
-.t14gray {
-	font-family: "Î¢ÈíÑÅºÚ";
-	font-size: 14px;
-	color: #363636;
-}
-.t14gray2 {
-	font-family: "Î¢ÈíÑÅºÚ";
-	font-size: 14px;
-	color: #999999;
-}
-.table3 {
-	border: 1px solid #cdcdcd;
-}
-.t14gray a {
-	color: #363636;
-}
-.t14white a {
-	color: #FFFFFF;
-}
-.t14red {
-	font-size: 14px;
-	color: #CC0000;
-}
-.table4 {
-	border-bottom-width: 1px;
-	border-bottom-style: solid;
-	border-bottom-color: #D8D8D8;
-}
-.table5 {
-	border-bottom-width: 1px;
-	border-bottom-style: solid;
-	border-bottom-color: #CC0000;
-}
-.table6 {
-	border-top-width: 2px;
-	border-right-width: 1px;
-	border-bottom-width: 1px;
-	border-left-width: 1px;
-	border-top-style: solid;
-	border-right-style: solid;
-	border-bottom-style: solid;
-	border-left-style: solid;
-	border-top-color: #2991CE;
-	border-right-color: #CCCCCC;
-	border-bottom-color: #FFFFFF;
-	border-left-color: #CCCCCC;
-	background-color: #FFFFFF;
-}
-.tB14black {
-	font-family: "Î¢ÈíÑÅºÚ";
+.font_14C {
+	font-family: "ËÎÌå";
 	font-size: 14px;
 	font-weight: bold;
-	color: #000000;
+	color: #999999;
+	text-decoration: none;
 }
-.table7 {
-	background-color: #F3F3F3;
-	border-top-width: 1px;
-	border-right-width: 1px;
-	border-bottom-width: 2px;
-	border-left-width: 1px;
-	border-top-style: solid;
-	border-right-style: solid;
-	border-bottom-style: solid;
-	border-left-style: solid;
-	border-top-color: #E0E0E0;
-	border-right-color: #E0E0E0;
-	border-bottom-color: #E0E0E0;
-	border-left-color: #E0E0E0;
+.font_12c_b {
+	font-family: "??";
+	font-size: 12px;
+	font-weight: bold;
+	color: #6B859F;
+	text-decoration: none;
 }
-.table8 {
-	border-bottom-width: 1px;
-	border-left-width: 1px;
-	border-bottom-style: solid;
-	border-left-style: solid;
-	border-bottom-color: #C6C6C6;
-	border-left-color: #C6C6C6;
+.font_12w_c {
+	font-family: "??";
+	font-size: 12px;
+	font-weight: bold;
+	color: #FFFFFF;
+	text-decoration: none;
 }
-.table8 td {
-	border-top-width: 1px;
-	border-right-width: 1px;
-	border-top-style: solid;
-	border-right-style: solid;
-	border-top-color: #C6C6C6;
-	border-right-color: #C6C6C6;
+.as-1 {
+	FONT-WEIGHT: normal;
+	COLOR: #919191;
+	font-family: "??";
+	font-size: 12px;
+	text-decoration: none;
 }
-.table9 {
-	border: 1px solid #D8D8D8;
+.as-1:link {
+	COLOR: #919191;
+	text-decoration: none;
+	font-size: 12px;
+	font-family: "??";
 }
-.table10 {
-	border-bottom-width: 1px;
-	border-bottom-style: solid;
-	border-bottom-color: #D8D8D8;
+.as-1:visited {
+	COLOR: #919191;
+	text-decoration: none;
+	font-size: 12px;
+	font-family: "??";
 }
-.bd2 {
+.as-1:hover {
+	COLOR: #FF0000;
+	font-size: 12px;
+	font-family: "??";
+}
+.as-2 {
+	FONT-WEIGHT: bold;
+	COLOR: #FF0000;
+	text-decoration: underline;
+	font-family: "??";
+	font-size: 12px;
+}
+.as-2:link {
+	COLOR: #FF0000;
+	font-size: 12px;
+	font-family: "??";
+	font-weight: bold;
+	text-decoration: underline;
+}
+.as-2:visited {
+	COLOR: #FF0000;
+	font-size: 12px;
+	font-weight: bold;
+	font-family: "??";
+	text-decoration: underline;
+}
+.as-2:hover {
+	COLOR: #FF0000;
+	font-size: 12px;
+	font-weight: bold;
+	font-family: "??";
+	text-decoration: none;
+}
+.as-3 {
+	FONT-WEIGHT: normal;
+	COLOR: #FFFFFF;
+	font-family: "??";
+	font-size: 12px;
+}
+.as-3:link {
+	COLOR: #FFFFFF;
+	line-height: normal;
+	text-decoration: none;
+	font-size: 12px;
+	font-family: "??";
+}
+.as-3:visited {
+	COLOR: #FFFFFF;
+	line-height: normal;
+	text-decoration: none;
+	font-size: 12px;
+	font-family: "??";
+}
+.as-3:hover {
+	COLOR: #00FFFF;
+	line-height: normal;
+	text-decoration: underline;
+	font-size: 12px;
+	font-family: "??";
+}
+.as-4 {
+	FONT-WEIGHT: normal;
+	COLOR: #FFFFFF;
+	font-family: "??";
+	font-size: 12px;
+}
+.as-4:link {
+	COLOR: #FFFFFF;
+	line-height: normal;
+	text-decoration: none;
+	font-size: 12px;
+	font-family: "??";
+	font-weight: bold;
+}
+.as-4:visited {
+	COLOR: #FFFFFF;
+	line-height: normal;
+	text-decoration: none;
+	font-size: 12px;
+	font-family: "??";
+	font-weight: bold;
+}
+.as-4:hover {
+	COLOR: #FFFFFF;
+	line-height: normal;
+	text-decoration: underline;
+	font-size: 12px;
+	font-family: "??";
+	font-weight: bold;
+}
+.as-6 {
+	FONT-WEIGHT: bold;
+	COLOR: #FF8306;
+	text-decoration: underline;
+}
+.as-6:link {
+	COLOR: #FF8306;
+	line-height: 20px;
+	text-decoration: underline;
+	font-size: 12px;
+	font-weight: bold;
+}
+.as-6:visited {
+	COLOR: #FF8306;
+	line-height: 20px;
+	font-size: 12px;
+	font-weight: bold;
+	text-decoration: underline;
+}
+.as-6:hover {
+	COLOR: #FF8306;
+	line-height: 20px;
+	text-decoration: none;
+	font-size: 12px;
+	font-weight: bold;
+}
+.as-7 {
+	FONT-WEIGHT: bold;
+	COLOR: #3A65B1;
+	text-decoration: underline;
+}
+.as-7:link {
+	COLOR: #3A65B1;
+	line-height: 20px;
+	text-decoration: underline;
+	font-size: 12px;
+}
+.as-7:visited {
+	COLOR: #3A65B1;
+	line-height: 20px;
+	font-size: 12px;
+	text-decoration: underline;
+}
+.as-7:hover {
+	COLOR: #3A65B1;
+	line-height: 20px;
+	text-decoration: none;
+	font-size: 12px;
+}
+.as-8 {
+	FONT-WEIGHT: normal; COLOR: #FFFFFF}
+.as-8:link {
+	COLOR: #FFFFFF;
+	line-height: 20px;
+	text-decoration: none;
+	font-size: 12px;
+}
+.as-8:visited {
+	COLOR: #FFFFFF;
+	line-height: 20px;
+	text-decoration: none;
+	font-size: 12px;
+}
+.as-8:hover {
+	COLOR: #FFFFFF;
+	line-height: 20px;
+	text-decoration: underline;
+	font-size: 12px;
+}
+.px11 {
+	FONT-SIZE: 12px; COLOR: #333333; FONT-FAMILY: "??¨¬?"; TEXT-DECORATION: none
+}
+.font_14c_r {
+	font-family: "??";
+	font-size: 12px;
+	font-weight: normal;
+	color: #FF0000;
+	text-decoration: none;
+}
+.heng {
+	background-image: url(../images/heng.gif);
+	background-repeat: repeat-x;
+}
+.font_12_b {
+	font-family: "??";
+	color: #6B859F;
+	text-decoration: none;
+}
+.font_12_w {
+	font-family: "??";
+	font-size: 12px;
+	line-height: normal;
+	color: #FFFFFF;
+	text-decoration: none;
+}
+.font_14c_w {
+	font-family: "??";
 	font-size: 14px;
-	height: 17px;
-	width: 30px;
+	font-weight: bold;
+	color: #FFFFFF;
+	text-decoration: none;
+}
+.bg_1 {
+	background-image: url(../images/bg_1.gif);
+	background-repeat: repeat-y;
+}
+.font_12_cop {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	color: #FFFFFF;
+	text-decoration: none;
+}
+.font_16b_c {
+	font-family: "??";
+	font-size: 16px;
+	font-weight: bold;
+	color: #333333;
+	text-decoration: none;
+}
+#footer {
+	CLEAR: both; BORDER-TOP: #dcdcdc 1px solid; MARGIN: 0px; WIDTH: 776px
+}
+#footer UL {
+	FLOAT: left
+}
+#footer UL LI {
+	FLOAT: left; COLOR: #666; LINE-HEIGHT: 26px
+}
+#footer UL LI.line {
+	MARGIN: 0px 5px
+}
+#footer UL LI A {
+	COLOR: #acacac
+}
+#footer H1 {
+	BACKGROUND-POSITION: 0px 6px; FONT-WEIGHT: normal; FONT-SIZE: 12px; FLOAT: right; BACKGROUND-IMAGE: url(line_gray_bg.gif); COLOR: #acacac; LINE-HEIGHT: 26px; BACKGROUND-REPEAT: no-repeat
 }
