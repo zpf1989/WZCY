@@ -77,6 +77,8 @@
     <Compile Include="PageBase.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="SalesManage\AskPrice\AskPriceBLL.cs" />
+    <Compile Include="SalesManage\AskPrice\AskPriceItemBLL.cs" />
     <Compile Include="SalesManage\BaseData\BillTypeBLL.cs" />
     <Compile Include="SalesManage\BaseData\ClientClassificationBLL.cs" />
     <Compile Include="SalesManage\BaseData\ClientLevelBLL.cs" />

@@ -462,5 +462,80 @@ namespace OA.DALFactory
         }
         #endregion
 
+        #region 销售管理——询价单
+        public static OA.IDAL.IAskPriceDAL GetIAskPriceDAL()
+        {
+            OA.IDAL.IAskPriceDAL idal;
+            switch (dbType)
+            {
+                //case "Oracle":
+                //    iAffix = new Upload.DALORACLE.Affix();
+                //    break;
+                //case "GBase":
+                //    iAffix = new Upload.DALGBase.Affix();
+                //    break;
+                case "SQLServer":
+                default:
+                    idal = new OA.DAL.AskPriceDAL();
+                    break;
+            }
+            return idal;
+        }
+        public static OA.IDAL.IAskPriceItemDAL GetIAskPriceItemDAL()
+        {
+            OA.IDAL.IAskPriceItemDAL idal;
+            switch (dbType)
+            {
+                //case "Oracle":
+                //    iAffix = new Upload.DALORACLE.Affix();
+                //    break;
+                //case "GBase":
+                //    iAffix = new Upload.DALGBase.Affix();
+                //    break;
+                case "SQLServer":
+                default:
+                    idal = new OA.DAL.AskPriceItemDAL();
+                    break;
+            }
+            return idal;
+        }
+        public static OA.IDAL.IAPSecondCheckDAL GetIAPSecondCheckDAL()
+        {
+            OA.IDAL.IAPSecondCheckDAL idal;
+            switch (dbType)
+            {
+                //case "Oracle":
+                //    iAffix = new Upload.DALORACLE.Affix();
+                //    break;
+                //case "GBase":
+                //    iAffix = new Upload.DALGBase.Affix();
+                //    break;
+                case "SQLServer":
+                default:
+                    idal = new OA.DAL.APSecondCheckDAL();
+                    break;
+            }
+            return idal;
+        }
+        public static OA.IDAL.IAPReaderDAL GetIAPReaderDAL()
+        {
+            OA.IDAL.IAPReaderDAL idal;
+            switch (dbType)
+            {
+                //case "Oracle":
+                //    iAffix = new Upload.DALORACLE.Affix();
+                //    break;
+                //case "GBase":
+                //    iAffix = new Upload.DALGBase.Affix();
+                //    break;
+                case "SQLServer":
+                default:
+                    idal = new OA.DAL.APReaderDAL();
+                    break;
+            }
+            return idal;
+        }
+        #endregion
+
     }
 }

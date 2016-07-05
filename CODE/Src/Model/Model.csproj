@@ -71,6 +71,10 @@
     <Compile Include="InventoryManage\BaseData\MaterialType.cs" />
     <Compile Include="InventoryManage\BaseData\MeasureUnits.cs" />
     <Compile Include="InventoryManage\BaseData\WareHouse.cs" />
+    <Compile Include="SalesManage\AskPrice\APReader.cs" />
+    <Compile Include="SalesManage\AskPrice\APSecondCheck.cs" />
+    <Compile Include="SalesManage\AskPrice\AskPrice.cs" />
+    <Compile Include="SalesManage\AskPrice\AskPriceItem.cs" />
     <Compile Include="SalesManage\BaseData\BillType.cs" />
     <Compile Include="SalesManage\BaseData\ClientClassification.cs" />
     <Compile Include="SalesManage\BaseData\ClientLevel.cs" />

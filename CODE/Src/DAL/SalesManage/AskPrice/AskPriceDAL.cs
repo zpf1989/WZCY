@@ -13,73 +13,69 @@ using OA.GeneralClass.Logger;
 
 namespace OA.DAL
 {
-    public class SaleOrderDAL : BaseDAL<SaleOrder>, ISaleOrderDAL
+    public class AskPriceDAL : BaseDAL<AskPrice>, IAskPriceDAL
     {
-        public const string TableName = "SaleOrder";
-        SaleOrderItemDAL soItemDAL = new SaleOrderItemDAL();
-        public override List<SaleOrder> GetEntitiesByPage(PageEntity pageEntity, string whereSql = null, string orderBySql = null)
+        public const string TableName = "AskPrice";
+        AskPriceItemDAL apItemDAL = new AskPriceItemDAL();
+        public override List<AskPrice> GetEntitiesByPage(PageEntity pageEntity, string whereSql = null, string orderBySql = null)
         {
             return GetEntitiesByPage(pageEntity, whereSql, orderBySql, false);
         }
-        public SaleOrder GetSaleOrderWithItems(string orderId)
+        public AskPrice GetAskPriceWithItems(string apId)
         {
-            if (ValidateUtil.isBlank(orderId))
+            if (ValidateUtil.isBlank(apId))
             {
                 return null;
             }
-            var list = GetEntitiesByPage(pageEntity: new PageEntity(1, 20), whereSql: string.Format(" and SaleOrderID='{0}'", orderId), orderBySql: null, containItems: true);
+            var list = GetEntitiesByPage(pageEntity: new PageEntity(1, 20), whereSql: string.Format(" and APID='{0}'", apId), orderBySql: null, containItems: true);
             if (list != null && list.Count > 0)
             {
                 return list[0];
             }
             return null;
         }
-        public List<SaleOrder> GetEntitiesByPage(PageEntity pageEntity, string whereSql = null, string orderBySql = null, bool containItems = false)
+        public List<AskPrice> GetEntitiesByPage(PageEntity pageEntity, string whereSql = null, string orderBySql = null, bool containItems = false)
         {
             if (ValidateUtil.isBlank(orderBySql))
             {
-                orderBySql = "s.SaleOrderCode";
+                orderBySql = "ap.APCode";
             }
-            List<SaleOrder> orders = new List<SaleOrder>();
+            List<AskPrice> aps = new List<AskPrice>();
             DataSet ds = DB.GetDataByPage(new PageQueryEntity
             {
                 PageEntity = pageEntity,
-                TableName = string.Format(@" {0} s 
-left join {1} t on s.BillTypeID=t.BillID
-LEFT JOIN {2} m on s.MaterialID=m.MaterialID
-LEFT JOIN {3} mu on s.SaleUnitID=mu.UnitID
-left JOIN {4} c on s.ClientID=c.ClientID
-left join {5} ue on s.Editor=ue.UserID
-left join {5} uc on s.Creator=uc.UserID
-left join {5} uf on s.FirstChecker=uf.UserID",
-TableName, BillTypeDAL.TableName, MaterialsDAL.TableName, MeasureUnitsDAL.TableName, ClientDAL.TableName, UserManageDAL.TableName),
-                PK = "s.SaleOrderID",
-                Fields = "s.*,t.BillName BillType_Name,m.MaterialName Material_Name,mu.UnitName SaleUnit_Name,c.ClientName Client_Name,uc.UserName Creator_Name,ue.UserName Editor_Name,uf.UserName FirstChecker_Name",
+                TableName = string.Format(@" {0} ap 
+left JOIN {4} c on ap.ClientID=c.ClientID
+left JOIN {4} pt on ap.PayTypeID=c.PayTypeID
+left join {5} ue on ap.Editor=ue.UserID
+left join {5} uc on ap.Creator=uc.UserID
+left join {5} uf on ap.FirstChecker=uf.UserID",
+TableName, ClientDAL.TableName, PayTypeDAL.TableName, UserManageDAL.TableName),
+                PK = "ap.APID",
+                Fields = "ap.*,c.ClientName Client_Name,pt.PayTypeName PayType_Name,uc.UserName Creator_Name,ue.UserName Editor_Name,uf.UserName FirstChecker_Name",
                 OrderBySql = orderBySql,
                 WhereSql = whereSql
             });
             if (ds.HasRow())
             {
-                SaleOrder order = null;
+                AskPrice ap = null;
                 foreach (DataRow row in ds.Tables[0].Rows)
                 {
-                    order = new SaleOrder
+                    ap = new AskPrice
                     {
-                        SaleOrderID = row["SaleOrderID"].ToString(),
-                        SaleOrderCode = row["SaleOrderCode"].ToString(),
-                        BillTypeID = row["BillTypeID"].ToString(),
-                        BillType_Name = row["BillType_Name"].ToString(),
-                        MaterialID = row["MaterialID"].ToString(),
-                        Material_Name = row["Material_Name"].ToString(),
-                        SaleUnitID = row["SaleUnitID"].ToString(),
-                        SaleUnit_Name = row["SaleUnit_Name"].ToString(),
+                        APID = row["APID"].ToString(),
+                        APCode = row["APCode"].ToString(),
+                        APType = row["APType"].ToString(),
                         ClientID = row["ClientID"].ToString(),
                         Client_Name = row["Client_Name"].ToString(),
-                        SaleDate = row["SaleDate"].ToString(),
-                        SaleQty = Convert.ToDecimal(row["SaleQty"]),
-                        SalePrice = Convert.ToDecimal(row["SalePrice"]),
-                        SaleCost = Convert.ToDecimal(row["SaleCost"]),
-                        FinishDate = row["FinishDate"].ToString(),
+                        Client_Contact = row["Client_Contact"].ToString(),
+                        Client_Tel = row["Client_Tel"].ToString(),
+                        Client_Address = row["Client_Address"].ToString(),
+                        PayTypeID = row["PayTypeID"].ToString(),
+                        PayType_Name = row["PayType_Name"].ToString(),
+                        TrackDescription = row["TrackDescription"].ToString(),
+                        ClientSurvey = row["ClientSurvey"].ToString(),
+                        APRemark = row["APRemark"].ToString(),
                         Creator = row["Creator"].ToString(),
                         Creator_Name = row["Creator_Name"].ToString(),
                         Editor = row["Editor"].ToString(),
@@ -87,74 +83,75 @@ TableName, BillTypeDAL.TableName, MaterialsDAL.TableName, MeasureUnitsDAL.TableN
                         FirstChecker = row["FirstChecker"].ToString(),
                         FirstChecker_Name = row["FirstChecker_Name"].ToString(),
                         FirstCheckView = row["FirstCheckView"].ToString(),
-                        RoutingID = row["RoutingID"].ToString(),
-                        Routing = row["Routing"].ToString(),
-                        SaleState = row["SaleState"].ToString(),
-                        Remark = row["Remark"].ToString(),
                         SecondCheckerName = row["SecondCheckerName"].ToString(),
-                        ReaderName = row["ReaderName"].ToString()
+                        ReaderName = row["ReaderName"].ToString(),
+                        State = row["State"].ToString(),
                     };
                     DateTime dtTemp;
+                    if (DateTime.TryParse(row["AskDate"].ToString(), out dtTemp))
+                    {
+                        ap.AskDate = dtTemp;
+                    }
                     if (DateTime.TryParse(row["CreateTime"].ToString(), out dtTemp))
                     {
-                        order.CreateTime = dtTemp;
+                        ap.CreateTime = dtTemp;
                     }
                     if (DateTime.TryParse(row["EditTime"].ToString(), out dtTemp))
                     {
-                        order.EditTime = dtTemp;
+                        ap.EditTime = dtTemp;
                     }
                     if (DateTime.TryParse(row["FirstCheckTime"].ToString(), out dtTemp))
                     {
-                        order.FirstCheckTime = dtTemp;
+                        ap.FirstCheckTime = dtTemp;
                     }
 
-                    orders.Add(order);
+                    aps.Add(ap);
                 }
             }
-            if (containItems && orders != null && orders.Count > 0)
+            if (containItems && aps != null && aps.Count > 0)
             {
-                foreach (var order in orders)
+                foreach (var ap in aps)
                 {
-                    order.Items = soItemDAL.GetOrderItems(new PageEntity(1, 1000), order.SaleOrderID);
+                    ap.Items = apItemDAL.GetAPItems(new PageEntity(1, 1000), ap.APID);
                 }
             }
 
-            return orders;
+            return aps;
         }
 
-        public override bool Save(params SaleOrder[] entities)
+        public override bool Save(params AskPrice[] entities)
         {
             if (entities == null || entities.Length < 1)
             {
                 return false;
             }
             //Logger.LogInfo(entities.SerializeToJson());
-            StringBuilder sbSqlSaleOrder = new StringBuilder();
+            StringBuilder sbSqlAskPrice = new StringBuilder();
             List<Func<bool>> saveItemsFuncs = new List<Func<bool>>();
             List<SqlParameter> sqlParams = new List<SqlParameter>();
-            SaleOrder entity = null;
+            AskPrice entity = null;
             for (int i = 0; i < entities.Length; i++)
             {
                 entity = entities[i];
                 //1、组织sql
-                //①销售订单
-                if (ValidateUtil.isBlank(entity.SaleOrderID))
+                //①询价单
+                if (ValidateUtil.isBlank(entity.APID))
                 {
                     //新增，保存部分字段
-                    entity.SaleOrderID = Guid.NewGuid().ToString();
-                    sbSqlSaleOrder.AppendFormat("insert into {0}(SaleOrderID,SaleOrderCode,BillTypeID,MaterialID,SaleUnitID,ClientID,SaleDate,SaleQty,SalePrice,SaleCost,FinishDate,Creator,CreateTime,SaleState,Remark,Routing)", TableName);
-                    sbSqlSaleOrder.AppendFormat(" values (@SaleOrderID{0},@SaleOrderCode{0},@BillTypeID{0},@MaterialID{0},@SaleUnitID{0},@ClientID{0},@SaleDate{0},@SaleQty{0},@SalePrice{0},@SaleCost{0},@FinishDate{0},@Creator{0},@CreateTime{0},@SaleState{0},@Remark{0},@Routing{0});", i);
+                    entity.APID = Guid.NewGuid().ToString();
+                    sbSqlAskPrice.AppendFormat("insert into {0}(APID,APCode,APType,AskDate,ClientID,PayTypeID,TrackDescription,ClientSurvey,APRemark,Creator,CreateTime,State)", TableName);
+                    sbSqlAskPrice.AppendFormat(" values (@APID{0},@APCode{0},@APType{0},@AskDate{0},,@ClientID{0},@PayTypeID{0},@TrackDescription{0},@ClientSurvey{0},@APRemark{0},@Creator{0},@CreateTime{0},@State{0});", i);
                     sqlParams.AddRange(new SqlParameter[]{
                             new SqlParameter{ParameterName="@Creator"+i, Value=entity.Creator},
                             new SqlParameter{ParameterName="@CreateTime"+i, Value=entity.CreateTime},
-                            new SqlParameter{ParameterName="@SaleState"+i, Value=entity.SaleState},
+                            new SqlParameter{ParameterName="@State"+i, Value=entity.State},
                     });
                 }
                 else
                 {
                     //修改，只更新部分字段
-                    sbSqlSaleOrder.AppendFormat("update {0} set BillTypeID=@BillTypeID{1},MaterialID=@MaterialID{1},SaleUnitID=@SaleUnitID{1},ClientID=@ClientID{1},SaleDate=@SaleDate{1},SaleQty=@SaleQty{1},SalePrice=@SalePrice{1},SaleCost=@SaleCost{1},FinishDate=@FinishDate{1},Editor=@Editor{1},EditTime=@EditTime{1},Remark=@Remark{1},Routing=@Routing{1}", TableName, i);
-                    sbSqlSaleOrder.AppendFormat(" where SaleOrderID=@SaleOrderID{0};", i);
+                    sbSqlAskPrice.AppendFormat("update {0} set APType=@APType{1},AskDate=@AskDate{1},ClientID=@ClientID{1},PayTypeID=@PayTypeID{1},TrackDescription=@TrackDescription{1},ClientSurvey=@ClientSurvey{1},APRemark=@APRemark{1},Editor=@Editor{1},EditTime=@EditTime{1},APRemark=@APRemark{1}", TableName, i);
+                    sbSqlAskPrice.AppendFormat(" where APID=@APID{0};", i);
                     sqlParams.AddRange(new SqlParameter[]{
                             new SqlParameter{ParameterName="@Editor"+i, Value=entity.Editor},
                             new SqlParameter{ParameterName="@EditTime"+i, Value=entity.EditTime},
@@ -162,31 +159,27 @@ TableName, BillTypeDAL.TableName, MaterialsDAL.TableName, MeasureUnitsDAL.TableN
                 }
                 //不管新增或修改， 参数都一样
                 sqlParams.AddRange(new SqlParameter[]{ 
-                            new SqlParameter{ParameterName="@SaleOrderID"+i, Value=entity.SaleOrderID},
-                            new SqlParameter{ParameterName="@SaleOrderCode"+i, Value=entity.SaleOrderCode},
-                            new SqlParameter{ParameterName="@BillTypeID"+i, Value=entity.BillTypeID},
-                            new SqlParameter{ParameterName="@MaterialID"+i, Value=entity.MaterialID},
-                            new SqlParameter{ParameterName="@SaleUnitID"+i, Value=entity.SaleUnitID},
+                            new SqlParameter{ParameterName="@APID"+i, Value=entity.APID},
+                            new SqlParameter{ParameterName="@APCode"+i, Value=entity.APCode},
+                            new SqlParameter{ParameterName="@APType"+i, Value=entity.APType},
+                            new SqlParameter{ParameterName="@AskDate"+i, Value=entity.AskDate},
                             new SqlParameter{ParameterName="@ClientID"+i, Value=entity.ClientID},
-                            new SqlParameter{ParameterName="@SaleDate"+i, Value=entity.SaleDate.Replace("-","")},
-                            new SqlParameter{ParameterName="@SaleQty"+i, Value=entity.SaleQty},
-                            new SqlParameter{ParameterName="@SalePrice"+i, Value=entity.SalePrice},
-                            new SqlParameter{ParameterName="@SaleCost"+i, Value=entity.SaleCost},
-                            new SqlParameter{ParameterName="@FinishDate"+i, Value=entity.FinishDate.Replace("-","")},
-                            new SqlParameter{ParameterName="@Remark"+i, Value=entity.Remark},
-                            new SqlParameter{ParameterName="@Routing"+i, Value=entity.Routing}
+                            new SqlParameter{ParameterName="@PayTypeID"+i, Value=entity.PayTypeID},
+                            new SqlParameter{ParameterName="@TrackDescription"+i, Value=entity.TrackDescription},
+                            new SqlParameter{ParameterName="@ClientSurvey"+i, Value=entity.ClientSurvey},
+                            new SqlParameter{ParameterName="@APRemark"+i, Value=entity.APRemark},
                                             });
-                //②销售订单行
+                //②询价单行
                 if (entity.Items != null && entity.Items.Count > 0)
                 {
                     foreach (var item in entity.Items)
                     {
-                        item.SaleOrderID = entity.SaleOrderID;
+                        item.APID = entity.APID;
                     }
                     saveItemsFuncs.Add(() =>
                     {
-                        //调用SalesOrderItemDAL.Save
-                        return soItemDAL.Save(entity.Items.ToArray());
+                        //调用AskPriceItemDAL.Save
+                        return apItemDAL.Save(entity.Items.ToArray());
                     });
                 }
             }
@@ -195,8 +188,8 @@ TableName, BillTypeDAL.TableName, MaterialsDAL.TableName, MeasureUnitsDAL.TableN
             int rst = 0;
             try
             {
-                rst = DBAccess.ExecuteNonQuery(DB.Type, DB.ConnectionString, CommandType.Text, sbSqlSaleOrder.ToString(), sqlParams.ToArray());
-                //保存销售订单行
+                rst = DBAccess.ExecuteNonQuery(DB.Type, DB.ConnectionString, CommandType.Text, sbSqlAskPrice.ToString(), sqlParams.ToArray());
+                //保存询价单行
                 if (saveItemsFuncs.Count > 0)
                 {
                     foreach (var func in saveItemsFuncs)
@@ -217,21 +210,21 @@ TableName, BillTypeDAL.TableName, MaterialsDAL.TableName, MeasureUnitsDAL.TableN
             return rst > 0;
         }
 
-        public override bool Delete(params string[] saleOrderIds)
+        public override bool Delete(params string[] apIDs)
         {
-            if (saleOrderIds == null || saleOrderIds.Length < 1)
+            if (apIDs == null || apIDs.Length < 1)
             {
                 return false;
             }
             //1、组织sql
-            StringBuilder sbSqlSO = new StringBuilder();//删除销售订单的sql
-            sbSqlSO.AppendFormat("delete from {0} where SaleOrderID in (", TableName);
+            StringBuilder sbSqlSO = new StringBuilder();//删除询价单的sql
+            sbSqlSO.AppendFormat("delete from {0} where APID in (", TableName);
             List<SqlParameter> sqlParams = new List<SqlParameter>();
-            for (int i = 0; i < saleOrderIds.Length; i++)
+            for (int i = 0; i < apIDs.Length; i++)
             {
-                sbSqlSO.AppendFormat("@SaleOrderID{0}", i);
-                sqlParams.Add(new SqlParameter { ParameterName = "@SaleOrderID" + i, Value = saleOrderIds[i] });
-                if (i < saleOrderIds.Length - 1)
+                sbSqlSO.AppendFormat("@APID{0}", i);
+                sqlParams.Add(new SqlParameter { ParameterName = "@APID" + i, Value = apIDs[i] });
+                if (i < apIDs.Length - 1)
                 {
                     sbSqlSO.Append(",");
                 }
@@ -242,7 +235,7 @@ TableName, BillTypeDAL.TableName, MaterialsDAL.TableName, MeasureUnitsDAL.TableN
 
             try
             {
-                //删除销售订单
+                //删除询价单
                 rst = DBAccess.ExecuteNonQuery(DB.Type, DB.ConnectionString, CommandType.Text, sbSqlSO.ToString(), sqlParams.ToArray());
             }
             catch (Exception ex)
@@ -260,7 +253,7 @@ TableName, BillTypeDAL.TableName, MaterialsDAL.TableName, MeasureUnitsDAL.TableN
             {
                 return false;
             }
-            return base.Exists(string.Format(" and SaleOrderCode in ('{0}')", string.Join("','", codes)));
+            return base.Exists(string.Format(" and APCode in ('{0}')", string.Join("','", codes)));
         }
 
         protected override string GetTableName()
@@ -268,28 +261,28 @@ TableName, BillTypeDAL.TableName, MaterialsDAL.TableName, MeasureUnitsDAL.TableN
             return TableName;
         }
 
-        public override List<SaleOrder> GetEntitiesByPageForHelp(PageEntity pageEntity, string whereSql = null, string orderBySql = null)
+        public override List<AskPrice> GetEntitiesByPageForHelp(PageEntity pageEntity, string whereSql = null, string orderBySql = null)
         {
             return GetEntitiesByPage(pageEntity, whereSql, orderBySql);
         }
 
-        public bool SubmitToFirstChecker(string userId, params string[] soIds)
+        public bool SubmitToFirstChecker(string userId, params string[] apIds)
         {
-            if (ValidateUtil.isBlank(userId) || soIds == null || soIds.Length < 1)
+            if (ValidateUtil.isBlank(userId) || apIds == null || apIds.Length < 1)
             {
                 return false;
             }
             //1、组织sql
             StringBuilder sbsql = new StringBuilder();//
-            sbsql.AppendFormat("update {0} set FirstChecker=@checker,SaleState=@state where SaleOrderID in (", TableName);
+            sbsql.AppendFormat("update {0} set FirstChecker=@checker,State=@state where APID in (", TableName);
             List<SqlParameter> sqlParams = new List<SqlParameter>();
             sqlParams.Add(new SqlParameter { ParameterName = "@checker", Value = userId });
             sqlParams.Add(new SqlParameter { ParameterName = "@state", Value = '2' });//提交
-            for (int i = 0; i < soIds.Length; i++)
+            for (int i = 0; i < apIds.Length; i++)
             {
-                sbsql.AppendFormat("@SaleOrderID{0}", i);
-                sqlParams.Add(new SqlParameter { ParameterName = "@SaleOrderID" + i, Value = soIds[i] });
-                if (i < soIds.Length - 1)
+                sbsql.AppendFormat("@APID{0}", i);
+                sqlParams.Add(new SqlParameter { ParameterName = "@APID" + i, Value = apIds[i] });
+                if (i < apIds.Length - 1)
                 {
                     sbsql.Append(",");
                 }
@@ -312,23 +305,23 @@ TableName, BillTypeDAL.TableName, MaterialsDAL.TableName, MeasureUnitsDAL.TableN
             return rst > 0;
         }
 
-        public bool SubmitToSecondChecker(string userId, params string[] soIds)
+        public bool SubmitToSecondChecker(string userId, params string[] apIds)
         {
-            if (ValidateUtil.isBlank(userId) || soIds == null || soIds.Length < 1)
+            if (ValidateUtil.isBlank(userId) || apIds == null || apIds.Length < 1)
             {
                 return false;
             }
             //1、组织sql
             StringBuilder sbsql = new StringBuilder();//
-            sbsql.AppendFormat("update {0} set SecondCheckerName=(select UserName from {1} where UserID=@checker),SaleState=@state where SaleOrderID in (", TableName, UserManageDAL.TableName);
+            sbsql.AppendFormat("update {0} set SecondCheckerName=(select UserName from {1} where UserID=@checker),State=@state where APID in (", TableName, UserManageDAL.TableName);
             List<SqlParameter> sqlParams = new List<SqlParameter>();
             sqlParams.Add(new SqlParameter { ParameterName = "@checker", Value = userId });
             sqlParams.Add(new SqlParameter { ParameterName = "@state", Value = '5' });//提交复审
-            for (int i = 0; i < soIds.Length; i++)
+            for (int i = 0; i < apIds.Length; i++)
             {
-                sbsql.AppendFormat("@SaleOrderID{0}", i);
-                sqlParams.Add(new SqlParameter { ParameterName = "@SaleOrderID" + i, Value = soIds[i] });
-                if (i < soIds.Length - 1)
+                sbsql.AppendFormat("@APID{0}", i);
+                sqlParams.Add(new SqlParameter { ParameterName = "@APID" + i, Value = apIds[i] });
+                if (i < apIds.Length - 1)
                 {
                     sbsql.Append(",");
                 }
@@ -351,22 +344,22 @@ TableName, BillTypeDAL.TableName, MaterialsDAL.TableName, MeasureUnitsDAL.TableN
             return rst > 0;
         }
 
-        public bool SubmitToReader(string userId, params string[] soIds)
+        public bool SubmitToReader(string userId, params string[] apIds)
         {
-            if (ValidateUtil.isBlank(userId) || soIds == null || soIds.Length < 1)
+            if (ValidateUtil.isBlank(userId) || apIds == null || apIds.Length < 1)
             {
                 return false;
             }
             //1、组织sql
             StringBuilder sbsql = new StringBuilder();//
-            sbsql.AppendFormat("update {0} set ReaderName=(select UserName from {1} where UserID=@reader) where SaleOrderID in (", TableName, UserManageDAL.TableName);
+            sbsql.AppendFormat("update {0} set ReaderName=(select UserName from {1} where UserID=@reader) where APID in (", TableName, UserManageDAL.TableName);
             List<SqlParameter> sqlParams = new List<SqlParameter>();
             sqlParams.Add(new SqlParameter { ParameterName = "@reader", Value = userId });
-            for (int i = 0; i < soIds.Length; i++)
+            for (int i = 0; i < apIds.Length; i++)
             {
-                sbsql.AppendFormat("@SaleOrderID{0}", i);
-                sqlParams.Add(new SqlParameter { ParameterName = "@SaleOrderID" + i, Value = soIds[i] });
-                if (i < soIds.Length - 1)
+                sbsql.AppendFormat("@APID{0}", i);
+                sqlParams.Add(new SqlParameter { ParameterName = "@APID" + i, Value = apIds[i] });
+                if (i < apIds.Length - 1)
                 {
                     sbsql.Append(",");
                 }
@@ -389,24 +382,24 @@ TableName, BillTypeDAL.TableName, MaterialsDAL.TableName, MeasureUnitsDAL.TableN
             return rst > 0;
         }
 
-        public bool FirstCheck(bool result, string checkView, params string[] soIds)
+        public bool FirstCheck(bool result, string checkView, params string[] apIds)
         {
-            if (soIds == null || soIds.Length < 1)
+            if (apIds == null || apIds.Length < 1)
             {
                 return false;
             }
             //1、组织sql
             StringBuilder sbSql = new StringBuilder();//
-            sbSql.AppendFormat("update {0} set SaleState=@state,FirstCheckView=@view,FirstCheckTime=@time where SaleOrderID in (", TableName);
+            sbSql.AppendFormat("update {0} set State=@state,FirstCheckView=@view,FirstCheckTime=@time where APID in (", TableName);
             List<SqlParameter> sqlParams = new List<SqlParameter>();
             sqlParams.Add(new SqlParameter { ParameterName = "@state", Value = result ? "3" : "4" });
             sqlParams.Add(new SqlParameter { ParameterName = "@view", Value = checkView });
             sqlParams.Add(new SqlParameter { ParameterName = "@time", Value = DateTime.Now });
-            for (int i = 0; i < soIds.Length; i++)
+            for (int i = 0; i < apIds.Length; i++)
             {
-                sbSql.AppendFormat("@SaleOrderID{0}", i);
-                sqlParams.Add(new SqlParameter { ParameterName = "@SaleOrderID" + i, Value = soIds[i] });
-                if (i < soIds.Length - 1)
+                sbSql.AppendFormat("@APID{0}", i);
+                sqlParams.Add(new SqlParameter { ParameterName = "@APID" + i, Value = apIds[i] });
+                if (i < apIds.Length - 1)
                 {
                     sbSql.Append(",");
                 }
@@ -429,22 +422,22 @@ TableName, BillTypeDAL.TableName, MaterialsDAL.TableName, MeasureUnitsDAL.TableN
 
 
 
-        public bool SecondCheck(bool checkResult, params string[] soIds)
+        public bool SecondCheck(bool checkResult, params string[] apIds)
         {
-            if (soIds == null || soIds.Length < 1)
+            if (apIds == null || apIds.Length < 1)
             {
                 return false;
             }
             //1、组织sql
             StringBuilder sbSql = new StringBuilder();//
-            sbSql.AppendFormat("update {0} set SaleState=@state where SaleOrderID in (", TableName);
+            sbSql.AppendFormat("update {0} set State=@state where APID in (", TableName);
             List<SqlParameter> sqlParams = new List<SqlParameter>();
             sqlParams.Add(new SqlParameter { ParameterName = "@state", Value = checkResult ? "6" : "7" });
-            for (int i = 0; i < soIds.Length; i++)
+            for (int i = 0; i < apIds.Length; i++)
             {
-                sbSql.AppendFormat("@SaleOrderID{0}", i);
-                sqlParams.Add(new SqlParameter { ParameterName = "@SaleOrderID" + i, Value = soIds[i] });
-                if (i < soIds.Length - 1)
+                sbSql.AppendFormat("@APID{0}", i);
+                sqlParams.Add(new SqlParameter { ParameterName = "@APID" + i, Value = apIds[i] });
+                if (i < apIds.Length - 1)
                 {
                     sbSql.Append(",");
                 }
@@ -466,22 +459,22 @@ TableName, BillTypeDAL.TableName, MaterialsDAL.TableName, MeasureUnitsDAL.TableN
         }
 
 
-        public bool Close(string[] soIds)
+        public bool Close(string[] apIds)
         {
-            if (soIds == null || soIds.Length < 1)
+            if (apIds == null || apIds.Length < 1)
             {
                 return false;
             }
             //1、组织sql
             StringBuilder sbSql = new StringBuilder();//
-            sbSql.AppendFormat("update {0} set SaleState=@state where SaleOrderID in (", TableName);
+            sbSql.AppendFormat("update {0} set SaleState=@state where APID in (", TableName);
             List<SqlParameter> sqlParams = new List<SqlParameter>();
             sqlParams.Add(new SqlParameter { ParameterName = "@state", Value = "8" });
-            for (int i = 0; i < soIds.Length; i++)
+            for (int i = 0; i < apIds.Length; i++)
             {
-                sbSql.AppendFormat("@SaleOrderID{0}", i);
-                sqlParams.Add(new SqlParameter { ParameterName = "@SaleOrderID" + i, Value = soIds[i] });
-                if (i < soIds.Length - 1)
+                sbSql.AppendFormat("@APID{0}", i);
+                sqlParams.Add(new SqlParameter { ParameterName = "@APID" + i, Value = apIds[i] });
+                if (i < apIds.Length - 1)
                 {
                     sbSql.Append(",");
                 }
