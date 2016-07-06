@@ -23,7 +23,7 @@ namespace OA.BLL
             return idal.GetEntitiesByPageForHelp(pageEntity, whereSql, orderBySql);
         }
 
-        public IList<AskPriceItem> GetOrderItems(PageEntity pageEntity, string apId)
+        public IList<AskPriceItem> GetAPItems(PageEntity pageEntity, string apId)
         {
             if (ValidateUtil.isBlank(apId))
             {

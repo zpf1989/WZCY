@@ -62,7 +62,7 @@ create table AskPriceItem (
    APItemID             varchar(36)          not null,
    APID                 varchar(36)          not null,
    MaterialID           varchar(36)          not null,
-   Routing              varchar(1024)        null,
+   Routing              varchar(100)        null,
    PlanPrice            decimal(18,2)        null,
    Qty                  decimal(18,2)        null,
    UnitID               varchar(36)          null,

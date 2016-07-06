@@ -80,7 +80,7 @@ var formatHandler = {
                 return "";
             }
             var date = gFunc.getDate(value);
-            return date.Format('yyyy-MM-dd hh:mm:ss');
+            return date.Format('yyyy-MM-dd');
         },
         parse: function (text) {
             return gFunc.getDate(text);
@@ -95,13 +95,35 @@ var formatHandler = {
             return date.Format('yyyy-MM-dd hh:mm:ss');
         },
         parse: function (text) { return gFunc.getDate(text); }
+    },
+    //
+    trueOrFalse: {
+        src: [{ value: '1', text: '是' }, { value: '0', text: '否' }],
+        format: function (value) {
+            if (value == 0 || value == '0' || value == 'false' || value == 'False' || value == 'FALSE' || value == false) {
+                return '否';
+            } else if (value == 1 || value == '1' || value == 'true' || value == 'True' || value == 'TRUE' || value == true) {
+                return '是';
+            } else {
+                return '未知';
+            }
+        },
+        parse: function (text) {
+            if (text == '是') {
+                return true;
+            } else if (text == '否') {
+                return false;
+            } else {
+                return null;
+            }
+        }
     }
 };
 
 /*公共方法*/
 var gFunc = {
     isNull: function (value) {
-        return typeof (value) == 'undefined' || value == null;
+        return typeof (value) == 'undefined' || value == null || value === '';
     },
     /*
     解析日期：

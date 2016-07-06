@@ -23,6 +23,13 @@ namespace OA.IDAL
         /// <returns></returns>
         AskPrice GetAskPriceWithItems(string apId);
         /// <summary>
+        /// 获取询价单,不含子项
+        /// </summary>
+        /// <param name="apId"></param>
+        /// <returns></returns>
+        AskPrice GetAskPrice(string apId);
+
+        /// <summary>
         /// 提交到初审人
         /// </summary>
         /// <param name="userId"></param>

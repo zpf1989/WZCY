@@ -34,6 +34,19 @@ namespace OA.DAL
             }
             return null;
         }
+        public SaleOrder GetSaleOrder(string orderId)
+        {
+            if (ValidateUtil.isBlank(orderId))
+            {
+                return null;
+            }
+            var list = GetEntitiesByPage(pageEntity: new PageEntity(1, 20), whereSql: string.Format(" and SaleOrderID='{0}'", orderId), orderBySql: null, containItems: false);
+            if (list != null && list.Count > 0)
+            {
+                return list[0];
+            }
+            return null;
+        }
         public List<SaleOrder> GetEntitiesByPage(PageEntity pageEntity, string whereSql = null, string orderBySql = null, bool containItems = false)
         {
             if (ValidateUtil.isBlank(orderBySql))

@@ -37,6 +37,10 @@
     position: relative;
 }
 
+.card-table-centent .big-text{
+    width:90%;
+}
+
 .radioSpan {
     position: relative;
     border: 1px solid #95B8E7;

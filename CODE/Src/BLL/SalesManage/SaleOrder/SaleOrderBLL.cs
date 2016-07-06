@@ -30,6 +30,10 @@ namespace OA.BLL
         {
             return idal.GetSaleOrderWithItems(orderId);
         }
+        public SaleOrder GetSaleOrder(string orderId)
+        {
+            return idal.GetSaleOrder(orderId);
+        }
 
         public bool Save(params SaleOrder[] entites)
         {
@@ -222,5 +226,6 @@ namespace OA.BLL
 
             return idal.Close(soIds);
         }
+
     }
 }

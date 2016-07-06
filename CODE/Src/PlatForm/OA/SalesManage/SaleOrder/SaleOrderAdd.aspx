@@ -21,7 +21,7 @@
         <a href="javascript:void(0);" id="btnBack" class="easyui-linkbutton" iconcls="icon-back">返回</a>
     </div>
     <div class="easyui-layout" fit="true">
-        <div region="north" title="订单基本信息" height="300px;">
+        <div region="north" title="订单基本信息" style="height:300px">
             <form id="editForm" style="padding: 0px;">
                 <input id="txtSOID" name="SaleOrderID" hidden="hidden" />
                 <table class="card-centent-table" cellpadding="0" cellspacing="0" border="1">
@@ -146,11 +146,11 @@
     <script>
         $(function () {
             $('.help-text').css({ 'width': '146px' });
-            var soData = JSON.parse(decodeURI(gFunc.getUrlParam('sodata')));
-            //soCard.log(soData);
+            var soId = gFunc.getUrlParam('soId');
+            //soCard.log(soId);
             var state = gFunc.getUrlParam('state');
             //soCard.log(state);
-            soCard.initCardForm(soData, state);
+            soCard.initCardForm(soId, state);
         });
     </script>
 </body>

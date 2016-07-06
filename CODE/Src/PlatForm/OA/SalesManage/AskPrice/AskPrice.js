@@ -1,8 +1,25 @@
-﻿//订单信息格式化对象
-var soFormatter = {
-    //订单状态
-    soState: {
+﻿//询价单信息格式化对象
+var apFormatter = {
+    //询价单状态
+    apState: {
         src: [{ value: '1', text: '编制' }, { value: '2', text: '提交初审' }, { value: '3', text: '初审通过' }, { value: '4', text: '初审不通过' }, { value: '5', text: '提交复审' }, { value: '6', text: '复审通过' }, { value: '7', text: '复审不通过' }, { value: '8', text: '关闭' }],
+        format: function (value) {
+            if (gFunc.isNull(value)) {
+                return "";
+            }
+            var rst = "";
+            for (var idx = 0; idx < this.src.length; idx++) {
+                if (value == this.src[idx].value) {
+                    rst = this.src[idx].text;
+                    break;
+                }
+            }
+            return rst;
+        }
+    },
+    //询价单类别
+    apType: {
+        src: [{ value: 'OffsetPrint', text: '胶印新产品' }, { value: 'SilkScreen', text: '丝印新产品' }],
         format: function (value) {
             if (gFunc.isNull(value)) {
                 return "";
@@ -19,110 +36,106 @@ var soFormatter = {
     },
 };
 
-//订单列表对象
-var saleorder = {
+//询价单列表对象
+var askprice = {
     stateConf: {
         add: '0',
         edit: '1',
         view: '2'
     },
     grid: $('#grid'),
-    gridSOItem: $('#gridSOItem'),
+    gridSOItem: $('#gridAPItem'),
     formSearch: $('#searchForm'),
     btnSearch: $('#btnSearch'),
-    txtSearchBillTypeName: $('#txtSearchBillTypeName'),
-    txtSearchBillTypeID: $('#txtSearchBillTypeID'),
-    btnSearchBillType: $('#btnSearchBillType'),
-    dateSearchSaleDateBegin: $('#dateSearchSaleDateBegin'),
-    dateSearchSaleDateEnd: $('#dateSearchSaleDateEnd'),
+    txtSearchAPCode: $('#txtSearchAPCode'),
+    cbAPType: $('#cbAPType'),
+    dateSearchAskDateBegin: $('#dateSearchAskDateBegin'),
+    dateSearchAskDateEnd: $('#dateSearchAskDateEnd'),
     cardFormWidth: 700,
     cardFormHeight: 600,
     approvalFormWidth: 400,
     approvalFormHeight: 240,
-    cardFormUrl: 'SaleOrderAdd.aspx',
-    searchUrl: 'SaleOrderService.asmx/GetList',
+    cardFormUrl: 'AskPriceAdd.aspx',
+    searchUrl: 'AskPriceService.asmx/GetList',
     init: function (funcType) {
-        saleorder.initgrid();
-        saleorder.bindingEvents();
-        saleorder.formSearch.children('div').css({ 'float': 'left', 'padding-left': '8px' });
+        askprice.initgrid();
+        askprice.bindingEvents();
+        askprice.formSearch.children('div').css({ 'float': 'left', 'padding-left': '8px' });
+        askprice.cbAPType.combobox({
+            data: apFormatter.apType.src,
+            valueField: 'value',
+            textField: 'text'
+        });
     },
     //绑定（注册）事件
     bindingEvents: function () {
-        saleorder.btnSearch.click(saleorder.doSearch);
-        saleorder.btnSearchBillType.click(saleorder.onClickSearchBillType);
-        saleorder.txtSearchBillTypeName.textbox({
-            onChange: function (newValue, oldValue) {
-                if (oldValue != newValue) {
-                    //手动输入时，id设置空
-                    saleorder.txtSearchBillTypeID.val('');
-                }
-            }
-        });
+        askprice.btnSearch.click(askprice.doSearch);
     },
     initgrid: function () {
-        gFunc.initGridPublic(saleorder.grid, {
-            title: '订单列表',
+        gFunc.initGridPublic(askprice.grid, {
+            title: '询价单列表',
             icon: 'icon-edit',
-            key: 'SaleOrderID',
-            url: saleorder.searchUrl,
+            key: 'APID',
+            url: askprice.searchUrl,
             toolbar: [{
                 id: 'btnAdd',
                 text: '新增',
                 iconCls: 'icon-add',
-                handler: saleorder.addSaleOrder
+                handler: askprice.addAskPrice
             }, "-", {
                 id: 'btnView',
                 text: '查看',
                 iconCls: 'icon-search',
-                handler: saleorder.viewSaleOrder
+                handler: askprice.viewAskPrice
             }, "-", {
                 id: 'btnEdit',
                 text: '修改',
                 iconCls: 'icon-edit',
-                handler: saleorder.editSaleOrder
+                handler: askprice.editAskPrice
             }, "-", {
                 id: 'btnDelete',
                 text: '删除',
                 iconCls: 'icon-remove',
-                handler: saleorder.deleteRowBatch
+                handler: askprice.deleteRowBatch
             }, "-", {
                 id: 'btnSubmitToFirstCheck',
                 text: '提交初审',
                 iconCls: 'icon-search',
-                handler: saleorder.submitToFirstCheck
+                handler: askprice.submitToFirstCheck
             }, "-", {
                 id: 'btnSubmitToSecondCheck',
                 text: '提交复审',
                 iconCls: 'icon-edit',
-                handler: saleorder.submitToSecondCheck
+                handler: askprice.submitToSecondCheck
             }, "-", {
                 id: 'btnSubmitToReader',
                 text: '设置分阅人',
                 iconCls: 'icon-remove',
-                handler: saleorder.submitToRead
+                handler: askprice.submitToRead
             }],
             columns: [[
                 { field: 'ck', title: '', width: 100, align: 'center', checkbox: true },
-                { field: 'SaleOrderID' },
-                { field: 'SaleOrderCode', title: '订单编号', width: 100, align: 'center' },
+                { field: 'APID' },
+                { field: 'APCode', title: '询价单编号', width: 100, align: 'center' },
                 {
-                    field: 'SaleState', title: '订单状态', width: 80, align: 'center',
-                    formatter: function (value, row, index) { return soFormatter.soState.format(value); }
+                    field: 'State', title: '询价单状态', width: 80, align: 'center',
+                    formatter: function (value, row, index) { return apFormatter.apState.format(value); }
                 },
-                { field: 'BillTypeID' },
-                { field: 'BillType_Name', title: '订单类型', width: 80, align: 'center' },
-                { field: 'SaleDate', title: '销售日期', align: 'center', width: 80, formatter: formatHandler.date.format },
-                { field: 'FinishDate', title: '交货日期', align: 'center', width: 80, formatter: formatHandler.date.format },
-                { field: 'MaterialID' },
-                { field: 'Material_Name', title: '物料', align: 'center', width: 100 },
-                { field: 'SaleUnitID' },
-                { field: 'SaleUnit_Name', title: '计量单位', align: 'center', width: 60 },
-                 { field: 'ClientID' },
-                { field: 'Client_Name', title: '客户', align: 'center', width: 100 },
-                { field: 'SaleQty', title: '销售数量', align: 'center', width: 80 },
-                { field: 'SalePrice', title: '销售单价', align: 'center', width: 80 },
-                { field: 'SaleCost', title: '销售金额', align: 'center', width: 80 },
-                { field: 'Routing', title: '生产工艺', align: 'center', width: 100 },
+                {
+                    field: 'APType', title: '询价单类型', width: 80, align: 'center',
+                    formatter: function (value, row, index) { return apFormatter.apType.format(value); }
+                },
+                { field: 'AskDate', title: '询价日期', align: 'center', width: 80, formatter: formatHandler.date.format },
+                { field: 'ClientID' },
+                { field: 'Client_Name', title: '客户名称', align: 'center', width: 100 },
+                { field: 'Client_Contact', title: '客户联系人', align: 'center', width: 100 },
+                { field: 'Client_Tel', title: '客户电话', align: 'center', width: 100 },
+                { field: 'Client_Address', title: '客户地址', align: 'center', width: 100 },
+                { field: 'PayTypeID' },
+                { field: 'PayType_Name', title: '付款方式', align: 'center', width: 80 },
+                { field: 'TrackDescription', title: '跟踪情况', align: 'center', width: 120 },
+                { field: 'ClientSurvey', title: '客户调查', align: 'center', width: 120 },
+                { field: 'APRemark', title: '备注', align: 'center', width: 100 },
                 { field: 'Creator' },
                 { field: 'Creator_Name', title: '创建人', align: 'center', width: 80 },
                 { field: 'CreateTime', title: '创建时间', align: 'center', width: 130 },
@@ -134,19 +147,18 @@ var saleorder = {
                 { field: 'FirstCheckTime', title: '初审时间', align: 'center', width: 130 },
                 { field: 'FirstCheckView', title: '初审意见', align: 'center', width: 100 },
                 { field: 'SecondCheckerName', title: '复审人', align: 'center', width: 80 },
-                { field: 'ReaderName', title: '分阅人', align: 'center', width: 60 },
-                { field: 'Remark', title: '备注', width: 100, align: 'center' }
+                { field: 'ReaderName', title: '分阅人', align: 'center', width: 60 }
             ]],
-            hidecols: ['SaleOrderID', 'BillTypeID', 'MaterialID', 'SaleUnitID', 'ClientID', 'Creator', 'Editor', 'FirstChecker'],
+            hidecols: ['APID', 'ClientID', 'PayTypeID', 'Creator', 'Editor', 'FirstChecker'],
             singleSelect: false
         });
     },
     //编辑
-    addSaleOrder: function () {
-        location.href = saleorder.cardFormUrl + '?state=0';
+    addAskPrice: function () {
+        location.href = askprice.cardFormUrl + '?state=0';
     },
-    viewSaleOrder: function () {
-        var checkedRows = saleorder.grid.datagrid('getChecked');
+    viewAskPrice: function () {
+        var checkedRows = askprice.grid.datagrid('getChecked');
         if (gFunc.isNull(checkedRows) || checkedRows.length < 1) {
             $.messager.alert('提示', '请选择要查看的数据');
             return;
@@ -155,11 +167,11 @@ var saleorder = {
             $.messager.alert('提示', '请选择一条数据查看');
             return;
         }
-        //location.href = saleorder.cardFormUrl + '?' + encodeURI('state=2&sodata=' + JSON.stringify(checkedRows[0]));//
-        location.href = saleorder.cardFormUrl + '?' + encodeURI('state=2&soId=' + checkedRows[0].SaleOrderID);//
+        //location.href = askprice.cardFormUrl + '?' + encodeURI('state=2&apdata=' + JSON.stringify(checkedRows[0]));//
+        location.href = askprice.cardFormUrl + '?' + encodeURI('state=2&apId=' + checkedRows[0].APID);//
     },
-    editSaleOrder: function () {
-        var rows = saleorder.grid.datagrid('getChecked');
+    editAskPrice: function () {
+        var rows = askprice.grid.datagrid('getChecked');
         ////console.log(rows.length);
         if (gFunc.isNull(rows) || rows.length < 1) {
             $.messager.alert('提示', '请选择要修改的数据');
@@ -170,25 +182,25 @@ var saleorder = {
             return;
         }
         //
-        if (rows[0].SaleState !== '1' && rows[0].SaleState !== '4' && rows[0].SaleState !== '7') {
-            $.messager.alert('提示', '请选择编制、初审不通过或复审不通过状态的订单');
+        if (rows[0].State !== '1' && rows[0].State !== '4' && rows[0].State !== '7') {
+            $.messager.alert('提示', '请选择编制、初审不通过或复审不通过状态的询价单');
             return;
         }
-        //location.href = saleorder.cardFormUrl + '?' + encodeURI('state=1&sodata=' + JSON.stringify(rows[0]));//
-        location.href = saleorder.cardFormUrl + '?' + encodeURI('state=1&soId=' + rows[0].SaleOrderID);//
+        //location.href = askprice.cardFormUrl + '?' + encodeURI('state=1&apdata=' + JSON.stringify(rows[0]));//
+        location.href = askprice.cardFormUrl + '?' + encodeURI('state=1&apId=' + rows[0].APID);//
     },
     deleteRowBatch: function () {
-        var delCheckedRows = saleorder.grid.datagrid('getChecked');
+        var delCheckedRows = askprice.grid.datagrid('getChecked');
         if (gFunc.isNull(delCheckedRows) || delCheckedRows.length < 1) {
             $.messager.alert('提示', '请选择要删除的数据');
             return;
         }
         var illegalRows = $.grep(delCheckedRows, function (row, idx) {
-            return row.SaleState !== '1' && row.SaleState !== '4'
-                && row.SaleState !== '7' && row.SaleState !== '8';//过滤条件：非(编制、初审不通过、复审不通过、关闭)
+            return row.State !== '1' && row.State !== '4'
+                && row.State !== '7' && row.State !== '8';//过滤条件：非(编制、初审不通过、复审不通过、关闭)
         });
         if (illegalRows.length > 0) {
-            $.messager.alert('提示', '请选择编制、初审不通过、复审不通过或关闭状态的订单');
+            $.messager.alert('提示', '请选择编制、初审不通过、复审不通过或关闭状态的询价单');
             return;
         }
 
@@ -197,13 +209,13 @@ var saleorder = {
                 //2、删除选中行中以保存的部分（这部分提交到服务端删除，然后刷新列表）
                 var ids = [];
                 $.each(delCheckedRows, function (index, row) {
-                    ids.push(row.SaleOrderID);
+                    ids.push(row.APID);
                 });
                 //这里json序列化的目标一定是一个数组，否则，后台解析（解析为列表）时会出错
-                $.post('SaleOrderService.asmx/Delete', JSON.stringify(ids), function (result) {
+                $.post('AskPriceService.asmx/Delete', JSON.stringify(ids), function (result) {
                     if (result && result.code) {
                         //重新加载
-                        saleorder.grid.datagrid('reload');
+                        askprice.grid.datagrid('reload');
                     }
                 });
             }
@@ -211,97 +223,90 @@ var saleorder = {
     },
     doSearch: function () {
         //收集查询条件
-        var searchParams = saleorder.formSearch.serializeToJson(true);
+        var searchParams = askprice.formSearch.serializeToJson(true);
+        console.log(JSON.stringify(searchParams));
         //重新查询
-        saleorder.grid.datagrid("reload", searchParams);
+        askprice.grid.datagrid("reload", searchParams);
     },
     //提交
     submitToFirstCheck: function () {
         //获取选中行
-        var checkedRows = saleorder.grid.datagrid('getChecked');
+        var checkedRows = askprice.grid.datagrid('getChecked');
         if (gFunc.isNull(checkedRows) || checkedRows.length < 1) {
             $.messager.alert('提示', '请选择数据');
             return;
         }
         var illegalRows = $.grep(checkedRows, function (row, idx) {
-            return row.SaleState !== '1' && row.SaleState !== '4';
+            return row.State !== '1' && row.State !== '4';
         });
         if (illegalRows.length > 0) {
-            $.messager.alert('提示', '请选择编制或初审不通过状态的订单');
+            $.messager.alert('提示', '请选择编制或初审不通过状态的询价单');
             return;
         }
         //提交初审
-        showPopGridHelp(400, 300, true, helpInitializer.user, saleorder.helpReceiver.submitToFirstChecker, null);
+        showPopGridHelp(400, 300, true, helpInitializer.user, askprice.helpReceiver.submitToFirstChecker, null);
     },
     submitToSecondCheck: function () {
         //获取选中行
-        var checkedRows = saleorder.grid.datagrid('getChecked');
+        var checkedRows = askprice.grid.datagrid('getChecked');
         if (gFunc.isNull(checkedRows) || checkedRows.length < 1) {
             $.messager.alert('提示', '请选择数据');
             return;
         }
         var illegalRows = $.grep(checkedRows, function (row, idx) {
-            return row.SaleState !== '3' && row.SaleState !== '7';
+            return row.State !== '3' && row.State !== '7';
         });
         if (illegalRows.length > 0) {
-            $.messager.alert('提示', '请选择初审通过或复审不通过状态的订单');
+            $.messager.alert('提示', '请选择初审通过或复审不通过状态的询价单');
             return;
         }
         //提交初审
-        showPopGridHelp(400, 300, true, helpInitializer.user, saleorder.helpReceiver.submitToSecondChecker, null);
+        showPopGridHelp(400, 300, true, helpInitializer.user, askprice.helpReceiver.submitToSecondChecker, null);
     },
     submitToRead: function () {
         //获取选中行
-        var checkedRows = saleorder.grid.datagrid('getChecked');
+        var checkedRows = askprice.grid.datagrid('getChecked');
         if (gFunc.isNull(checkedRows) || checkedRows.length < 1) {
             $.messager.alert('提示', '请选择数据');
             return;
         }
         //提交分阅
-        showPopGridHelp(400, 300, true, helpInitializer.user, saleorder.helpReceiver.submitToReader, null);
-    },
-    onClickSearchBillType: function () {
-        showPopGridHelp(400, 300, true, helpInitializer.billType, saleorder.helpReceiver.searchBillType, null);
+        showPopGridHelp(400, 300, true, helpInitializer.user, askprice.helpReceiver.submitToReader, null);
     },
     helpReceiver: {
-        searchBillType: function (typeData) {
-            //注意：必须先给name赋值，因为它会触发onChange事件，会把id冲掉
-            saleorder.txtSearchBillTypeName.textbox('setValue', typeData.BillName);
-            saleorder.txtSearchBillTypeID.val(typeData.BillID);
-        },
         submitToFirstChecker: function (userData) {
             if (gFunc.isNull(userData) || gFunc.isNull(userData.UserID)) {
                 $.messager.alert('提示', '请选择初审人');
                 return;
             }
             //获取选中行
-            var checkedRows = saleorder.grid.datagrid('getChecked');
+            var checkedRows = askprice.grid.datagrid('getChecked');
             if (gFunc.isNull(checkedRows) || checkedRows.length < 1) {
                 $.messager.alert('提示', '请选择数据');
                 return;
             }
-            var soIds = [];
+            var apIds = [];
             $.each(checkedRows, function (index, row) {
-                soIds.push(row.SaleOrderID);
+                apIds.push(row.APID);
             });
             var ajaxResult = false;
             $.ajax({
                 type: 'post',
-                url: 'SaleOrderService.asmx/SubmitToFirstChecker',
-                data: 'userId=' + userData.UserID + '&soIds=' + JSON.stringify(soIds),
+                url: 'AskPriceService.asmx/SubmitToFirstChecker',
+                data: 'userId=' + userData.UserID + '&apIds=' + JSON.stringify(apIds),
                 async: false,//同步请求
                 success: function (result) {
                     if (result && result.code) {
                         ajaxResult = true;
-                        saleorder.grid.datagrid('reload');
-                        //console.log('saleorder,ajax succeed');
+                        askprice.grid.datagrid('reload');
+                        ////console.log('askprice,ajax succeed');
                     } else {
-                        //console.log('saleorder,ajax fail');
+                        ////console.log('askprice,ajax fail');
                         ajaxResult = false;
                     }
                 },
                 error: function () {
-                    //console.log('saleorder,ajax error');
+                    //console.log('askprice,ajax error');
                     ajaxResult = false;
                 }
             });
@@ -312,33 +317,33 @@ var saleorder = {
                 return;
             }
             //获取选中行
-            var checkedRows = saleorder.grid.datagrid('getChecked');
+            var checkedRows = askprice.grid.datagrid('getChecked');
             if (gFunc.isNull(checkedRows) || checkedRows.length < 1) {
                 $.messager.alert('提示', '请选择数据');
                 return;
             }
-            var soIds = [];
+            var apIds = [];
             $.each(checkedRows, function (index, row) {
-                soIds.push(row.SaleOrderID);
+                apIds.push(row.APID);
             });
             var ajaxResult = false;
             $.ajax({
                 type: 'post',
-                url: 'SaleOrderService.asmx/SubmitToSecondChecker',
-                data: 'userId=' + userData.UserID + '&soIds=' + JSON.stringify(soIds),
+                url: 'AskPriceService.asmx/SubmitToSecondChecker',
+                data: 'userId=' + userData.UserID + '&apIds=' + JSON.stringify(apIds),
                 async: false,//同步请求
                 success: function (result) {
                     if (result && result.code) {
                         ajaxResult = true;
-                        saleorder.grid.datagrid('reload');
-                        //console.log('saleorder,ajax succeed');
+                        askprice.grid.datagrid('reload');
+                        //console.log('askprice,ajax succeed');
                     } else {
-                        //console.log('saleorder,ajax fail');
+                        //console.log('askprice,ajax fail');
                         ajaxResult = false;
                     }
                 },
                 error: function () {
-                    //console.log('saleorder,ajax error');
+                    //console.log('askprice,ajax error');
                     ajaxResult = false;
                 }
             });
@@ -349,33 +354,33 @@ var saleorder = {
                 return;
             }
             //获取选中行
-            var checkedRows = saleorder.grid.datagrid('getChecked');
+            var checkedRows = askprice.grid.datagrid('getChecked');
             if (gFunc.isNull(checkedRows) || checkedRows.length < 1) {
                 $.messager.alert('提示', '请选择数据');
                 return;
             }
-            var soIds = [];
+            var apIds = [];
             $.each(checkedRows, function (index, row) {
-                soIds.push(row.SaleOrderID);
+                apIds.push(row.APID);
             });
             var ajaxResult = false;
             $.ajax({
                 type: 'post',
-                url: 'SaleOrderService.asmx/SubmitToReader',
-                data: 'userId=' + userData.UserID + '&soIds=' + JSON.stringify(soIds),
+                url: 'AskPriceService.asmx/SubmitToReader',
+                data: 'userId=' + userData.UserID + '&apIds=' + JSON.stringify(apIds),
                 async: false,//同步请求
                 success: function (result) {
                     if (result && result.code) {
                         ajaxResult = true;
-                        saleorder.grid.datagrid('reload');
-                        //console.log('saleorder,ajax succeed');
+                        askprice.grid.datagrid('reload');
+                        //console.log('askprice,ajax succeed');
                     } else {
-                        //console.log('saleorder,ajax fail');
+                        //console.log('askprice,ajax fail');
                         ajaxResult = false;
                     }
                 },
                 error: function () {
-                    //console.log('saleorder,ajax error');
+                    //console.log('askprice,ajax error');
                     ajaxResult = false;
                 }
             });

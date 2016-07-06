@@ -34,6 +34,19 @@ namespace OA.DAL
             }
             return null;
         }
+        public AskPrice GetAskPrice(string apId)
+        {
+            if (ValidateUtil.isBlank(apId))
+            {
+                return null;
+            }
+            var list = GetEntitiesByPage(pageEntity: new PageEntity(1, 20), whereSql: string.Format(" and APID='{0}'", apId), orderBySql: null, containItems: false);
+            if (list != null && list.Count > 0)
+            {
+                return list[0];
+            }
+            return null;
+        }
         public List<AskPrice> GetEntitiesByPage(PageEntity pageEntity, string whereSql = null, string orderBySql = null, bool containItems = false)
         {
             if (ValidateUtil.isBlank(orderBySql))
@@ -45,14 +58,14 @@ namespace OA.DAL
             {
                 PageEntity = pageEntity,
                 TableName = string.Format(@" {0} ap 
-left JOIN {4} c on ap.ClientID=c.ClientID
-left JOIN {4} pt on ap.PayTypeID=c.PayTypeID
-left join {5} ue on ap.Editor=ue.UserID
-left join {5} uc on ap.Creator=uc.UserID
-left join {5} uf on ap.FirstChecker=uf.UserID",
+left JOIN {1} c on ap.ClientID=c.ClientID
+left JOIN {2} pt on ap.PayTypeID=pt.PayTypeID
+left join {3} ue on ap.Editor=ue.UserID
+left join {3} uc on ap.Creator=uc.UserID
+left join {3} uf on ap.FirstChecker=uf.UserID",
 TableName, ClientDAL.TableName, PayTypeDAL.TableName, UserManageDAL.TableName),
                 PK = "ap.APID",
-                Fields = "ap.*,c.ClientName Client_Name,pt.PayTypeName PayType_Name,uc.UserName Creator_Name,ue.UserName Editor_Name,uf.UserName FirstChecker_Name",
+                Fields = "ap.*,c.ClientName Client_Name,c.ClientTel Client_Tel,c.ClientAddress Client_Address,c.Contactor Client_Contact,pt.PayTypeName PayType_Name,uc.UserName Creator_Name,ue.UserName Editor_Name,uf.UserName FirstChecker_Name",
                 OrderBySql = orderBySql,
                 WhereSql = whereSql
             });
@@ -140,7 +153,7 @@ TableName, ClientDAL.TableName, PayTypeDAL.TableName, UserManageDAL.TableName),
                     //新增，保存部分字段
                     entity.APID = Guid.NewGuid().ToString();
                     sbSqlAskPrice.AppendFormat("insert into {0}(APID,APCode,APType,AskDate,ClientID,PayTypeID,TrackDescription,ClientSurvey,APRemark,Creator,CreateTime,State)", TableName);
-                    sbSqlAskPrice.AppendFormat(" values (@APID{0},@APCode{0},@APType{0},@AskDate{0},,@ClientID{0},@PayTypeID{0},@TrackDescription{0},@ClientSurvey{0},@APRemark{0},@Creator{0},@CreateTime{0},@State{0});", i);
+                    sbSqlAskPrice.AppendFormat(" values (@APID{0},@APCode{0},@APType{0},@AskDate{0},@ClientID{0},@PayTypeID{0},@TrackDescription{0},@ClientSurvey{0},@APRemark{0},@Creator{0},@CreateTime{0},@State{0});", i);
                     sqlParams.AddRange(new SqlParameter[]{
                             new SqlParameter{ParameterName="@Creator"+i, Value=entity.Creator},
                             new SqlParameter{ParameterName="@CreateTime"+i, Value=entity.CreateTime},
@@ -150,7 +163,7 @@ TableName, ClientDAL.TableName, PayTypeDAL.TableName, UserManageDAL.TableName),
                 else
                 {
                     //修改，只更新部分字段
-                    sbSqlAskPrice.AppendFormat("update {0} set APType=@APType{1},AskDate=@AskDate{1},ClientID=@ClientID{1},PayTypeID=@PayTypeID{1},TrackDescription=@TrackDescription{1},ClientSurvey=@ClientSurvey{1},APRemark=@APRemark{1},Editor=@Editor{1},EditTime=@EditTime{1},APRemark=@APRemark{1}", TableName, i);
+                    sbSqlAskPrice.AppendFormat("update {0} set APType=@APType{1},AskDate=@AskDate{1},ClientID=@ClientID{1},PayTypeID=@PayTypeID{1},TrackDescription=@TrackDescription{1},ClientSurvey=@ClientSurvey{1},APRemark=@APRemark{1},Editor=@Editor{1},EditTime=@EditTime{1}", TableName, i);
                     sbSqlAskPrice.AppendFormat(" where APID=@APID{0};", i);
                     sqlParams.AddRange(new SqlParameter[]{
                             new SqlParameter{ParameterName="@Editor"+i, Value=entity.Editor},
@@ -467,7 +480,7 @@ TableName, ClientDAL.TableName, PayTypeDAL.TableName, UserManageDAL.TableName),
             }
             //1、组织sql
             StringBuilder sbSql = new StringBuilder();//
-            sbSql.AppendFormat("update {0} set SaleState=@state where APID in (", TableName);
+            sbSql.AppendFormat("update {0} set State=@state where APID in (", TableName);
             List<SqlParameter> sqlParams = new List<SqlParameter>();
             sqlParams.Add(new SqlParameter { ParameterName = "@state", Value = "8" });
             for (int i = 0; i < apIds.Length; i++)
@@ -494,5 +507,8 @@ TableName, ClientDAL.TableName, PayTypeDAL.TableName, UserManageDAL.TableName),
             //3、返回成功或失败的标志
             return rst > 0;
         }
+
+
+
     }
 }

@@ -66,10 +66,10 @@ namespace OA.Model
         public DateTime CreateTime { get; set; }
         public string Editor { get; set; }
         public string Editor_Name { get; set; }
-        public DateTime EditTime { get; set; }
+        public DateTime? EditTime { get; set; }
         public string FirstChecker { get; set; }
         public string FirstChecker_Name { get; set; }
-        public DateTime FirstCheckTime { get; set; }
+        public DateTime? FirstCheckTime { get; set; }
         /// <summary>
         /// 初审意见
         /// </summary>

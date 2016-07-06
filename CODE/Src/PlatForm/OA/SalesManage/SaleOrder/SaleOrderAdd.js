@@ -83,7 +83,7 @@ var soCard = {
                 return;
             }
             var rows = soCard.gridSOItem.datagrid('getChecked');
-            console.log(rows.length);
+            //console.log(rows.length);
             if (gFunc.isNull(rows) || rows.length < 1) {
                 $.messager.alert('提示', '请选择要修改的数据');
                 return;
@@ -206,79 +206,106 @@ var soCard = {
         }
         return soCard.gridSOItem.datagrid('getRowIndexByEditor', { element: target });
     },
-    initCardForm: function (data, state) {
+    initCardForm: function (soId, state) {
         soCard.bindingEvents();
-        soCard.cardState = state;
+        if (!gFunc.isNull(state)) {
+            soCard.cardState = state;
+        }
         switch (state) {
             case cardStateConf.edit://修改
             case cardStateConf.view://查看
-                //赋值
-                //console.log(data);
-                soCard.txtCardSOID.val(data.SaleOrderID);
-                $('#txtCardSOCode').textbox('setValue', data.SaleOrderCode);
-                soCard.txtCardBillTypeName.textbox('setValue', data.BillType_Name);
-                soCard.txtCardBillTypeID.val(data.BillTypeID);
-                soCard.txtCardMName.textbox('setValue', data.Material_Name);
-                soCard.txtCardMID.val(data.MaterialID);
-                soCard.txtCardUName.textbox('setValue', data.SaleUnit_Name);
-                soCard.txtCardUID.val(data.SaleUnitID);
-                soCard.txtCardClientName.textbox('setValue', data.Client_Name);
-                soCard.txtCardClientID.val(data.ClientID);
-                $('#txtCardSaleDate').datebox('setValue', data.SaleDate);
-                $('#txtCardFinishDate').datebox('setValue', data.FinishDate);
-                $('#txtCardSOState').textbox('setValue', soFormatter.soState.format(data.SaleState));
-                $('#txtCardRouting').textbox('setValue', data.Routing);
-                $('#txtCardSaleQty').numberbox('setValue', data.SaleQty);
-                $('#txtCardPrice').numberbox('setValue', data.SalePrice);
-                $('#txtCardSaleCost').numberbox('setValue', data.SaleCost);
-                $('#txtCardCreatorName').textbox('setValue', data.Creator_Name);
-                $('#txtCardCreateTime').textbox('setValue', data.CreateTime);
-                $('#txtCardEditorName').textbox('setValue', data.Editor_Name);
-                $('#txtCardEditTime').textbox('setValue', data.EditTime);
-                $('#txtCardFirstCheckerName').textbox('setValue', data.FirstChecker_Name);
-                $('#txtCardFirstCheckTime').textbox('setValue', data.FirstCheckTime);
-                $('#txtCardFirstCheckView').textbox('setValue', data.FirstCheckView);
-                $('#txtCardSecondCheckerName').textbox('setValue', data.SecondCheckerName);
-                $('#txtCardReaderName').textbox('setValue', data.ReaderName);
-                $('#txtCardRemark').textbox('setValue', data.Remark);
-                //设置只读
-                $('#txtCardSOCode').textbox('readonly', true);//编号只读
-                //console.log(typeof(state));
-                var boolReadOnly = state == cardStateConf.view ? true : false;
-                //console.log('boolReadOnly:' + boolReadOnly);
-                if (boolReadOnly) {
-                    //console.log('soCard.btnSave.hide();');
-                    soCard.btnSave.hide();
-                }
-                $('#txtCardSaleDate').datebox('readonly', boolReadOnly);
-                $('#txtCardFinishDate').datebox('readonly', boolReadOnly);
-                $('#txtCardRouting').textbox('readonly', boolReadOnly);
-                $('#txtCardSaleQty').numberbox('readonly', boolReadOnly);
-                $('#txtCardPrice').numberbox('readonly', boolReadOnly);
-                $('#txtCardSaleCost').numberbox('readonly', boolReadOnly);
-                $('#txtCardRemark').textbox('readonly', boolReadOnly);
-                if (boolReadOnly) {
-                    soCard.btnCardBillType.attr({ 'disabled': 'disabled' });
-                    soCard.btnCardMaterial.attr({ 'disabled': 'disabled' });
-                    soCard.btnCardClient.attr({ 'disabled': 'disabled' });
-                    soCard.btnCardUnit.attr({ 'disabled': 'disabled' });
-                }
+                var ajaxResult = false;
+                $.ajax({
+                    type: 'post',
+                    url: 'SaleOrderService.asmx/GetSaleOrderById',
+                    data: 'SOID=' + soId,
+                    async: false,//同步请求
+                    success: function (result) {
+                        if (result && result.code) {
+                            ajaxResult = true;
+                            soCard.setFormData(result.data, state);
+                            ////console.log('askprice,ajax succeed');
+                        } else {
+                            console.log('saleorder,ajax fail:' + result.msg);
+                            ajaxResult = false;
+                        }
+                    },
+                    error: function () {
+                        //console.log('askprice,ajax error');
+                        ajaxResult = false;
+                    }
+                });
                 break;
             case cardStateConf.add://添加
             default:
+                soCard.initCardGrid("");
                 break;
         }
         //数值类型如果空则赋初值0
         if (!$('#txtCardSaleQty').textbox('getValue')) {
-            //console.log('txtCardSaleQty,before set 0 ');
+            ////console.log('txtCardSaleQty,before set 0 ');
             $('#txtCardSaleQty').textbox('setValue', 0.00);
-            //console.log('txtCardSaleQty,after set 0 ');
+            ////console.log('txtCardSaleQty,after set 0 ');
         }
         if (!$('#txtCardPrice').textbox('getValue')) {
             $('#txtCardPrice').textbox('setValue', 0.00);
         }
         if (!$('#txtCardSaleCost').textbox('getValue')) {
             $('#txtCardSaleCost').textbox('setValue', 0.00);
+        }
+
+    },
+    setFormData: function (data, state) {
+        //赋值
+        ////console.log(data);
+        soCard.txtCardSOID.val(data.SaleOrderID);
+        $('#txtCardSOCode').textbox('setValue', data.SaleOrderCode);
+        soCard.txtCardBillTypeName.textbox('setValue', data.BillType_Name);
+        soCard.txtCardBillTypeID.val(data.BillTypeID);
+        soCard.txtCardMName.textbox('setValue', data.Material_Name);
+        soCard.txtCardMID.val(data.MaterialID);
+        soCard.txtCardUName.textbox('setValue', data.SaleUnit_Name);
+        soCard.txtCardUID.val(data.SaleUnitID);
+        soCard.txtCardClientName.textbox('setValue', data.Client_Name);
+        soCard.txtCardClientID.val(data.ClientID);
+        $('#txtCardSaleDate').datebox('setValue', data.SaleDate);
+        $('#txtCardFinishDate').datebox('setValue', data.FinishDate);
+        $('#txtCardSOState').textbox('setValue', soFormatter.soState.format(data.SaleState));
+        $('#txtCardRouting').textbox('setValue', data.Routing);
+        $('#txtCardSaleQty').numberbox('setValue', data.SaleQty);
+        $('#txtCardPrice').numberbox('setValue', data.SalePrice);
+        $('#txtCardSaleCost').numberbox('setValue', data.SaleCost);
+        $('#txtCardCreatorName').textbox('setValue', data.Creator_Name);
+        $('#txtCardCreateTime').textbox('setValue', data.CreateTime);
+        $('#txtCardEditorName').textbox('setValue', data.Editor_Name);
+        $('#txtCardEditTime').textbox('setValue', data.EditTime);
+        $('#txtCardFirstCheckerName').textbox('setValue', data.FirstChecker_Name);
+        $('#txtCardFirstCheckTime').textbox('setValue', data.FirstCheckTime);
+        $('#txtCardFirstCheckView').textbox('setValue', data.FirstCheckView);
+        $('#txtCardSecondCheckerName').textbox('setValue', data.SecondCheckerName);
+        $('#txtCardReaderName').textbox('setValue', data.ReaderName);
+        $('#txtCardRemark').textbox('setValue', data.Remark);
+        //设置只读
+        $('#txtCardSOCode').textbox('readonly', true);//编号只读
+        ////console.log(typeof(state));
+        var boolReadOnly = state == cardStateConf.view ? true : false;
+        ////console.log('boolReadOnly:' + boolReadOnly);
+        if (boolReadOnly) {
+            ////console.log('soCard.btnSave.hide();');
+            soCard.btnSave.hide();
+        }
+        $('#txtCardSaleDate').datebox('readonly', boolReadOnly);
+        $('#txtCardFinishDate').datebox('readonly', boolReadOnly);
+        $('#txtCardRouting').textbox('readonly', boolReadOnly);
+        $('#txtCardSaleQty').numberbox('readonly', boolReadOnly);
+        $('#txtCardPrice').numberbox('readonly', boolReadOnly);
+        $('#txtCardSaleCost').numberbox('readonly', boolReadOnly);
+        $('#txtCardRemark').textbox('readonly', boolReadOnly);
+        if (boolReadOnly) {
+            soCard.btnCardBillType.attr({ 'disabled': 'disabled' });
+            soCard.btnCardMaterial.attr({ 'disabled': 'disabled' });
+            soCard.btnCardClient.attr({ 'disabled': 'disabled' });
+            soCard.btnCardUnit.attr({ 'disabled': 'disabled' });
         }
 
         //初始化列表
@@ -402,7 +429,7 @@ var soCard = {
     doSave: function () {
         //1、基本信息验证
         var valRst = gFunc.formFunc.validate("editForm");
-        //console.log('valresult:' + valRst);
+        ////console.log('valresult:' + valRst);
         if (!valRst) {
             $.messager.alert('提示', '数据校验失败，请检查输入！');
             return false;
@@ -431,7 +458,7 @@ var soCard = {
         //3、组合数据
         var formData = gFunc.formFunc.serializeToJson("editForm");
         formData.Items = editingRows;
-        //console.log(JSON.stringify(formData));
+        ////console.log(JSON.stringify(formData));
         //提交保存
         //这里json序列化的目标一定是一个数组，否则，后台解析（解析为列表）时会出错
         var ajaxResult = false;
@@ -443,19 +470,19 @@ var soCard = {
             success: function (result) {
                 if (result && result.code) {
                     ajaxResult = true;
-                    console.log('saleorder,ajax succeed');
+                    //console.log('saleorder,ajax succeed');
                     location.href = soCard.soManageUrl;
                 } else {
-                    console.log('saleorder,ajax fail');
+                    //console.log('saleorder,ajax fail');
                     ajaxResult = false;
                 }
             },
             error: function () {
-                console.log('saleorder,ajax error');
+                //console.log('saleorder,ajax error');
                 ajaxResult = false;
             }
         });
-        console.log('saleorder,doSave over');
+        //console.log('saleorder,doSave over');
         return ajaxResult;
     }
 }

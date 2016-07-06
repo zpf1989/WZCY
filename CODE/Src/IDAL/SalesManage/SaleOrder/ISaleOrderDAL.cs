@@ -23,6 +23,13 @@ namespace OA.IDAL
         /// <returns></returns>
         SaleOrder GetSaleOrderWithItems(string orderId);
         /// <summary>
+        /// 获取销售订单，不含子项
+        /// </summary>
+        /// <param name="orderId"></param>
+        /// <returns></returns>
+        SaleOrder GetSaleOrder(string orderId);
+
+        /// <summary>
         /// 提交到初审人
         /// </summary>
         /// <param name="userId"></param>
@@ -58,7 +65,7 @@ namespace OA.IDAL
         /// <param name="checkResult"></param>
         /// <param name="soIds"></param>
         /// <returns></returns>
-        bool SecondCheck( bool checkResult, params string[] soIds);
+        bool SecondCheck(bool checkResult, params string[] soIds);
 
         /// <summary>
         /// 关闭
@@ -66,5 +73,6 @@ namespace OA.IDAL
         /// <param name="soIds"></param>
         /// <returns></returns>
         bool Close(string[] soIds);
+
     }
 }

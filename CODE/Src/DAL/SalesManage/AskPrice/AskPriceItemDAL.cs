@@ -28,7 +28,7 @@ namespace OA.DAL
                 PageEntity = pageEntity,
                 TableName = string.Format(@"{0} ai left join {1} m on ai.MaterialID=m.MaterialID left join {2} mu on ai.UnitID=mu.UnitID", TableName, MaterialsDAL.TableName, MeasureUnitsDAL.TableName),
                 PK = "ai.AskPriceItemID",
-                Fields = "ai.*,m.MaterialName Material_Name,mu.UnitName Unit_Name",
+                Fields = "ai.*,m.MaterialCode Material_Code, m.MaterialName Material_Name,m.Specs Material_Specs,mu.UnitName Unit_Name",
                 OrderBySql = orderBySql,
                 WhereSql = whereSql
             });
@@ -41,7 +41,9 @@ namespace OA.DAL
                         APItemID = row["APItemID"].ToString(),
                         APID = row["APID"].ToString(),
                         MaterialID = row["MaterialID"].ToString(),
+                        Material_Code = row["Material_Code"].ToString(),
                         Material_Name = row["Material_Name"].ToString(),
+                        Material_Specs = row["Material_Specs"].ToString(),
                         Routing = row["Routing"].ToString(),
                         PlanPrice = Convert.ToDecimal(row["PlanPrice"]),
                         Qty = Convert.ToDecimal(row["Qty"]),

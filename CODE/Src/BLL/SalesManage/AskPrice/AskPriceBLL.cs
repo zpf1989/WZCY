@@ -26,9 +26,14 @@ namespace OA.BLL
             return idal.GetEntitiesByPageForHelp(pageEntity, whereSql, orderBySql);
         }
 
-        public AskPrice GetAskPriceWithItems(string orderId)
+        public AskPrice GetAskPriceWithItems(string apId)
         {
-            return idal.GetAskPriceWithItems(orderId);
+            return idal.GetAskPriceWithItems(apId);
+        }
+
+        public AskPrice GetAskPrice(string apId)
+        {
+            return idal.GetAskPrice(apId);
         }
 
         public bool Save(params AskPrice[] entites)
@@ -133,8 +138,9 @@ namespace OA.BLL
             {
                 list.Add(new APReader
                 {
+                    APReadID = Guid.NewGuid().ToString(),
                     APID = apId,
-                    APReadID = reader,
+                    ReaderID = reader,
                     ReadTime = DateTime.Now,
                     ReadFlag = "0"
                 });
