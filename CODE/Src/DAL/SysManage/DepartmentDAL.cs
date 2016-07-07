@@ -8,12 +8,15 @@ using System.Linq;
 using System.Text;
 using OA.GeneralClass.Extensions;
 using OA.GeneralClass;
+using System.Data.SqlClient;
+using OA.GeneralClass.Logger;
 
 namespace OA.DAL
 {
     public class DepartmentDAL : BaseDAL<DepartmentInfo>, IDepartmentDAL
     {
         public const string TableName = "OA_Dept";
+        ILogHelper<DepartmentDAL> logger = LoggerFactory.GetLogger<DepartmentDAL>();
 
         public override List<DepartmentInfo> GetEntitiesByPage(PageEntity pageEntity, string whereSql = null, string orderBySql = null)
         {
@@ -54,17 +57,99 @@ namespace OA.DAL
         {
             return GetEntitiesByPage(pageEntity, whereSql, orderBySql);
         }
-
-        public override bool Save(params DepartmentInfo[] entities)
+        /// <summary>
+        /// 保存
+        /// </summary>
+        /// <param name="deptinfo"></param>
+        /// <returns></returns>
+        public override bool Save(params DepartmentInfo[] deptinfo)
         {
-            throw new NotImplementedException("尚未实现");
+            if (deptinfo == null || deptinfo.Length < 1)
+            {
+                return false;
+            }
+            StringBuilder sbSql = new StringBuilder();
+            List<SqlParameter> sqlParams = new List<SqlParameter>();
+            DepartmentInfo dept = null;
+            for (int i = 0; i < deptinfo.Length; i++)
+            {
+                dept = deptinfo[i];
+                //1、组织sql
+                if (ValidateUtil.isBlank(dept.DeptID))
+                {
+                    //新增
+                    dept.DeptID = Guid.NewGuid().ToString();
+                    sbSql.AppendFormat("insert into {0}(DeptID,DeptCode,DeptName,ParentDeptID,Remark)", TableName);
+                    sbSql.AppendFormat(" values (@DeptID{0},@DeptCode{0},@DeptName{0},@ParentDeptID{0},@Remark{0});", i);
+                }
+                else
+                {
+                    //修改
+                    sbSql.AppendFormat("update {0} set DeptCode=@DeptCode{1},DeptName=@DeptName{1},Remark=@Remark{1},ParentDeptID=@ParentDeptID{1}", TableName, i);
+                    sbSql.AppendFormat(" where DeptID=@DeptID{0};", i);
+                }
+                //不管新增或修改， 参数都一样
+                sqlParams.AddRange(new SqlParameter[]{ 
+                            new SqlParameter("@DeptID"+i, SqlDbType.VarChar,36){Value=dept.DeptID},
+                            new SqlParameter("@DeptCode"+i, SqlDbType.VarChar,100){Value=dept.DeptCode},
+                            new SqlParameter("@DeptName"+i, SqlDbType.VarChar,100){Value=dept.DeptName},
+                            new SqlParameter("@ParentDeptID"+i, SqlDbType.VarChar,36){Value=dept.ParentDeptID},
+                            new SqlParameter("@Remark"+i, SqlDbType.VarChar,1000){Value=dept.Remark},
+                                            });
+            }
+            //2、执行sql
+            int rst = 0;
+            try
+            {
+                rst = DBAccess.ExecuteNonQuery(DB.Type, DB.ConnectionString, CommandType.Text, sbSql.ToString(), sqlParams.ToArray());
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex);
+                return false;
+            }
+            //3、返回成功或失败的标志
+            return rst > 0;
 
         }
-
-        public override bool Delete(params string[] ids)
+        /// <summary>
+        /// 删除
+        /// </summary>
+        /// <param name="deptIds"></param>
+        /// <returns></returns>
+        public override bool Delete(params string[] deptIds)
         {
-            throw new NotImplementedException("尚未实现");
-
+            if (deptIds == null || deptIds.Length < 1)
+            {
+                return false;
+            }
+            //1、组织sql
+            StringBuilder sbSql2 = new StringBuilder();//删除用户的sql
+            sbSql2.AppendFormat("delete from {0} where DeptID in (", TableName);
+            List<SqlParameter> sqlParams = new List<SqlParameter>();
+            for (int i = 0; i < deptIds.Length; i++)
+            {
+                sbSql2.AppendFormat("@DeptID{0}", i);
+                sqlParams.Add(new SqlParameter("@DeptID" + i, SqlDbType.VarChar, 36) { Value = deptIds[i] });
+                if (i < deptIds.Length - 1)
+                {
+                    sbSql2.Append(",");
+                }
+            }
+            sbSql2.Append(");");
+            //2、执行sql
+            int rst = 0;
+            try
+            {
+                rst = DBAccess.ExecuteNonQuery(DB.Type, DB.ConnectionString, CommandType.Text, sbSql2.ToString(), sqlParams.ToArray());
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex);
+                return false;
+            }
+            //3、返回成功或失败的标志
+            return rst > 0;
         }
 
         protected override string GetTableName()

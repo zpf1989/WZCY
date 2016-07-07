@@ -14,7 +14,7 @@ using OA.Model;
 [WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]
 // 若要允许使用 ASP.NET AJAX 从脚本中调用此 Web 服务，请取消注释以下行。 
 // [System.Web.Script.Services.ScriptService]
-public class DepartmentService : System.Web.Services.WebService
+public class DepartmentService : BaseService
 {
     OA.BLL.DepartmentBLL departmentBLL = new OA.BLL.DepartmentBLL();
     public DepartmentService()
@@ -25,6 +25,12 @@ public class DepartmentService : System.Web.Services.WebService
     }
 
     [WebMethod(EnableSession = true)]
+    public void GetList()
+    {
+        GetForGridHelp();
+    }
+
+    [WebMethod(EnableSession = true)]
     public void GetForGridHelp()
     {
         //过滤条件
@@ -32,12 +38,12 @@ public class DepartmentService : System.Web.Services.WebService
         string code = Context.Request["DeptCode"];
         if (!ValidateUtil.isBlank(code))
         {
-            whereSql += string.Format(" and DeptCode like '%{0}%'", code);
+            whereSql += string.Format(" and d1.DeptCode like '%{0}%'", code);
         }
         string name = Context.Request["DeptName"];
         if (!ValidateUtil.isBlank(name))
         {
-            whereSql += string.Format(" and DeptName like '%{0}%'", name);
+            whereSql += string.Format(" and d1.DeptName like '%{0}%'", name);
         }
         //分页参数：easyui分页查询时，page、rows
         int pageIndex = 1;
@@ -53,6 +59,53 @@ public class DepartmentService : System.Web.Services.WebService
             rows = depts
         }.SerializeToJson();
         Context.Response.WriteJson(json);
+    }
+
+    [WebMethod(EnableSession = true)]
+    public void Save()
+    {
+        //获取请求数据
+        using (var reader = new System.IO.StreamReader(Context.Request.InputStream))
+        {
+            string data = reader.ReadToEnd();
+            if (!ValidateUtil.isBlank(data))
+            {
+                var dept = data.DeSerializeFromJson<List<DepartmentInfo>>();
+                if (dept != null && dept.Count > 0)
+                {
+                    bool rst = departmentBLL.Save(dept.ToArray());
+                    if (rst)
+                    {
+                        Context.Response.WriteJson(OA.GeneralClass.ResultCode.Success, null, null);
+                        return;
+                    }
+                }
+            }
+        }
+        Context.Response.WriteJson(OA.GeneralClass.ResultCode.Failure, "保存失败", null);
+    }
+
+    [WebMethod(EnableSession = true)]
+    public void Delete()
+    {
+        using (var reader = new System.IO.StreamReader(Context.Request.InputStream))
+        {
+            string data = reader.ReadToEnd();
+            if (!ValidateUtil.isBlank(data))
+            {
+                var empIds = data.DeSerializeFromJson<List<string>>();
+                if (empIds != null && empIds.Count > 0)
+                {
+                    bool rst = departmentBLL.Delete(empIds.ToArray());
+                    if (rst)
+                    {
+                        Context.Response.WriteJson(OA.GeneralClass.ResultCode.Success, null, null);
+                        return;
+                    }
+                }
+            }
+        }
+        Context.Response.WriteJson(OA.GeneralClass.ResultCode.Failure, "删除失败", null);
     }
 
     public gentleyh.Class1 security = new gentleyh.Class1();
