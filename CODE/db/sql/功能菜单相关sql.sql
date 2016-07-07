@@ -37,7 +37,10 @@ update OA_Function set FunURL='OA/SalesManage/AskPrice/AskPriceAdd.aspx' where F
 update OA_Function set FunName='询价单管理',FunURL='OA/SalesManage/AskPrice/AskPrice.aspx' where FunID=1331;
 update OA_Function set FunName='询价单审阅',FunURL='OA/SalesManage/AskPrice/AskPriceApproval.aspx' where FunID=1332;
 delete from OA_Function where FunID in (1333,1334,1335);
-
+--部门管理
+update OA_Function
+set FunURL='OA/SysManage/Department/DeptList.aspx',FunName='部门管理'
+where FunID='86'
 
 
 
