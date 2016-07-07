@@ -201,6 +201,15 @@ var apCard = {
             apCard.gridAPItem.datagrid('updateRowCell', { field: 'UnitID', index: index, value: uData.UnitID });
         }
     },
+    computeActualPrice: function (rowIndex) {
+        var editor1 = apCard.gridAPItem.datagrid('getEditor', { index: rowIndex, field: 'PlanPrice' });
+        var editor2 = apCard.gridAPItem.datagrid('getEditor', { index: rowIndex, field: 'Qty' });
+        var editor3 = apCard.gridAPItem.datagrid('getEditor', { index: rowIndex, field: 'ActualPrice' });
+
+        var actual = $(editor1.target).numberbox('getValue') * $(editor2.target).numberbox('getValue');
+        //console.log('PlanPrice:' + $(editor1.target).numberbox('getValue') + ',Qty:' + $(editor2.target).numberbox('getValue') + ',Result:' + actual);
+        $(editor3.target).numberbox('setValue', actual);
+    },
     getRowIndexByEditor: function (target) {
         if (gFunc.isNull(target)) {
             return null;
@@ -378,7 +387,15 @@ var apCard = {
                         type: 'numberbox',
                         options: {
                             precision: 2,
-                            validType: 'maxLength[18]'
+                            validType: 'maxLength[18]',
+                            onChange: function (newVal, oldVal) {
+                                if (oldVal != newVal && !gFunc.isNull(newVal)) {
+                                    //更新row
+                                    var index = apCard.getRowIndexByEditor(this);
+                                    //自动计算总额
+                                    apCard.computeActualPrice(index);
+                                }
+                            }
                         }
                     }
                 },
@@ -388,7 +405,13 @@ var apCard = {
                         type: 'numberbox',
                         options: {
                             precision: 2,
-                            validType: 'maxLength[18]'
+                            validType: 'maxLength[18]',
+                            onChange: function (newVal, oldVal) {
+                                if (oldVal != newVal && !gFunc.isNull(newVal)) {
+                                    var index = apCard.getRowIndexByEditor(this);
+                                    apCard.computeActualPrice(index);
+                                }
+                            }
                         }
                     }
                 },

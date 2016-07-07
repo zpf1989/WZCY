@@ -238,11 +238,6 @@ var gFunc = {
             onBeforeEdit: function (index, row) {
                 row.editing = true;
                 $(this).datagrid('refreshRow', index);
-                //if (!gFunc.isNull(row[options.key])) {
-                //    //主键不为空，说明是已保存的数据，则唯一列禁止修改
-                //    var cellEdit = $(grid).datagrid('getEditor', { index: index, field: 'MaterialClassCode' });
-                //    cellEdit.target.prop('readonly', true);
-                //}
             },
             onAfterEdit: function (index, row) {
                 row.editing = false;
@@ -253,8 +248,11 @@ var gFunc = {
                 $(this).datagrid('refreshRow', index);
             }
         });
-        for (var i = 0; i < options.hidecols.length; i++) {
-            $(grid).datagrid('hideColumn', options.hidecols[i]);//隐藏列
+        //隐藏列
+        if (!gFunc.isNull(options.hidecols) && options.hidecols.length > 0) {
+            for (var i = 0; i < options.hidecols.length; i++) {
+                $(grid).datagrid('hideColumn', options.hidecols[i]);
+            }
         }
     },
     /*
