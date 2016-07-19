@@ -75,7 +75,7 @@ namespace OA.Model
         /// </summary>
         public string FirstCheckView { get; set; }
         /// <summary>
-        /// 单据状态：1:编制   2:提交   3:审核通过   4:审核不通过   5:批准通过   6:批准不通过   7:关闭
+        /// 单据状态
         /// </summary>
         public string State { get; set; }
         /// <summary>

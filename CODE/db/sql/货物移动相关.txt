@@ -1,0 +1,57 @@
+/*=========================1、货物移动复审GMSecondCheck========================*/
+if exists (select 1
+            from  sysobjects
+           where  id = object_id('GMSecondCheck')
+            and   type = 'U')
+   drop table GMSecondCheck
+go
+
+create table GMSecondCheck (
+   GMSecondCheckID      varchar(36)          not null,
+   GoodsMovementID      varchar(36)          null,
+   SecondChecker        varchar(36)          null,
+   SecondCheckView      varchar(255)         null,
+   SecondCheckTime      datetime             null,
+   CheckFlag            char(1)              null,
+   constraint PK_SOSECONDCHECK primary key (GMSecondCheckID)
+)
+go
+
+sp_addextendedproperty N'MS_Description', N'0 未批准
+   1 批准不通过
+   2 批准通过', 'User', N'dbo', 'TABLE', N'GMSecondCheck', 'COLUMN', N'CheckFlag'
+GO
+
+
+/*=========================2、货物移动分阅GMReader========================*/
+if exists (select 1
+            from  sysobjects
+           where  id = object_id('GMReader')
+            and   type = 'U')
+   drop table GMReader
+go
+
+create table GMReader (
+   GMReadID             varchar(36)          not null,
+   GoodsMovementID      varchar(36)          null,
+   ReaderID             varchar(36)          null,
+   ReadTime             datetime             null,
+   ReadFlag             char(1)              null,
+   constraint PK_SOREADER primary key (GMReadID)
+)
+go
+
+sp_addextendedproperty N'MS_Description', N'0 未分阅
+   1 已分阅', 'User', N'dbo', 'TABLE', N'GMReader', 'COLUMN', N'ReadFlag'
+GO
+
+/*=========================3、货物移动主表，单据状态描述========================*/
+sp_addextendedproperty N'MS_Description', N'1:编制
+   2:提交初审
+   3:初审通过
+   4:初审不通过
+   5:提交复审  
+   6:复审通过
+   7:复审不通过
+   8:关闭', 'User', N'dbo', 'TABLE', N'GoodsMovement', 'COLUMN', N'BillState'
+GO

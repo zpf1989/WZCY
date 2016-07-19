@@ -45,15 +45,15 @@ namespace OA.DAL
         {
             //组织查询参数
             List<SqlParameter> sqlParams = new List<SqlParameter>();
-            sqlParams.Add(new SqlParameter("tableName", SqlDbType.NVarChar, 500) { Value = entity.TableName });
-            sqlParams.Add(new SqlParameter("pk", SqlDbType.NVarChar, 100) { Value = entity.PK });
-            sqlParams.Add(new SqlParameter("fields", SqlDbType.NVarChar, 1000) { Value = entity.Fields });
-            sqlParams.Add(new SqlParameter("orderBySql", SqlDbType.NVarChar, 1000) { Value = entity.OrderBySql });
-            sqlParams.Add(new SqlParameter("whereSql", SqlDbType.NVarChar, 1000) { Value = entity.WhereSql });
-            sqlParams.Add(new SqlParameter("pageSize", SqlDbType.Int) { Value = entity.PageEntity.PageSize });
-            SqlParameter sqlParamPageIndex = new SqlParameter("pageIndex", SqlDbType.Int) { Value = entity.PageEntity.PageIndex, Direction = ParameterDirection.InputOutput };
+            sqlParams.Add(new SqlParameter { ParameterName = "tableName", Value = entity.TableName });
+            sqlParams.Add(new SqlParameter { ParameterName = "pk", Value = entity.PK });
+            sqlParams.Add(new SqlParameter { ParameterName = "fields", Value = entity.Fields });
+            sqlParams.Add(new SqlParameter { ParameterName = "orderBySql", Value = entity.OrderBySql });
+            sqlParams.Add(new SqlParameter { ParameterName = "whereSql", Value = entity.WhereSql });
+            sqlParams.Add(new SqlParameter { ParameterName = "pageSize", SqlDbType = SqlDbType.Int, Value = entity.PageEntity.PageSize });
+            SqlParameter sqlParamPageIndex = new SqlParameter { ParameterName = "pageIndex", SqlDbType = SqlDbType.Int, Value = entity.PageEntity.PageIndex, Direction = ParameterDirection.InputOutput };
             sqlParams.Add(sqlParamPageIndex);
-            SqlParameter sqlParamTotalRecord = new SqlParameter("totalRecord", SqlDbType.Int) { Direction = ParameterDirection.Output };
+            SqlParameter sqlParamTotalRecord = new SqlParameter { ParameterName = "totalRecord", SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Output };
             sqlParams.Add(sqlParamTotalRecord);
             try
             {

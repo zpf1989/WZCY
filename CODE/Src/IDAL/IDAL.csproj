@@ -72,6 +72,10 @@
     <Compile Include="InventoryManage\BaseData\IMeasureUnitsDAL.cs" />
     <Compile Include="IBaseDAL.cs" />
     <Compile Include="InventoryManage\BaseData\IWareHouseDAL.cs" />
+    <Compile Include="InventoryManage\GoodsMovement\IGMReaderDAL.cs" />
+    <Compile Include="InventoryManage\GoodsMovement\IGMSecondCheckDAL.cs" />
+    <Compile Include="InventoryManage\GoodsMovement\IGoodsMovementItemDAL.cs" />
+    <Compile Include="InventoryManage\GoodsMovement\IGoodsMovementDAL.cs" />
     <Compile Include="SalesManage\AskPrice\IAskPriceItemDAL.cs" />
     <Compile Include="SalesManage\AskPrice\IAPSecondCheckDAL.cs" />
     <Compile Include="SalesManage\AskPrice\IAPReaderDAL.cs" />
@@ -116,6 +120,7 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

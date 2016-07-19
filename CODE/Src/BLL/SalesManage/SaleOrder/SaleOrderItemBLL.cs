@@ -12,17 +12,6 @@ namespace OA.BLL
     {
         private readonly ISaleOrderItemDAL idal = DALFactory.Helper.GetISaleOrderItemDAL();
 
-        public List<SaleOrderItem> GetSaleOrdersByPage(PageEntity pageEntity, string whereSql = null, string orderBySql = null, bool isForHelp = false)
-        {
-
-            return isForHelp ? idal.GetEntitiesByPageForHelp(pageEntity, whereSql, orderBySql) : idal.GetEntitiesByPage(pageEntity, whereSql, orderBySql);
-        }
-
-        public List<SaleOrderItem> GetSaleOrdersByPageForHelp(PageEntity pageEntity, string whereSql = null, string orderBySql = null)
-        {
-            return idal.GetEntitiesByPageForHelp(pageEntity, whereSql, orderBySql);
-        }
-
         public IList<SaleOrderItem> GetOrderItems(PageEntity pageEntity, string soId)
         {
             if (ValidateUtil.isBlank(soId))

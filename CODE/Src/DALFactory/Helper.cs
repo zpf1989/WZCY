@@ -293,6 +293,81 @@ namespace OA.DALFactory
         }
         #endregion
 
+        #region 库存管理——货物移动
+        public static OA.IDAL.IGoodsMovementDAL GetIGoodsMovementDAL()
+        {
+            OA.IDAL.IGoodsMovementDAL idal;
+            switch (dbType)
+            {
+                //case "Oracle":
+                //    iAffix = new Upload.DALORACLE.Affix();
+                //    break;
+                //case "GBase":
+                //    iAffix = new Upload.DALGBase.Affix();
+                //    break;
+                case "SQLServer":
+                default:
+                    idal = new OA.DAL.GoodsMovementDAL();
+                    break;
+            }
+            return idal;
+        }
+        public static OA.IDAL.IGoodsMovementItemDAL GetIGoodsMovementItemDAL()
+        {
+            OA.IDAL.IGoodsMovementItemDAL idal;
+            switch (dbType)
+            {
+                //case "Oracle":
+                //    iAffix = new Upload.DALORACLE.Affix();
+                //    break;
+                //case "GBase":
+                //    iAffix = new Upload.DALGBase.Affix();
+                //    break;
+                case "SQLServer":
+                default:
+                    idal = new OA.DAL.GoodsMovementItemDAL();
+                    break;
+            }
+            return idal;
+        }
+        public static OA.IDAL.IGMSecondCheckDAL GetIGMSecondCheckDAL()
+        {
+            OA.IDAL.IGMSecondCheckDAL idal;
+            switch (dbType)
+            {
+                //case "Oracle":
+                //    iAffix = new Upload.DALORACLE.Affix();
+                //    break;
+                //case "GBase":
+                //    iAffix = new Upload.DALGBase.Affix();
+                //    break;
+                case "SQLServer":
+                default:
+                    idal = new OA.DAL.GMSecondCheckDAL();
+                    break;
+            }
+            return idal;
+        }
+        public static OA.IDAL.IGMReaderDAL GetIGMReaderDAL()
+        {
+            OA.IDAL.IGMReaderDAL idal;
+            switch (dbType)
+            {
+                //case "Oracle":
+                //    iAffix = new Upload.DALORACLE.Affix();
+                //    break;
+                //case "GBase":
+                //    iAffix = new Upload.DALGBase.Affix();
+                //    break;
+                case "SQLServer":
+                default:
+                    idal = new OA.DAL.GMReaderDAL();
+                    break;
+            }
+            return idal;
+        }
+        #endregion
+
         #region 销售管理——基础数据
         public static OA.IDAL.IPayTypeDAL GetIPayTypeDAL()
         {

@@ -75,6 +75,10 @@
     <Compile Include="InventoryManage\BaseData\MaterialClassDAL.cs" />
     <Compile Include="DB.cs" />
     <Compile Include="InventoryManage\BaseData\WareHouseDAL.cs" />
+    <Compile Include="InventoryManage\GoodsMovement\GMReaderDAL.cs" />
+    <Compile Include="InventoryManage\GoodsMovement\GMSecondCheckDAL.cs" />
+    <Compile Include="InventoryManage\GoodsMovement\GoodsMovementDAL.cs" />
+    <Compile Include="InventoryManage\GoodsMovement\GoodsMovementItemDAL.cs" />
     <Compile Include="SalesManage\AskPrice\AskPriceDAL.cs" />
     <Compile Include="SalesManage\SaleOrder\SaleOrderItemDAL.cs" />
     <Compile Include="SalesManage\AskPrice\APReaderDAL.cs" />

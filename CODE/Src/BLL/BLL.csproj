@@ -74,6 +74,8 @@
     <Compile Include="InventoryManage\BaseData\MeasureUnitsBLL.cs" />
     <Compile Include="InventoryManage\BaseData\MaterialTypeBLL.cs" />
     <Compile Include="InventoryManage\BaseData\MaterialClassBLL.cs" />
+    <Compile Include="InventoryManage\GoodsMovement\GoodsMovementBLL.cs" />
+    <Compile Include="InventoryManage\GoodsMovement\GoodsMovementItemBLL.cs" />
     <Compile Include="PageBase.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>

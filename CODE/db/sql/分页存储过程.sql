@@ -1,7 +1,7 @@
 create Procedure Proc_GetDataByPage 
- @tableName varchar(500),        --表名
+ @tableName varchar(2000),        --表名
  @pk varchar(50),				 --主键名称
- @fields varchar(1000) = '*',    --字段名(全部字段为*)
+ @fields varchar(2000) = '*',    --字段名(全部字段为*)
  @orderBySql varchar(1000),        --排序字段(必须!支持多字段，如果为空，则取@pk)
  @whereSql varchar(1000),--条件语句(不用加where)
  @pageSize int,                    --每页多少条记录

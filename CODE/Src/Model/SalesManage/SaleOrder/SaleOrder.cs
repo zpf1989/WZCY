@@ -97,7 +97,7 @@ namespace OA.Model
         /// </summary>
         public string RoutingID { get; set; }
         /// <summary>
-        /// 单据状态,1:编制2:提交3:初审通过4:初审不通过5:复审通过6:复审不通过7:关闭
+        /// 单据状态
         /// </summary>
         public string SaleState { get; set; }
         /// <summary>
