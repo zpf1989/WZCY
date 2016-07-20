@@ -76,6 +76,7 @@ var formatHandler = {
     },
     date: {
         format: function (value) {
+            value = gFunc.trim(value);
             if (gFunc.isNull(value)) {
                 return "";
             }
@@ -117,11 +118,33 @@ var formatHandler = {
                 return null;
             }
         }
+    },
+    combobox: {
+        //src是数组，格式[{ value: '1', text: '编制' }, { value: '2', text: '提交初审' }]
+        format: function (value, src) {
+            if (gFunc.isNull(value)) {
+                return "";
+            }
+            if (gFunc.isNull(src)) {
+                return value;
+            }
+            var rst = "";
+            for (var idx = 0; idx < src.length; idx++) {
+                if (value == src[idx].value) {
+                    rst = src[idx].text;
+                    break;
+                }
+            }
+            return rst;
+        }
     }
 };
 
 /*公共方法*/
 var gFunc = {
+    trim: function (str) {
+        return str.replace(/(^\s*)|(\s*$)/g, "");
+    },
     isNull: function (value) {
         return typeof (value) == 'undefined' || value == null || value === '';
     },

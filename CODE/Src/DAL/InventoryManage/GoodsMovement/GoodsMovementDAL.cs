@@ -141,6 +141,7 @@ usrCreate.UserName Creator_Name,usrEdit.UserName Editor_Name,usrFirst.UserName F
                         BusinessType = row["BusinessType"].ToString(),
                         MoveTypeCode = row["MoveTypeCode"].ToString(),
                         GoodsMovementCode = row["GoodsMovementCode"].ToString(),
+                        BillState = row["BillState"].ToString(),
                         CreateDate = row["CreateDate"].ToString(),
                         ReceiptDate = row["ReceiptDate"].ToString(),
                         RecDeptID = row["RecDeptID"].ToString(),

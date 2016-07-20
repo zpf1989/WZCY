@@ -7,14 +7,7 @@ var soFormatter = {
             if (gFunc.isNull(value)) {
                 return "";
             }
-            var rst = "";
-            for (var idx = 0; idx < this.src.length; idx++) {
-                if (value == this.src[idx].value) {
-                    rst = this.src[idx].text;
-                    break;
-                }
-            }
-            return rst;
+            return formatHandler.combobox.format(value, soFormatter.soState.src);
         }
     },
 };
@@ -27,7 +20,6 @@ var saleorder = {
         view: '2'
     },
     grid: $('#grid'),
-    gridSOItem: $('#gridSOItem'),
     formSearch: $('#searchForm'),
     btnSearch: $('#btnSearch'),
     txtSearchBillTypeName: $('#txtSearchBillTypeName'),
@@ -41,7 +33,7 @@ var saleorder = {
     approvalFormHeight: 240,
     cardFormUrl: 'SaleOrderAdd.aspx',
     searchUrl: 'SaleOrderService.asmx/GetList',
-    init: function (funcType) {
+    init: function () {
         saleorder.initgrid();
         saleorder.bindingEvents();
         saleorder.formSearch.children('div').css({ 'float': 'left', 'padding-left': '8px' });
