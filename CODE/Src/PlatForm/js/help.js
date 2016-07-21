@@ -193,6 +193,26 @@ var helpInitializer = {
             singleSelect: true
         });
     },
+    wareHouse: function (grid) {
+        if (!grid) {
+            return;
+        }
+        gFunc.initGridPublic(grid, {
+            title: "仓库帮助",
+            url: gFunc.getRootPath() + '/OA/InventoryManage/WareHouse/WareHouseService.asmx/GetListForHelp',
+            columns: [[
+                { field: 'WareHouseId' },
+                { field: 'WareHouseMan' },
+                { field: 'WareHouseCode', title: '仓库编号', width: 100, align: 'center' },
+                { field: 'WareHouseName', title: '仓库名称', width: 100, align: 'center' },
+                { field: 'WareHouseMan_Name', title: '仓库管理员', width: 100, align: 'center' },
+                { field: 'Address', title: '仓库地址', width: 100, align: 'center' },
+                { field: 'Tel', title: '电话', width: 100, align: 'center' },
+            ]],
+            hidecols: ['WareHouseId', 'WareHouseMan'],
+            singleSelect: true
+        });
+    }
 };
 
 /*
