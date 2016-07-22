@@ -44,9 +44,9 @@ where FunID='86'
 --货物移动
 insert into OA_Function(FunID,FunName,ParentFunID) values('124','货物移动','12');
 insert into OA_RFRelation(ID,RoleID,FunID) values(NEWID(),'5FE1155A-5920-47EC-99D9-CA7ACA8DC4BB','124');
-insert into OA_Function(FunID,FunName,ParentFunID,FunURL) values('1241','库存单据管理','124','http://localhost/wzcy/OA/InventoryManage/GoodsMovement/GoodsMovement.aspx');
+insert into OA_Function(FunID,FunName,ParentFunID,FunURL) values('1241','库存单据管理','124','OA/InventoryManage/GoodsMovement/GoodsMovement.aspx');
 insert into OA_RFRelation(ID,RoleID,FunID) values(NEWID(),'5FE1155A-5920-47EC-99D9-CA7ACA8DC4BB','1241');
-insert into OA_Function(FunID,FunName,ParentFunID,FunURL) values('1242','库存单据审阅','124','http://localhost/wzcy/OA/InventoryManage/GoodsMovement/GoodsMovementApproval.aspx');
+insert into OA_Function(FunID,FunName,ParentFunID,FunURL) values('1242','库存单据审阅','124','OA/InventoryManage/GoodsMovement/GoodsMovementApproval.aspx');
 insert into OA_RFRelation(ID,RoleID,FunID) values(NEWID(),'5FE1155A-5920-47EC-99D9-CA7ACA8DC4BB','1242');
 
 
