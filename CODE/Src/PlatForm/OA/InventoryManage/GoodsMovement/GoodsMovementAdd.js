@@ -48,198 +48,134 @@ var gmCard = {
     cbCardBusinessType: $('#cbCardBusinessType'),
     cbCardMoveType: $('#cbCardMoveType'),
 
-    btnCardHelpRecDept: $('#btnCardHelpRecDept'),
-    txtCardRecDeptName: $('#txtCardRecDeptName'),
-    txtCardRecDeptID: $('#txtCardRecDeptID'),
-
-    btnCardHelpRecHandler: $('#btnCardHelpRecHandler'),
-    txtCardRecHandlerName: $('#txtCardRecHandlerName'),
-    txtCardRecHandler: $('#txtCardRecHandler'),
-
-    btnCardHelpRecWH: $('#btnCardHelpRecWH'),
-    txtCardRecWHName: $('#txtCardRecWHName'),
-    txtCardRecWHID: $('#txtCardRecWHID'),
-
-    btnCardHelpRecWHEmp: $('#btnCardHelpRecWHEmp'),
-    txtCardRecWHEmpName: $('#txtCardRecWHEmpName'),
-    txtCardRecWHEmpID: $('#txtCardRecWHEmpID'),
-
-    btnCardHelpIssDept: $('#btnCardHelpIssDept'),
-    txtCardIssDeptName: $('#txtCardIssDeptName'),
-    txtCardIssDeptID: $('#txtCardIssDeptID'),
-
-    btnCardHelpIssHandler: $('#btnCardHelpIssHandler'),
-    txtCardIssHandlerName: $('#txtCardIssHandlerName'),
-    txtCardIssHandler: $('#txtCardIssHandler'),
-
-    btnCardHelpIssWH: $('#btnCardHelpIssWH'),
-    txtCardIssWHName: $('#txtCardIssWHName'),
-    txtCardIssWHID: $('#txtCardIssWHID'),
-
-    btnCardHelpIssWHEmp: $('#btnCardHelpIssWHEmp'),
-    txtCardIssWHEmpName: $('#txtCardIssWHEmpName'),
-    txtCardIssWHEmpID: $('#txtCardIssWHEmpID'),
-
-    btnCardHelpPurDept: $('#btnCardHelpPurDept'),
-    txtCardPurDeptName: $('#txtCardPurDeptName'),
-    txtCardPurDeptID: $('#txtCardPurDeptID'),
-
-    btnCardHelpPurEmp: $('#btnCardHelpPurEmp'),
-    txtCardPurEmpName: $('#txtCardPurEmpName'),
-    txtCardPurEmpID: $('#txtCardPurEmpID'),
-
-    btnCardHelpSupplier: $('#btnCardHelpSupplier'),
-    txtCardSupplierName: $('#txtCardSupplierName'),
-    txtCardSupplierID: $('#txtCardSupplierID'),
-
-    btnCardHelpSalesDep: $('#btnCardHelpSalesDep'),
-    txtCardSalesDepName: $('#txtCardSalesDepName'),
-    txtCardSalesDepID: $('#txtCardSalesDepID'),
-
-    btnCardHelpSalesEmp: $('#btnCardHelpSalesEmp'),
-    txtCardSalesEmpName: $('#txtCardSalesEmpName'),
-    txtCardSalesEmpID: $('#txtCardSalesEmpID'),
-
-    btnCardHelpCustomer: $('#btnCardHelpCustomer'),
-    txtCardCustomerName: $('#txtCardCustomerName'),
-    txtCardCustomerID: $('#txtCardCustomerID'),
-
-    btnCardHelpProDep: $('#btnCardHelpProDep'),
-    txtCardProDepName: $('#txtCardProDepName'),
-    txtCardProDepID: $('#txtCardProDepID'),
-
-    btnCardHelpProEmp: $('#btnCardHelpProEmp'),
-    txtCardProEmpName: $('#txtCardProEmpName'),
-    txtCardProEmpID: $('#txtCardProEmpID'),
-
-    btnCardHelpConDep: $('#btnCardHelpConDep'),
-    txtCardConDepName: $('#txtCardConDepName'),
-    txtCardConDepID: $('#txtCardConDepID'),
-
-    btnCardHelpConEmp: $('#btnCardHelpConEmp'),
-    txtCardConEmpName: $('#txtCardConEmpName'),
-    txtCardConEmpID: $('#txtCardConEmpID'),
+    txtCardCreateDate: $('#txtCardCreateDate'),
 
     txtCardGMID: $('#txtGMID'),
     saveUrl: 'GoodsMovementService.asmx/Save',
     searchUrlGMItem: 'GoodsMovementItemService.asmx/GetGMItems',
     gmManageUrl: 'GoodsMovement.aspx',
-    bindingEvents: function () {
-        gmCard.btnCardHelpRecDept.click(function () {
+    bindingEvents: function (options) {
+        $('#btnCardHelpRecDept').click(function () {
             showPopGridHelp(400, 300, true, helpInitializer.dept, function (data) {
-                gmCard.txtCardRecDeptName.textbox('setValue', data.DeptName);
-                gmCard.txtCardRecDeptID.val(data.DeptID);
+                $('#txtCardRecDeptName').textbox('setValue', data.DeptName);
+                $('#txtCardRecDeptID').val(data.DeptID);
             }, null);
         });
-        gmCard.btnCardHelpRecHandler.click(function () {
+        $('#btnCardHelpRecHandler').click(function () {
             showPopGridHelp(400, 300, true, helpInitializer.user, function (data) {
-                gmCard.txtCardRecHandlerName.textbox('setValue', data.UserName);
-                gmCard.txtCardRecHandler.val(data.UserID);
+                $('#txtCardRecHandlerName').textbox('setValue', data.UserName);
+                $('#txtCardRecHandler').val(data.UserID);
             }, null);
         });
-        gmCard.btnCardHelpRecWH.click(function () {
+        $('#btnCardHelpRecWH').click(function () {
             showPopGridHelp(400, 300, true, helpInitializer.wareHouse, function (data) {
                 //设置仓库
-                gmCard.txtCardRecWHName.textbox('setValue', data.WareHouseName);
-                gmCard.txtCardRecWHID.val(data.WareHouseId);
+                $('#txtCardRecWHName').textbox('setValue', data.WareHouseName);
+                $('#txtCardRecWHID').val(data.WareHouseID);
                 //设置库管员
-                gmCard.txtCardRecWHEmpName.textbox('setValue', data.WareHouseMan_Name);
-                gmCard.txtCardRecWHEmpID.val(data.WareHouseId);
+                $('#txtCardRecWHEmpName').textbox('setValue', data.WareHouseMan_Name);
+                $('#txtCardRecWHEmpID').val(data.WareHouseMan);
             }, null);
         });
-        gmCard.btnCardHelpRecWHEmp.click(function () {
+        $('#btnCardHelpRecWHEmp').click(function () {
             showPopGridHelp(400, 300, true, helpInitializer.user, function (data) {
-                gmCard.txtCardRecWHEmpName.textbox('setValue', data.UserName);
-                gmCard.txtCardRecWHEmpID.val(data.UserID);
+                $('#txtCardRecWHEmpName').textbox('setValue', data.UserName);
+                $('#txtCardRecWHEmpID').val(data.UserID);
             }, null);
         });
-        gmCard.btnCardHelpIssDept.click(function () {
+        $('#btnCardHelpIssDept').click(function () {
             showPopGridHelp(400, 300, true, helpInitializer.dept, function (data) {
-                gmCard.txtCardIssDeptName.textbox('setValue', data.DeptName);
-                gmCard.txtCardIssDeptID.val(data.DeptID);
+                $('#txtCardIssDeptName').textbox('setValue', data.DeptName);
+                $('#txtCardIssDeptID').val(data.DeptID);
             }, null);
         });
-        gmCard.btnCardHelpIssHandler.click(function () {
+        $('#btnCardHelpIssHandler').click(function () {
             showPopGridHelp(400, 300, true, helpInitializer.user, function (data) {
-                gmCard.txtCardIssHandlerName.textbox('setValue', data.UserName);
-                gmCard.txtCardIssHandler.val(data.UserID);
+                $('#txtCardIssHandlerName').textbox('setValue', data.UserName);
+                $('#txtCardIssHandler').val(data.UserID);
             }, null);
         });
-        gmCard.btnCardHelpIssWH.click(function () {
+        $('#btnCardHelpIssWH').click(function () {
             showPopGridHelp(400, 300, true, helpInitializer.wareHouse, function (data) {
                 //设置仓库
-                gmCard.txtCardIssWHName.textbox('setValue', data.WareHouseName);
-                gmCard.txtCardIssWHID.val(data.WareHouseId);
+                $('#txtCardIssWHName').textbox('setValue', data.WareHouseName);
+                $('#txtCardIssWHID').val(data.WareHouseID);
                 //设置库管员
-                gmCard.txtCardIssWHEmpName.textbox('setValue', data.WareHouseMan_Name);
-                gmCard.txtCardIssWHEmpID.val(data.WareHouseId);
+                $('#txtCardIssWHEmpName').textbox('setValue', data.WareHouseMan_Name);
+                $('#txtCardIssWHEmpID').val(data.WareHouseMan);
             }, null);
         });
-        gmCard.btnCardHelpIssWHEmp.click(function () {
+        $('#btnCardHelpIssWHEmp').click(function () {
             showPopGridHelp(400, 300, true, helpInitializer.user, function (data) {
-                gmCard.txtCardIssWHEmpName.textbox('setValue', data.UserName);
-                gmCard.txtCardIssWHEmpID.val(data.UserID);
+                $('#txtCardIssWHEmpName').textbox('setValue', data.UserName);
+                $('#txtCardIssWHEmpID').val(data.UserID);
             }, null);
         });
-        gmCard.btnCardHelpPurDept.click(function () {
+        $('#btnCardHelpPurDept').click(function () {
             showPopGridHelp(400, 300, true, helpInitializer.dept, function (data) {
-                gmCard.txtCardPurDeptName.textbox('setValue', data.DeptName);
-                gmCard.txtCardPurDeptID.val(data.DeptID);
+                $('#txtCardPurDeptName').textbox('setValue', data.DeptName);
+                $('#txtCardPurDeptID').val(data.DeptID);
             }, null);
         });
-        gmCard.btnCardHelpPurEmp.click(function () {
+        $('#btnCardHelpPurEmp').click(function () {
             showPopGridHelp(400, 300, true, helpInitializer.user, function (data) {
-                gmCard.txtCardPurEmpName.textbox('setValue', data.UserName);
-                gmCard.txtCardPurEmpID.val(data.UserID);
+                $('#txtCardPurEmpName').textbox('setValue', data.UserName);
+                $('#txtCardPurEmpID').val(data.UserID);
             }, null);
         });
-        //gmCard.btnCardHelpSupplier.click();
-        gmCard.btnCardHelpSalesDep.click(function () {
+        //供应商：帮助尚未完成？？
+        //$('#btnCardHelpSupplier').click(function () {
+        //    showPopGridHelp(400, 300, true, helpInitializer.dept, function (data) {
+        //        $('#txtCardSupplierName').textbox('setValue', data.DeptName);
+        //        $('#txtCardSupplierID').val(data.DeptID);
+        //    }, null);
+        //});
+        $('#btnCardHelpSalesDep').click(function () {
             showPopGridHelp(400, 300, true, helpInitializer.dept, function (data) {
-                gmCard.txtCardSalesDepName.textbox('setValue', data.DeptName);
-                gmCard.txtCardSalesDepID.val(data.DeptID);
+                $('#txtCardSalesDepName').textbox('setValue', data.DeptName);
+                $('#txtCardSalesDepID').val(data.DeptID);
             }, null);
         });
-        gmCard.btnCardHelpSalesEmp.click(function () {
+        $('#btnCardHelpSalesEmp').click(function () {
             showPopGridHelp(400, 300, true, helpInitializer.user, function (data) {
-                gmCard.txtCardSalesEmpName.textbox('setValue', data.UserName);
-                gmCard.txtCardSalesEmpID.val(data.UserID);
+                $('#txtCardSalesEmpName').textbox('setValue', data.UserName);
+                $('#txtCardSalesEmpID').val(data.UserID);
             }, null);
         });
-        gmCard.btnCardHelpCustomer.click(function () {
+        $('#btnCardHelpCustomer').click(function () {
             showPopGridHelp(400, 300, true, helpInitializer.client, function (data) {
-                gmCard.txtCardCustomerName.textbox('setValue', data.ClientName);
-                gmCard.txtCardCustomerID.val(data.ClientID);
+                $('#txtCardCustomerName').textbox('setValue', data.ClientName);
+                $('#txtCardCustomerID').val(data.ClientID);
             }, null);
         });
-        gmCard.btnCardHelpProDep.click(function () {
+        $('#btnCardHelpProDep').click(function () {
             showPopGridHelp(400, 300, true, helpInitializer.dept, function (data) {
-                gmCard.txtCardProDepName.textbox('setValue', data.DeptName);
-                gmCard.txtCardProDepID.val(data.DeptID);
+                $('#txtCardProDepName').textbox('setValue', data.DeptName);
+                $('#txtCardProDepID').val(data.DeptID);
             }, null);
         });
-        gmCard.btnCardHelpProEmp.click(function () {
+        $('#btnCardHelpProEmp').click(function () {
             showPopGridHelp(400, 300, true, helpInitializer.user, function (data) {
-                gmCard.txtCardProEmpName.textbox('setValue', data.UserName);
-                gmCard.txtCardProEmpID.val(data.UserID);
+                $('#txtCardProEmpName').textbox('setValue', data.UserName);
+                $('#txtCardProEmpID').val(data.UserID);
             }, null);
         });
-        gmCard.btnCardHelpConDep.click(function () {
+        $('#btnCardHelpConDep').click(function () {
             showPopGridHelp(400, 300, true, helpInitializer.dept, function (data) {
-                gmCard.txtCardConDepName.textbox('setValue', data.DeptName);
-                gmCard.txtCardConDepID.val(data.DeptID);
+                $('#txtCardConDepName').textbox('setValue', data.DeptName);
+                $('#txtCardConDepID').val(data.DeptID);
             }, null);
         });
-        gmCard.btnCardHelpConEmp.click(function () {
+        $('#btnCardHelpConEmp').click(function () {
             showPopGridHelp(400, 300, true, helpInitializer.user, function (data) {
-                gmCard.txtCardConEmpName.textbox('setValue', data.UserName);
-                gmCard.txtCardConEmpID.val(data.UserID);
+                $('#txtCardConEmpName').textbox('setValue', data.UserName);
+                $('#txtCardConEmpID').val(data.UserID);
             }, null);
         });
 
         gmCard.btnSave.click(gmCard.doSave);
         gmCard.btnBack.click(function () {
-            location.href = gmCard.gmManageUrl;
+            location.href = gmCard.gmManageUrl + '?busType=' + options.busType + '&moveType=' + options.moveType;
         });
     },
     gridHandler: {
@@ -342,37 +278,46 @@ var gmCard = {
         }
         return gmCard.gridGMItem.datagrid('getRowIndexByEditor', { element: target });
     },
-    initCardForm: function (gmId, state) {
-        gmCard.bindingEvents();
+    initCardForm: function (options) {
+        //1、加载动态控件
+        gmCard.initDynamicControl(options.busType, options.moveType);
+        if (!gFunc.isNull(options.state)) {
+            gmCard.cardState = options.state;
+        }
+        //2、绑定按钮事件
+        gmCard.bindingEvents(options);
 
-        //下拉框
+        //3、下拉框
         gmCard.cbCardBusinessType.combobox({
             data: gmFormatter.busType.src,
             valueField: 'value',
             textField: 'text'
         });
+        gmCard.cbCardBusinessType.combobox('setValue', options.busType);
+        gmCard.cbCardBusinessType.combobox('readonly', 'readonly');
+
         gmCard.cbCardMoveType.combobox({
             data: gmFormatter.moveType.src,
             valueField: 'value',
             textField: 'text'
         });
-
-        if (!gFunc.isNull(state)) {
-            gmCard.cardState = state;
-        }
-        switch (state) {
+        gmCard.cbCardMoveType.combobox('setValue', options.moveType);
+        gmCard.cbCardMoveType.combobox('readonly', 'readonly');
+        //4、表单数据
+        var cols = gmCard.getCols(options.busType);
+        switch (options.state) {
             case cardStateConf.edit://修改
             case cardStateConf.view://查看
                 var ajaxResult = false;
                 $.ajax({
                     type: 'post',
                     url: 'GoodsMovementService.asmx/GetGoodsMovementById',
-                    data: 'gmId=' + gmId,
+                    data: 'gmId=' + options.gmId,
                     async: false,//同步请求
                     success: function (result) {
                         if (result && result.code) {
                             ajaxResult = true;
-                            gmCard.setFormData(result.data, state);
+                            gmCard.setFormData(result.data, options.state, cols);
                             ////console.log('askprice,ajax succeed');
                         } else {
                             console.log('goodsmovement,ajax fail:' + result.msg);
@@ -387,82 +332,84 @@ var gmCard = {
                 break;
             case cardStateConf.add://添加
             default:
-                gmCard.initCardGrid("");
+                gmCard.txtCardCreateDate.datebox('setValue', new Date().Format('yyyy-MM-dd'));
+                gmCard.initCardGrid("", cols);
                 break;
         }
     },
-    setFormData: function (data, state) {
+    setFormData: function (data, state, gridCols) {
         //赋值
         ////console.log(data);
         gmCard.txtCardGMID.val(data.GoodsMovementID);
         $('#txtCardGMCode').textbox('setValue', data.GoodsMovementCode);
-        gmCard.cbCardBusinessType.combobox('setValue', data.CardBusinessType);
-        gmCard.cbCardMoveType.combobox('setValue', data.CardMoveType);
-        $('#txtCardCreateDate').datebox('setValue', gmFormatter.gmState.format(data.CreateDate));
+        //gmCard.cbCardBusinessType.combobox('setValue', data.BusinessType);
+        //gmCard.cbCardMoveType.combobox('setValue', data.MoveTypeCode);
+        gmCard.txtCardCreateDate.datebox('setValue', formatHandler.date.format(data.CreateDate));
         $('#txtCardBillState').textbox('setValue', gmFormatter.gmState.format(data.BillState));
         if (data.IsRed == '1') {
             $('#checkCardIsRed').attr({ 'checked': 'checked' });
         }
-        $('#txtCardReceiptDate').textbox('setValue', gmFormatter.gmState.format(data.ReceiptDate));
+        $('#txtCardReceiptDate').textbox('setValue', formatHandler.date.format(data.ReceiptDate));
 
-        gmCard.txtCardRecDeptName.textbox('setValue', data.RecDept_Name);
-        gmCard.txtCardRecDeptID.val(data.RecDeptID);
+        $('#txtCardRecDeptName').textbox('setValue', data.RecDept_Name);
+        $('#txtCardRecDeptID').val(data.RecDeptID);
 
-        gmCard.txtCardRecHandlerName.textbox('setValue', data.RecHandler_Name);
-        gmCard.txtCardRecHandlerID.val(data.RecHandlerID);
+        $('#txtCardRecHandlerName').textbox('setValue', data.RecHandler_Name);
+        $('#txtCardRecHandler').val(data.RecHandler);
+        console.log($('#txtCardRecHandler').val());
 
-        gmCard.txtCardRecWHName.textbox('setValue', data.RecWH_Name);
-        gmCard.txtCardRecWHID.val(data.RecWHID);
+        $('#txtCardRecWHName').textbox('setValue', data.RecWH_Name);
+        $('#txtCardRecWHID').val(data.RecWHID);
 
-        gmCard.txtCardRecWHEmpName.textbox('setValue', data.RecWHEmp_Name);
-        gmCard.txtCardRecWHEmpID.val(data.RecWHEmpID);
+        $('#txtCardRecWHEmpName').textbox('setValue', data.RecWHEmp_Name);
+        $('#txtCardRecWHEmpID').val(data.RecWHEmpID);
 
-        gmCard.txtCardRecWHEmpName.textbox('setValue', data.RecWHEmp_Name);
-        gmCard.txtCardRecWHEmpID.val(data.RecWHEmpID);
+        $('#txtCardRecWHEmpName').textbox('setValue', data.RecWHEmp_Name);
+        $('#txtCardRecWHEmpID').val(data.RecWHEmpID);
 
-        $('#txtCardIssDate').datebox('setValue', gmFormatter.gmState.format(data.IssDate));
+        $('#txtCardIssDate').datebox('setValue', formatHandler.date.format(data.IssDate));
 
-        gmCard.txtCardIssDeptName.textbox('setValue', data.IssDept_Name);
-        gmCard.txtCardIssDeptID.val(data.IssDeptID);
+        $('#txtCardIssDeptName').textbox('setValue', data.IssDept_Name);
+        $('#txtCardIssDeptID').val(data.IssDeptID);
 
-        gmCard.txtCardIssHandlerName.textbox('setValue', data.IssHandler_Name);
-        gmCard.txtCardIssHandler.val(data.IssHandler);
+        $('#txtCardIssHandlerName').textbox('setValue', data.IssHandler_Name);
+        $('#txtCardIssHandler').val(data.IssHandler);
 
-        gmCard.txtCardIssWHName.textbox('setValue', data.IssWH_Name);
-        gmCard.txtCardIssWHID.val(data.IssWHID);
+        $('#txtCardIssWHName').textbox('setValue', data.IssWH_Name);
+        $('#txtCardIssWHID').val(data.IssWHID);
 
-        gmCard.txtCardIssWHEmpName.textbox('setValue', data.IssWHEmp_Name);
-        gmCard.txtCardIssWHEmpID.val(data.IssWHEmpID);
+        $('#txtCardIssWHEmpName').textbox('setValue', data.IssWHEmp_Name);
+        $('#txtCardIssWHEmpID').val(data.IssWHEmpID);
 
-        gmCard.txtCardPurDeptName.textbox('setValue', data.PurDept_Name);
-        gmCard.txtCardPurDeptID.val(data.PurDeptID);
+        $('#txtCardPurDeptName').textbox('setValue', data.PurDept_Name);
+        $('#txtCardPurDeptID').val(data.PurDeptID);
 
-        gmCard.txtCardPurEmpName.textbox('setValue', data.PurEmp_Name);
-        gmCard.txtCardPurEmpID.val(data.PurEmpID);
+        $('#txtCardPurEmpName').textbox('setValue', data.PurEmp_Name);
+        $('#txtCardPurEmpID').val(data.PurEmpID);
 
-        gmCard.txtCardSupplierName.textbox('setValue', data.Supplier_Name);
-        gmCard.txtCardSupplierID.val(data.SupplierID);
+        $('txtCardSupplierName').textbox('setValue', data.Supplier_Name);
+        $('txtCardSupplierID').val(data.SupplierID);
 
-        gmCard.txtCardSalesDepName.textbox('setValue', data.SalesDep_Name);
-        gmCard.txtCardSalesDepID.val(data.SalesDepID);
+        $('#txtCardSalesDepName').textbox('setValue', data.SalesDep_Name);
+        $('#txtCardSalesDepID').val(data.SalesDepID);
 
-        gmCard.txtCardSalesEmpName.textbox('setValue', data.SalesEmp_Name);
-        gmCard.txtCardSalesEmpID.val(data.SalesEmpID);
+        $('#txtCardSalesEmpName').textbox('setValue', data.SalesEmp_Name);
+        $('#txtCardSalesEmpID').val(data.SalesEmpID);
 
-        gmCard.txtCardCustomerName.textbox('setValue', data.Customer_Name);
-        gmCard.txtCardCustomerID.val(data.SalesEmpID);
+        $('#txtCardCustomerName').textbox('setValue', data.Customer_Name);
+        $('#txtCardCustomerID').val(data.CustomerID);
 
-        gmCard.txtCardProDepName.textbox('setValue', data.ProDep_Name);
-        gmCard.txtCardProDepID.val(data.ProDepID);
+        $('#txtCardProDepName').textbox('setValue', data.ProDep_Name);
+        $('#txtCardProDepID').val(data.ProDepID);
 
-        gmCard.txtCardProEmpName.textbox('setValue', data.ProEmp_Name);
-        gmCard.txtCardProEmpID.val(data.ProEmpID);
+        $('#txtCardProEmpName').textbox('setValue', data.ProEmp_Name);
+        $('#txtCardProEmpID').val(data.ProEmpID);
 
-        gmCard.txtCardConDepName.textbox('setValue', data.ConDep_Name);
-        gmCard.txtCardConDepID.val(data.ConDepID);
+        $('#txtCardConDepName').textbox('setValue', data.ConDep_Name);
+        $('#txtCardConDepID').val(data.ConDepID);
 
-        gmCard.txtCardConEmpName.textbox('setValue', data.ConEmp_Name);
-        gmCard.txtCardConEmpID.val(data.ConEmpID);
+        $('#txtCardConEmpName').textbox('setValue', data.ConEmp_Name);
+        $('#txtCardConEmpID').val(data.ConEmpID);
 
         $('#txtCardCreatorName').textbox('setValue', data.Creator_Name);
         $('#txtCardCreateTime').textbox('setValue', data.CreateTime);
@@ -475,7 +422,7 @@ var gmCard = {
         $('#txtCardReaderName').textbox('setValue', data.ReaderName);
         $('#txtCardRemark').textbox('setValue', data.Remark);
         //设置只读
-        $('#GoodsMovementCode').textbox('readonly', true);//编号只读
+        $('#txtCardGMCode').textbox('readonly', true);//编号只读
         ////console.log(typeof(state));
         var boolReadOnly = state == cardStateConf.view ? true : false;
         ////console.log('boolReadOnly:' + boolReadOnly);
@@ -483,30 +430,31 @@ var gmCard = {
             ////console.log('gmCard.btnSave.hide();');
             gmCard.btnSave.hide();
         }
-        $('#txtCardCreateDate').datebox('readonly', boolReadOnly);
+        gmCard.txtCardCreateDate.datebox('readonly', boolReadOnly);
         $('#txtCardIssDate').datebox('readonly', boolReadOnly);
+        $('#txtCardReceiptDate').datebox('readonly', boolReadOnly);
 
         $('#txtCardRemark').textbox('readonly', boolReadOnly);
         if (boolReadOnly) {
             $('#checkCardIsRed').attr({ 'disabled': 'disabled' });
-            gmCard.btnCardHelpRecDept.attr({ 'disabled': 'disabled' });
-            gmCard.btnCardHelpRecHandler.attr({ 'disabled': 'disabled' });
-            gmCard.btnCardHelpRecWH.attr({ 'disabled': 'disabled' });
-            gmCard.btnCardHelpRecWHEmp.attr({ 'disabled': 'disabled' });
-            gmCard.btnCardHelpIssDept.attr({ 'disabled': 'disabled' });
-            gmCard.btnCardHelpIssHandler.attr({ 'disabled': 'disabled' });
-            gmCard.btnCardHelpIssWH.attr({ 'disabled': 'disabled' });
-            gmCard.btnCardHelpIssWHEmp.attr({ 'disabled': 'disabled' });
-            gmCard.btnCardHelpPurDept.attr({ 'disabled': 'disabled' });
-            gmCard.btnCardHelpPurEmp.attr({ 'disabled': 'disabled' });
-            gmCard.btnCardHelpSupplier.attr({ 'disabled': 'disabled' });
-            gmCard.btnCardHelpSalesDep.attr({ 'disabled': 'disabled' });
-            gmCard.btnCardHelpSalesEmp.attr({ 'disabled': 'disabled' });
-            gmCard.btnCardHelpCustomer.attr({ 'disabled': 'disabled' });
-            gmCard.btnCardHelpProDep.attr({ 'disabled': 'disabled' });
-            gmCard.btnCardHelpProEmp.attr({ 'disabled': 'disabled' });
-            gmCard.btnCardHelpConDep.attr({ 'disabled': 'disabled' });
-            gmCard.btnCardHelpConEmp.attr({ 'disabled': 'disabled' });
+            $('#btnCardHelpRecDept').attr({ 'disabled': 'disabled' });
+            $('#btnCardHelpRecHandler').attr({ 'disabled': 'disabled' });
+            $('#btnCardHelpRecWH').attr({ 'disabled': 'disabled' });
+            $('#btnCardHelpRecWHEmp').attr({ 'disabled': 'disabled' });
+            $('#btnCardHelpIssDept').attr({ 'disabled': 'disabled' });
+            $('#btnCardHelpIssHandler').attr({ 'disabled': 'disabled' });
+            $('#btnCardHelpIssWH').attr({ 'disabled': 'disabled' });
+            $('#btnCardHelpIssWHEmp').attr({ 'disabled': 'disabled' });
+            $('#btnCardHelpPurDept').attr({ 'disabled': 'disabled' });
+            $('#btnCardHelpPurEmp').attr({ 'disabled': 'disabled' });
+            $('#btnCardHelpSupplier').attr({ 'disabled': 'disabled' });
+            $('#btnCardHelpSalesDep').attr({ 'disabled': 'disabled' });
+            $('#btnCardHelpSalesEmp').attr({ 'disabled': 'disabled' });
+            $('#btnCardHelpCustomer').attr({ 'disabled': 'disabled' });
+            $('#btnCardHelpProDep').attr({ 'disabled': 'disabled' });
+            $('#btnCardHelpProEmp').attr({ 'disabled': 'disabled' });
+            $('#btnCardHelpConDep').attr({ 'disabled': 'disabled' });
+            $('#btnCardHelpConEmp').attr({ 'disabled': 'disabled' });
         }
 
         //初始化列表
@@ -514,9 +462,9 @@ var gmCard = {
         if (!gFunc.isNull(data)) {
             gmId = data.GoodsMovementID;
         }
-        //gmCard.initCardGrid(gmId);
+        gmCard.initCardGrid(gmId, gridCols);
     },
-    initCardGrid: function (gmId) {
+    initCardGrid: function (gmId, cols) {
         gFunc.initGridPublic(gmCard.gridGMItem, {
             title: '',
             icon: 'icon-edit',
@@ -548,196 +496,7 @@ var gmCard = {
                     gmCard.gridGMItem.datagrid('rejectChanges').datagrid('clearChecked').datagrid('clearSelections');
                 }
             }],
-            columns: [[
-                { field: 'ck', title: '', width: 100, align: 'center', checkbox: true },
-                { field: 'GoodsMovementItemID' },
-                { field: 'GoodsMovementID' },
-                { field: 'MaterialID' },
-                {
-                    field: 'Material_Name', title: '物料', align: 'center', width: 100,
-                    editor: {
-                        type: 'helpEdit',
-                        options: {
-                            required: true,
-                            onclick: function (target) {
-                                if (gFunc.isNull(target)) {
-                                    return;
-                                }
-                                showPopGridHelp(400, 300, true, helpInitializer.materials, gmCard.helpReceiver.gmItemMaterial, target);
-                            }
-                        }
-                    }
-                },
-                {
-                    field: 'TargInpQty', title: '应收数量', align: 'center', width: 80,
-                    editor: {
-                        type: 'numberbox',
-                        options: {
-                            precision: 2,
-                            validType: 'maxLength[20]'
-                        }
-                    }
-                },
-                {
-                    field: 'ActInpQty', title: '实收数量', align: 'center', width: 80,
-                    editor: {
-                        type: 'numberbox',
-                        options: {
-                            precision: 2,
-                            validType: 'maxLength[20]'
-                        }
-                    }
-                },
-                { field: 'RecUnitID' },
-                {
-                    field: 'RecUnit_Name', title: '接收计量单位', align: 'center', width: 100,
-                    editor: {
-                        type: 'helpEdit',
-                        options: {
-                            onclick: function (target) {
-                                if (gFunc.isNull(target)) {
-                                    return;
-                                }
-                                showPopGridHelp(400, 300, true, helpInitializer.measureUnit, gmCard.helpReceiver.gmItemUnitRec, target);
-                            }
-                        }
-                    }
-                },
-                {
-                    field: 'TargOutQty', title: '应发数量', align: 'center', width: 80,
-                    editor: {
-                        type: 'numberbox',
-                        options: {
-                            precision: 2,
-                            validType: 'maxLength[20]'
-                        }
-                    }
-                },
-                {
-                    field: 'ActOutQty', title: '实发数量', align: 'center', width: 80,
-                    editor: {
-                        type: 'numberbox',
-                        options: {
-                            precision: 2,
-                            validType: 'maxLength[20]'
-                        }
-                    }
-                },
-                { field: 'IssUnitID' },
-                {
-                    field: 'IssUnit_Name', title: '发出计量单位', align: 'center', width: 100,
-                    editor: {
-                        type: 'helpEdit',
-                        options: {
-                            onclick: function (target) {
-                                if (gFunc.isNull(target)) {
-                                    return;
-                                }
-                                showPopGridHelp(400, 300, true, helpInitializer.measureUnit, gmCard.helpReceiver.gmItemUnitIss, target);
-                            }
-                        }
-                    }
-                },
-                {
-                    field: 'InpPlaPrice', title: '接收计划单价', align: 'center', width: 80,
-                    editor: {
-                        type: 'numberbox',
-                        options: {
-                            precision: 2,
-                            validType: 'maxLength[20]'
-                        }
-                    }
-                },
-                {
-                    field: 'InpPlaValue', title: '接收计划金额', align: 'center', width: 80,
-                    editor: {
-                        type: 'numberbox',
-                        options: {
-                            precision: 2,
-                            validType: 'maxLength[20]'
-                        }
-                    }
-                },
-                {
-                    field: 'InpActPrice', title: '接收实际单价', align: 'center', width: 80,
-                    editor: {
-                        type: 'numberbox',
-                        options: {
-                            precision: 2,
-                            validType: 'maxLength[20]'
-                        }
-                    }
-                },
-                {
-                    field: 'InpActValue', title: '接收实际金额', align: 'center', width: 80,
-                    editor: {
-                        type: 'numberbox',
-                        options: {
-                            precision: 2,
-                            validType: 'maxLength[20]'
-                        }
-                    }
-                },
-                {
-                    field: 'OutPlaPrice', title: '发出计划单价', align: 'center', width: 80,
-                    editor: {
-                        type: 'numberbox',
-                        options: {
-                            precision: 2,
-                            validType: 'maxLength[20]'
-                        }
-                    }
-                },
-                {
-                    field: 'OutPlaValue', title: '发出计划金额', align: 'center', width: 80,
-                    editor: {
-                        type: 'numberbox',
-                        options: {
-                            precision: 2,
-                            validType: 'maxLength[20]'
-                        }
-                    }
-                },
-                {
-                    field: 'OutActPrice', title: '发出实际单价', align: 'center', width: 80,
-                    editor: {
-                        type: 'numberbox',
-                        options: {
-                            precision: 2,
-                            validType: 'maxLength[20]'
-                        }
-                    }
-                },
-                {
-                    field: 'OutActValue', title: '发出实际金额', align: 'center', width: 80,
-                    editor: {
-                        type: 'numberbox',
-                        options: {
-                            precision: 2,
-                            validType: 'maxLength[20]'
-                        }
-                    }
-                },
-                {
-                    field: 'ReturnQuantity', title: '退回数量', align: 'center', width: 80,
-                    editor: {
-                        type: 'numberbox',
-                        options: {
-                            precision: 2,
-                            validType: 'maxLength[20]'
-                        }
-                    }
-                },
-                {
-                    field: 'Remark', title: '备注', width: 100, align: 'center',
-                    editor: {
-                        type: 'textbox',
-                        options: {
-                            validType: 'maxLength[1024]'
-                        }
-                    }
-                }
-            ]],
+            columns: cols,
             hidecols: ['GoodsMovementID', 'GoodsMovementItemID', 'MaterialID', 'RecUnitID', 'IssUnitID'],
             singleSelect: false
         });
@@ -803,6 +562,13 @@ var gmCard = {
 
         //3、组合数据
         var formData = gFunc.formFunc.serializeToJson("editForm");
+        //是否红单，特殊处理
+        if ($('#checkCardIsRed').is(':checked')) {
+            formData.IsRed = 1;
+        } else {
+            formData.IsRed = 0;
+        }
+        //alert(formData.IsRed);
         formData.Items = editingRows;
         ////console.log(JSON.stringify(formData));
         //提交保存
@@ -817,7 +583,7 @@ var gmCard = {
                 if (result && result.code) {
                     ajaxResult = true;
                     //console.log('goodsmovement,ajax succeed');
-                    location.href = gmCard.gmManageUrl;
+                    location.href = gmCard.gmManageUrl + '?busType=' + formData.BusinessType + '&moveType=' + formData.MoveTypeCode;;
                 } else {
                     //console.log('goodsmovement,ajax fail');
                     ajaxResult = false;
@@ -830,5 +596,104 @@ var gmCard = {
         });
         //console.log('goodsmovement,doSave over');
         return ajaxResult;
+    },
+    initDynamicControl: function (busType, moveType) {
+        //初始化动态内容
+        var strHtml = '';
+        if (busType == '1') {//入库
+            strHtml += '<tr><td class="card-table-label">接收日期</td><td class="card-table-centent"><input type="text" id="txtCardReceiptDate" name="ReceiptDate" class="easyui-datebox" editable="false" /></td><td class="card-table-label">接收部门</td><td class="card-table-centent"><span><input type="text" id="txtCardRecDeptName" class="easyui-textbox help-text" readonly="readonly" /><input type="button" value="..." id="btnCardHelpRecDept" class="btn-help" /><input id="txtCardRecDeptID" name="RecDeptID" hidden="hidden" /></span></td></tr><tr><td class="card-table-label">接收经办人</td><td class="card-table-centent"><span><input type="text" id="txtCardRecHandlerName" class="easyui-textbox help-text" readonly="readonly" /><input type="button" value="..." id="btnCardHelpRecHandler" class="btn-help" /><input id="txtCardRecHandler" name="RecHandler" hidden="hidden" /></span></td><td class="card-table-label">接收仓库</td><td class="card-table-centent"><span><input type="text" id="txtCardRecWHName" class="easyui-textbox help-text" readonly="readonly" /><input type="button" value="..." id="btnCardHelpRecWH" class="btn-help" /><input id="txtCardRecWHID" name="RecWHID" hidden="hidden" /></span></td></tr><tr><td class="card-table-label">接收仓库保管员</td><td class="card-table-centent"><span><input type="text" id="txtCardRecWHEmpName" class="easyui-textbox help-text" readonly="readonly" /><input type="button" value="..." id="btnCardHelpRecWHEmp" class="btn-help" /><input id="txtCardRecWHEmpID" name="RecWHEmpID" hidden="hidden" /></span></td></tr>';
+            if (moveType == '100') {//采购入库
+                strHtml += '<tr><td class="card-table-label">采购部门</td><td class="card-table-centent"><span><input type="text" id="txtCardPurDeptName" class="easyui-textbox help-text" readonly="readonly" /><input type="button" value="..." id="btnCardHelpPurDept" class="btn-help" /><input id="txtCardPurDeptID" name="PurDeptID" hidden="hidden" /></span></td><td class="card-table-label">采购人员</td><td class="card-table-centent"><span><input type="text" id="txtCardPurEmpName" class="easyui-textbox help-text" readonly="readonly" /><input type="button" value="..." id="btnCardHelpPurEmp" class="btn-help" /><input id="txtCardPurEmpID" name="PurEmpID" hidden="hidden" /></span></td></tr><tr><td class="card-table-label">供应商</td><td class="card-table-centent"><span><input type="text" id="txtCardSupplierName" class="easyui-textbox help-text" readonly="readonly" /><input type="button" value="..." id="btnCardHelpSupplier" class="btn-help" /><input id="txtCardSupplierID" name="SupplierID" hidden="hidden" /></span></td></tr>';
+            } else if (moveType == '101') {//生产入库
+                strHtml += '<tr><td class="card-table-label">生产部门</td><td class="card-table-centent"><span><input type="text" id="txtCardProDepName" class="easyui-textbox help-text" readonly="readonly" /><input type="button" value="..." id="btnCardHelpProDep" class="btn-help" /><input id="txtCardProDepID" name="ProDepID" hidden="hidden" /></span></td><td class="card-table-label">生产人</td><td class="card-table-centent"><span><input type="text" id="txtCardProEmpName" class="easyui-textbox help-text" readonly="readonly" /><input type="button" value="..." id="btnCardHelpProEmp" class="btn-help" /><input id="txtCardProEmpID" name="ProEmpID" hidden="hidden" /></span></td></tr>';
+            }
+        } else if (busType == '2') {
+            strHtml += '<tr><td class="card-table-label">发出日期</td><td class="card-table-centent"><input type="text" id="txtCardIssDate" name="IssDate" class="easyui-datebox" editable="false" /></td><td class="card-table-label">发出部门</td><td class="card-table-centent"><span><input type="text" id="txtCardIssDeptName" class="easyui-textbox help-text" readonly="readonly" /><input type="button" value="..." id="btnCardHelpIssDept" class="btn-help" /><input id="txtCardIssDeptID" name="IssDeptID" hidden="hidden" /></span></td></tr><tr><td class="card-table-label">发出经办人</td><td class="card-table-centent"><span><input type="text" id="txtCardIssHandlerName" class="easyui-textbox help-text" readonly="readonly" /><input type="button" value="..." id="btnCardHelpIssHandler" class="btn-help" /><input id="txtCardIssHandler" name="IssHandler" hidden="hidden" /></span></td><td class="card-table-label">发出仓库</td><td class="card-table-centent"><span><input type="text" id="txtCardIssWHName" class="easyui-textbox help-text" readonly="readonly" /><input type="button" value="..." id="btnCardHelpIssWH" class="btn-help" /><input id="txtCardIssWHID" name="IssWHID" hidden="hidden" /></span></td></tr><tr><td class="card-table-label">发出仓库保管员</td><td class="card-table-centent"><span><input type="text" id="txtCardIssWHEmpName" class="easyui-textbox help-text" readonly="readonly" /><input type="button" value="..." id="btnCardHelpIssWHEmp" class="btn-help" /><input id="txtCardIssWHEmpID" name="IssWHEmpID" hidden="hidden" /></span></td></tr>';
+            if (moveType == '102') {//领料出库
+                strHtml += '<tr><td class="card-table-label">销售部门</td><td class="card-table-centent"><span><input type="text" id="txtCardSalesDepName" class="easyui-textbox help-text" readonly="readonly" /><input type="button" value="..." id="btnCardHelpSalesDep" class="btn-help" /><input id="txtCardSalesDepID" name="SalesDepID" hidden="hidden" /></span></td><td class="card-table-label">销售人员</td><td class="card-table-centent"><span><input type="text" id="txtCardSalesEmpName" class="easyui-textbox help-text" readonly="readonly" /><input type="button" value="..." id="btnCardHelpSalesEmp" class="btn-help" /><input id="txtCardSalesEmpID" name="SalesEmpID" hidden="hidden" /></span></td></tr><tr><td class="card-table-label">销售客户</td><td class="card-table-centent"><span><input type="text" id="txtCardCustomerName" class="easyui-textbox help-text" readonly="readonly" /><input type="button" value="..." id="btnCardHelpCustomer" class="btn-help" /><input id="txtCardCustomerID" name="CustomerID" hidden="hidden" /></span></td></tr>';
+            } else if (moveType == '103') {//销售出库
+                strHtml += '<tr><td class="card-table-label">领用部门</td><td class="card-table-centent"><span><input type="text" id="txtCardConDepName" class="easyui-textbox help-text" readonly="readonly" /><input type="button" value="..." id="btnCardHelpConDep" class="btn-help" /><input id="txtCardConDepID" name="ConDepID" hidden="hidden" /></span></td><td class="card-table-label">领用人</td><td class="card-table-centent"><span><input type="text" id="txtCardConEmpName" class="easyui-textbox help-text" readonly="readonly" /><input type="button" value="..." id="btnCardHelpConEmp" class="btn-help" /><input id="txtCardConEmpID" name="ConEmpID" hidden="hidden" /></span></td></tr>';
+            }
+        }
+        $('#tbBasicInfo tr:eq(2)').after(strHtml);
+        $.parser.parse($('#tbBasicInfo'));
+    },
+    getCols: function (busType) {
+        var cols = [[
+                { field: 'ck', title: '', width: 100, align: 'center', checkbox: true },
+                { field: 'GoodsMovementItemID' },
+                { field: 'GoodsMovementID' },
+                { field: 'MaterialID' },
+                {
+                    field: 'Material_Name', title: '物料', align: 'center', width: 100,
+                    editor: {
+                        type: 'helpEdit',
+                        options: {
+                            required: true,
+                            onclick: function (target) {
+                                if (gFunc.isNull(target)) {
+                                    return;
+                                }
+                                showPopGridHelp(400, 300, true, helpInitializer.materials, gmCard.helpReceiver.gmItemMaterial, target);
+                            }
+                        }
+                    }
+                }
+        ]];
+        //根据业务类型加载动态列
+        if (busType == '1') {//入库
+            cols[0].push({ field: 'TargInpQty', title: '应收数量', align: 'center', width: 80, editor: { type: 'numberbox', options: { precision: 2, validType: 'maxLength[20]' } } },
+                { field: 'ActInpQty', title: '实收数量', align: 'center', width: 80, editor: { type: 'numberbox', options: { precision: 2, validType: 'maxLength[20]' } } },
+                { field: 'RecUnitID' },
+                {
+                    field: 'RecUnit_Name', title: '接收计量单位', align: 'center', width: 100, editor: {
+                        type: 'helpEdit',
+                        options: {
+                            onclick:
+                                function (target) {
+                                    if (gFunc.isNull(target)) { return; }
+                                    showPopGridHelp(400, 300, true, helpInitializer.measureUnit, gmCard.helpReceiver.gmItemUnitRec, target);
+                                }
+                        }
+                    }
+                },
+                { field: 'InpPlaPrice', title: '接收计划单价', align: 'center', width: 80, editor: { type: 'numberbox', options: { precision: 2, validType: 'maxLength[20]' } } },
+                { field: 'InpPlaValue', title: '接收计划金额', align: 'center', width: 80, editor: { type: 'numberbox', options: { precision: 2, validType: 'maxLength[20]' } } },
+                { field: 'InpActPrice', title: '接收实际单价', align: 'center', width: 80, editor: { type: 'numberbox', options: { precision: 2, validType: 'maxLength[20]' } } },
+                { field: 'InpActValue', title: '接收实际金额', align: 'center', width: 80, editor: { type: 'numberbox', options: { precision: 2, validType: 'maxLength[20]' } } });
+        } else if (busType == '2') {//出库
+            cols[0].push({ field: 'TargOutQty', title: '应发数量', align: 'center', width: 80, editor: { type: 'numberbox', options: { precision: 2, validType: 'maxLength[20]' } } },
+                { field: 'ActOutQty', title: '实发数量', align: 'center', width: 80, editor: { type: 'numberbox', options: { precision: 2, validType: 'maxLength[20]' } } },
+                { field: 'IssUnitID' },
+                {
+                    field: 'IssUnit_Name', title: '发出计量单位', align: 'center', width: 100,
+                    editor: {
+                        type: 'helpEdit',
+                        options: {
+                            onclick: function (target) {
+                                if (gFunc.isNull(target)) {
+                                    return;
+                                }
+                                showPopGridHelp(400, 300, true, helpInitializer.measureUnit, gmCard.helpReceiver.gmItemUnitIss, target);
+                            }
+                        }
+                    }
+                },
+                { field: 'OutPlaPrice', title: '发出计划单价', align: 'center', width: 80, editor: { type: 'numberbox', options: { precision: 2, validType: 'maxLength[20]' } } },
+                { field: 'OutPlaValue', title: '发出计划金额', align: 'center', width: 80, editor: { type: 'numberbox', options: { precision: 2, validType: 'maxLength[20]' } } },
+                { field: 'OutActPrice', title: '发出实际单价', align: 'center', width: 80, editor: { type: 'numberbox', options: { precision: 2, validType: 'maxLength[20]' } } },
+                { field: 'OutActValue', title: '发出实际金额', align: 'center', width: 80, editor: { type: 'numberbox', options: { precision: 2, validType: 'maxLength[20]' } } });
+        }
+        cols[0].push({
+            field: 'Remark', title: '备注', width: 100, align: 'center',
+            editor: {
+                type: 'textbox',
+                options: {
+                    validType: 'maxLength[1024]'
+                }
+            }
+        });
+
+        return cols;
     }
 }

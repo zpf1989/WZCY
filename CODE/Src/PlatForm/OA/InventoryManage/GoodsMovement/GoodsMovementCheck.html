@@ -1,0 +1,19 @@
+﻿<div class="easyui-layout" fit="true">
+    <form id="checkForm">
+        <table class="card-centent-table" cellpadding="0" cellspacing="0" border="1">
+            <tr>
+                <td class="card-table-label">审批结果</td>
+                <td class="card-table-centent">
+                    <span>
+                        <input type="radio" name="checkresult" value="true" checked="checked">通过</input>
+                        <input type="radio" name="checkresult" value="false">不通过</input>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="card-table-label">审批意见</td>
+                <td class="card-table-centent"><input type="text" name="checkview" id="txtCheckView" class="easyui-textbox" data-options="validType:'maxLength[255]'" /></td>
+            </tr>
+        </table>
+    </form>
+</div>

@@ -190,7 +190,7 @@ namespace OA.Model
         /// <summary>
         /// 制单时间
         /// </summary>
-        public DateTime CreateTime { get; set; }
+        public DateTime? CreateTime { get; set; }
         /// <summary>
         /// 修改人id
         /// </summary>
@@ -202,7 +202,7 @@ namespace OA.Model
         /// <summary>
         /// 修改时间
         /// </summary>
-        public DateTime EditTime { get; set; }
+        public DateTime? EditTime { get; set; }
         /// <summary>
         /// 单据状态
         /// </summary>
@@ -218,7 +218,7 @@ namespace OA.Model
         /// <summary>
         /// 初审时间
         /// </summary>
-        public DateTime FirstCheckTime { get; set; }
+        public DateTime? FirstCheckTime { get; set; }
         /// <summary>
         /// 初审意见
         /// </summary>

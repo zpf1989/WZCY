@@ -195,12 +195,13 @@ TableName, BillTypeDAL.TableName, MaterialsDAL.TableName, MeasureUnitsDAL.TableN
                     foreach (var item in entity.Items)
                     {
                         item.SaleOrderID = entity.SaleOrderID;
+                        saveItemsFuncs.Add(() =>
+                        {
+                            //调用SalesOrderItemDAL.Save
+                            return soItemDAL.Save(entity.Items.ToArray());
+                        });
                     }
-                    saveItemsFuncs.Add(() =>
-                    {
-                        //调用SalesOrderItemDAL.Save
-                        return soItemDAL.Save(entity.Items.ToArray());
-                    });
+                   
                 }
             }
             //2、执行sql
@@ -352,7 +353,7 @@ TableName, BillTypeDAL.TableName, MaterialsDAL.TableName, MeasureUnitsDAL.TableN
 
             try
             {
-                //更新初审人
+                //更新复审人
                 rst = DBAccess.ExecuteNonQuery(DB.Type, DB.ConnectionString, CommandType.Text, sbsql.ToString(), sqlParams.ToArray());
             }
             catch (Exception ex)
@@ -444,44 +445,18 @@ TableName, BillTypeDAL.TableName, MaterialsDAL.TableName, MeasureUnitsDAL.TableN
 
         public bool SecondCheck(bool checkResult, params string[] soIds)
         {
-            if (soIds == null || soIds.Length < 1)
-            {
-                return false;
-            }
-            //1、组织sql
-            StringBuilder sbSql = new StringBuilder();//
-            sbSql.AppendFormat("update {0} set SaleState=@state where SaleOrderID in (", TableName);
-            List<SqlParameter> sqlParams = new List<SqlParameter>();
-            sqlParams.Add(new SqlParameter { ParameterName = "@state", Value = checkResult ? "6" : "7" });
-            for (int i = 0; i < soIds.Length; i++)
-            {
-                sbSql.AppendFormat("@SaleOrderID{0}", i);
-                sqlParams.Add(new SqlParameter { ParameterName = "@SaleOrderID" + i, Value = soIds[i] });
-                if (i < soIds.Length - 1)
-                {
-                    sbSql.Append(",");
-                }
-            }
-            sbSql.Append(");");
-            //2、执行sql
-            int rst = 0;
-            try
-            {
-                rst = DBAccess.ExecuteNonQuery(DB.Type, DB.ConnectionString, CommandType.Text, sbSql.ToString(), sqlParams.ToArray());
-            }
-            catch (Exception ex)
-            {
-                base.Logger.LogError(ex);
-                return false;
-            }
-            //3、返回成功或失败的标志
-            return rst > 0;
+            return ChangeState(soIds, checkResult ? "6" : "7");
         }
 
 
         public bool Close(string[] soIds)
         {
-            if (soIds == null || soIds.Length < 1)
+            return ChangeState(soIds, "8");
+        }
+
+        bool ChangeState(string[] soIds, string state)
+        {
+            if (soIds == null || soIds.Length < 1 || string.IsNullOrEmpty(state))
             {
                 return false;
             }
@@ -489,7 +464,7 @@ TableName, BillTypeDAL.TableName, MaterialsDAL.TableName, MeasureUnitsDAL.TableN
             StringBuilder sbSql = new StringBuilder();//
             sbSql.AppendFormat("update {0} set SaleState=@state where SaleOrderID in (", TableName);
             List<SqlParameter> sqlParams = new List<SqlParameter>();
-            sqlParams.Add(new SqlParameter { ParameterName = "@state", Value = "8" });
+            sqlParams.Add(new SqlParameter { ParameterName = "@state", Value = state });
             for (int i = 0; i < soIds.Length; i++)
             {
                 sbSql.AppendFormat("@SaleOrderID{0}", i);

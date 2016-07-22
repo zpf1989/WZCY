@@ -44,7 +44,7 @@ var askprice = {
         view: 2
     },
     grid: $('#grid'),
-    gridSOItem: $('#gridAPItem'),
+    gridAPItem: $('#gridAPItem'),
     formSearch: $('#searchForm'),
     btnSearch: $('#btnSearch'),
     txtSearchAPCode: $('#txtSearchAPCode'),

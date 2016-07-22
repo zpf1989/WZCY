@@ -188,12 +188,13 @@ TableName, ClientDAL.TableName, PayTypeDAL.TableName, UserManageDAL.TableName),
                     foreach (var item in entity.Items)
                     {
                         item.APID = entity.APID;
+                        saveItemsFuncs.Add(() =>
+                        {
+                            //调用AskPriceItemDAL.Save
+                            return apItemDAL.Save(entity.Items.ToArray());
+                        });
                     }
-                    saveItemsFuncs.Add(() =>
-                    {
-                        //调用AskPriceItemDAL.Save
-                        return apItemDAL.Save(entity.Items.ToArray());
-                    });
+                    
                 }
             }
             //2、执行sql
@@ -345,7 +346,7 @@ TableName, ClientDAL.TableName, PayTypeDAL.TableName, UserManageDAL.TableName),
 
             try
             {
-                //更新初审人
+                //更新复审人
                 rst = DBAccess.ExecuteNonQuery(DB.Type, DB.ConnectionString, CommandType.Text, sbsql.ToString(), sqlParams.ToArray());
             }
             catch (Exception ex)
@@ -383,7 +384,7 @@ TableName, ClientDAL.TableName, PayTypeDAL.TableName, UserManageDAL.TableName),
 
             try
             {
-                //更新初审人
+                //更新
                 rst = DBAccess.ExecuteNonQuery(DB.Type, DB.ConnectionString, CommandType.Text, sbsql.ToString(), sqlParams.ToArray());
             }
             catch (Exception ex)
@@ -437,44 +438,18 @@ TableName, ClientDAL.TableName, PayTypeDAL.TableName, UserManageDAL.TableName),
 
         public bool SecondCheck(bool checkResult, params string[] apIds)
         {
-            if (apIds == null || apIds.Length < 1)
-            {
-                return false;
-            }
-            //1、组织sql
-            StringBuilder sbSql = new StringBuilder();//
-            sbSql.AppendFormat("update {0} set State=@state where APID in (", TableName);
-            List<SqlParameter> sqlParams = new List<SqlParameter>();
-            sqlParams.Add(new SqlParameter { ParameterName = "@state", Value = checkResult ? "6" : "7" });
-            for (int i = 0; i < apIds.Length; i++)
-            {
-                sbSql.AppendFormat("@APID{0}", i);
-                sqlParams.Add(new SqlParameter { ParameterName = "@APID" + i, Value = apIds[i] });
-                if (i < apIds.Length - 1)
-                {
-                    sbSql.Append(",");
-                }
-            }
-            sbSql.Append(");");
-            //2、执行sql
-            int rst = 0;
-            try
-            {
-                rst = DBAccess.ExecuteNonQuery(DB.Type, DB.ConnectionString, CommandType.Text, sbSql.ToString(), sqlParams.ToArray());
-            }
-            catch (Exception ex)
-            {
-                base.Logger.LogError(ex);
-                return false;
-            }
-            //3、返回成功或失败的标志
-            return rst > 0;
+            return ChangeState(apIds, checkResult ? "6" : "7");
         }
 
 
         public bool Close(string[] apIds)
         {
-            if (apIds == null || apIds.Length < 1)
+            return ChangeState(apIds, "8");
+        }
+
+        bool ChangeState(string[] apIds, string state)
+        {
+            if (apIds == null || apIds.Length < 1 || string.IsNullOrEmpty(state))
             {
                 return false;
             }
@@ -482,7 +457,7 @@ TableName, ClientDAL.TableName, PayTypeDAL.TableName, UserManageDAL.TableName),
             StringBuilder sbSql = new StringBuilder();//
             sbSql.AppendFormat("update {0} set State=@state where APID in (", TableName);
             List<SqlParameter> sqlParams = new List<SqlParameter>();
-            sqlParams.Add(new SqlParameter { ParameterName = "@state", Value = "8" });
+            sqlParams.Add(new SqlParameter { ParameterName = "@state", Value = state });
             for (int i = 0; i < apIds.Length; i++)
             {
                 sbSql.AppendFormat("@APID{0}", i);
@@ -507,8 +482,6 @@ TableName, ClientDAL.TableName, PayTypeDAL.TableName, UserManageDAL.TableName),
             //3、返回成功或失败的标志
             return rst > 0;
         }
-
-
 
     }
 }

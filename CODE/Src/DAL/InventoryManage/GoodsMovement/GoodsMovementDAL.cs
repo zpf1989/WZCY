@@ -55,32 +55,202 @@ namespace OA.DAL
 
         public bool SubmitToFirstChecker(string userId, params string[] gmIds)
         {
-            throw new NotImplementedException();
+            if (ValidateUtil.isBlank(userId) || gmIds == null || gmIds.Length < 1)
+            {
+                return false;
+            }
+            //1、组织sql
+            StringBuilder sbsql = new StringBuilder();//
+            sbsql.AppendFormat("update {0} set FirstChecker=@checker,BillState=@state where GoodsMovementID in (", TableName);
+            List<SqlParameter> sqlParams = new List<SqlParameter>();
+            sqlParams.Add(new SqlParameter { ParameterName = "@checker", Value = userId });
+            sqlParams.Add(new SqlParameter { ParameterName = "@state", Value = '2' });//提交
+            for (int i = 0; i < gmIds.Length; i++)
+            {
+                sbsql.AppendFormat("@gmId{0}", i);
+                sqlParams.Add(new SqlParameter { ParameterName = "@gmId" + i, Value = gmIds[i] });
+                if (i < gmIds.Length - 1)
+                {
+                    sbsql.Append(",");
+                }
+            }
+            sbsql.Append(");");
+            //2、执行sql
+            int rst = 0;
+
+            try
+            {
+                //更新初审人
+                rst = DBAccess.ExecuteNonQuery(DB.Type, DB.ConnectionString, CommandType.Text, sbsql.ToString(), sqlParams.ToArray());
+            }
+            catch (Exception ex)
+            {
+                base.Logger.LogError(ex);
+                return false;
+            }
+            //3、返回成功或失败的标志
+            return rst > 0;
         }
 
         public bool SubmitToSecondChecker(string userId, params string[] gmIds)
         {
-            throw new NotImplementedException();
+            if (ValidateUtil.isBlank(userId) || gmIds == null || gmIds.Length < 1)
+            {
+                return false;
+            }
+            //1、组织sql
+            StringBuilder sbsql = new StringBuilder();//
+            sbsql.AppendFormat("update {0} set SecondCheckerName=(select UserName from {1} where UserID=@checker),BillState=@state where GoodsMovementID in (", TableName, UserManageDAL.TableName);
+            List<SqlParameter> sqlParams = new List<SqlParameter>();
+            sqlParams.Add(new SqlParameter { ParameterName = "@checker", Value = userId });
+            sqlParams.Add(new SqlParameter { ParameterName = "@state", Value = '5' });//提交复审
+            for (int i = 0; i < gmIds.Length; i++)
+            {
+                sbsql.AppendFormat("@gmId{0}", i);
+                sqlParams.Add(new SqlParameter { ParameterName = "@gmId" + i, Value = gmIds[i] });
+                if (i < gmIds.Length - 1)
+                {
+                    sbsql.Append(",");
+                }
+            }
+            sbsql.Append(");");
+            //2、执行sql
+            int rst = 0;
+
+            try
+            {
+                //更新复审人
+                rst = DBAccess.ExecuteNonQuery(DB.Type, DB.ConnectionString, CommandType.Text, sbsql.ToString(), sqlParams.ToArray());
+            }
+            catch (Exception ex)
+            {
+                base.Logger.LogError(ex);
+                return false;
+            }
+            //3、返回成功或失败的标志
+            return rst > 0;
         }
 
         public bool SubmitToReader(string userId, params string[] gmIds)
         {
-            throw new NotImplementedException();
+            if (ValidateUtil.isBlank(userId) || gmIds == null || gmIds.Length < 1)
+            {
+                return false;
+            }
+            //1、组织sql
+            StringBuilder sbsql = new StringBuilder();//
+            sbsql.AppendFormat("update {0} set ReaderName=(select UserName from {1} where UserID=@reader) where GoodsMovementID in (", TableName, UserManageDAL.TableName);
+            List<SqlParameter> sqlParams = new List<SqlParameter>();
+            sqlParams.Add(new SqlParameter { ParameterName = "@reader", Value = userId });
+            for (int i = 0; i < gmIds.Length; i++)
+            {
+                sbsql.AppendFormat("@gmId{0}", i);
+                sqlParams.Add(new SqlParameter { ParameterName = "@gmId" + i, Value = gmIds[i] });
+                if (i < gmIds.Length - 1)
+                {
+                    sbsql.Append(",");
+                }
+            }
+            sbsql.Append(");");
+            //2、执行sql
+            int rst = 0;
+
+            try
+            {
+                //更新
+                rst = DBAccess.ExecuteNonQuery(DB.Type, DB.ConnectionString, CommandType.Text, sbsql.ToString(), sqlParams.ToArray());
+            }
+            catch (Exception ex)
+            {
+                base.Logger.LogError(ex);
+                return false;
+            }
+            //3、返回成功或失败的标志
+            return rst > 0;
         }
 
         public bool FirstCheck(bool result, string checkView, params string[] gmIds)
         {
-            throw new NotImplementedException();
+            if (gmIds == null || gmIds.Length < 1)
+            {
+                return false;
+            }
+            //1、组织sql
+            StringBuilder sbSql = new StringBuilder();//
+            sbSql.AppendFormat("update {0} set BillState=@state,FirstCheckView=@view,FirstCheckTime=@time where GoodsMovementID in (", TableName);
+            List<SqlParameter> sqlParams = new List<SqlParameter>();
+            sqlParams.Add(new SqlParameter { ParameterName = "@state", Value = result ? "3" : "4" });
+            sqlParams.Add(new SqlParameter { ParameterName = "@view", Value = checkView });
+            sqlParams.Add(new SqlParameter { ParameterName = "@time", Value = DateTime.Now });
+            for (int i = 0; i < gmIds.Length; i++)
+            {
+                sbSql.AppendFormat("@gmId{0}", i);
+                sqlParams.Add(new SqlParameter { ParameterName = "@gmId" + i, Value = gmIds[i] });
+                if (i < gmIds.Length - 1)
+                {
+                    sbSql.Append(",");
+                }
+            }
+            sbSql.Append(");");
+            //2、执行sql
+            int rst = 0;
+            try
+            {
+                rst = DBAccess.ExecuteNonQuery(DB.Type, DB.ConnectionString, CommandType.Text, sbSql.ToString(), sqlParams.ToArray());
+            }
+            catch (Exception ex)
+            {
+                base.Logger.LogError(ex);
+                return false;
+            }
+            //3、返回成功或失败的标志
+            return rst > 0;
         }
 
         public bool SecondCheck(bool checkResult, params string[] gmIds)
         {
-            throw new NotImplementedException();
+            return ChangeState(gmIds, checkResult ? "6" : "7");
         }
 
         public bool Close(string[] gmIds)
         {
-            throw new NotImplementedException();
+            return ChangeState(gmIds, "8");
+        }
+
+        bool ChangeState(string[] gmIds, string state)
+        {
+            if (gmIds == null || gmIds.Length < 1 || string.IsNullOrEmpty(state))
+            {
+                return false;
+            }
+            //1、组织sql
+            StringBuilder sbSql = new StringBuilder();//
+            sbSql.AppendFormat("update {0} set BillState=@state where GoodsMovementID in (", TableName);
+            List<SqlParameter> sqlParams = new List<SqlParameter>();
+            sqlParams.Add(new SqlParameter { ParameterName = "@state", Value = state });
+            for (int i = 0; i < gmIds.Length; i++)
+            {
+                sbSql.AppendFormat("@gmId{0}", i);
+                sqlParams.Add(new SqlParameter { ParameterName = "@gmId" + i, Value = gmIds[i] });
+                if (i < gmIds.Length - 1)
+                {
+                    sbSql.Append(",");
+                }
+            }
+            sbSql.Append(");");
+            //2、执行sql
+            int rst = 0;
+            try
+            {
+                rst = DBAccess.ExecuteNonQuery(DB.Type, DB.ConnectionString, CommandType.Text, sbSql.ToString(), sqlParams.ToArray());
+            }
+            catch (Exception ex)
+            {
+                base.Logger.LogError(ex);
+                return false;
+            }
+            //3、返回成功或失败的标志
+            return rst > 0;
         }
 
         public override List<GoodsMovement> GetEntitiesByPage(GeneralClass.PageEntity pageEntity, string whereSql = null, string orderBySql = null)
@@ -267,16 +437,16 @@ usrCreate.UserName Creator_Name,usrEdit.UserName Editor_Name,usrFirst.UserName F
                 //不管新增或修改， 参数都一样
                 sqlParams.AddRange(new SqlParameter[]{ 
                             new SqlParameter{ParameterName="@GoodsMovementID"+i, Value=entity.GoodsMovementID},
-                            new SqlParameter{ParameterName="@BusinessType"+i, Value=entity.GoodsMovementCode},
+                            new SqlParameter{ParameterName="@BusinessType"+i, Value=entity.BusinessType},
                             new SqlParameter{ParameterName="@MoveTypeCode"+i, Value=entity.MoveTypeCode},
                             new SqlParameter{ParameterName="@GoodsMovementCode"+i, Value=entity.GoodsMovementCode},
-                            new SqlParameter{ParameterName="@CreateDate"+i, Value=entity.CreateDate},
-                            new SqlParameter{ParameterName="@ReceiptDate"+i, Value=entity.ReceiptDate},
+                            new SqlParameter{ParameterName="@CreateDate"+i, Value=string.IsNullOrEmpty(entity.CreateDate)?null:entity.CreateDate.Replace("-","")},
+                            new SqlParameter{ParameterName="@ReceiptDate"+i, Value=string.IsNullOrEmpty(entity.ReceiptDate)?null:entity.ReceiptDate.Replace("-","")},
                             new SqlParameter{ParameterName="@RecDeptID"+i, Value=entity.RecDeptID},
                             new SqlParameter{ParameterName="@RecHandler"+i, Value=entity.RecHandler},
                             new SqlParameter{ParameterName="@RecWHID"+i, Value=entity.RecWHID},
                             new SqlParameter{ParameterName="@RecWHEmpID"+i, Value=entity.RecWHEmpID},
-                            new SqlParameter{ParameterName="@IssDate"+i, Value=entity.IssDate},
+                            new SqlParameter{ParameterName="@IssDate"+i, Value=string.IsNullOrEmpty(entity.IssDate)?null:entity.IssDate.Replace("-","")},
                             new SqlParameter{ParameterName="@IssDeptID"+i, Value=entity.IssDeptID},
                             new SqlParameter{ParameterName="@IssHandler"+i, Value=entity.IssHandler},
                             new SqlParameter{ParameterName="@IssWHID"+i, Value=entity.IssWHID},
@@ -291,14 +461,8 @@ usrCreate.UserName Creator_Name,usrEdit.UserName Editor_Name,usrFirst.UserName F
                             new SqlParameter{ParameterName="@ProEmpID"+i, Value=entity.ProEmpID},
                             new SqlParameter{ParameterName="@ConDepID"+i, Value=entity.ConDepID},
                             new SqlParameter{ParameterName="@ConEmpID"+i, Value=entity.ConEmpID},
-                            new SqlParameter{ParameterName="@Creator"+i, Value=entity.Creator},
-                            new SqlParameter{ParameterName="@CreateTime"+i, Value=entity.CreateTime},
-                            new SqlParameter{ParameterName="@BillState"+i, Value=entity.BillState},
                             new SqlParameter{ParameterName="@IsRed"+i, Value=entity.IsRed},
                             new SqlParameter{ParameterName="@Remark"+i, Value=entity.Remark},
-                            new SqlParameter{ParameterName="@Editor"+i, Value=entity.Editor},
-                            new SqlParameter{ParameterName="@EditTime"+i, Value=entity.EditTime},
-                           
                                             });
                 //②货物移动行
                 if (entity.Items != null && entity.Items.Count > 0)
@@ -306,12 +470,12 @@ usrCreate.UserName Creator_Name,usrEdit.UserName Editor_Name,usrFirst.UserName F
                     foreach (var item in entity.Items)
                     {
                         item.GoodsMovementID = entity.GoodsMovementID;
+                        saveItemsFuncs.Add(() =>
+                        {
+                            //调用GoodsMovementItemDAL.Save
+                            return gmItemDAL.Save(entity.Items.ToArray());
+                        });
                     }
-                    saveItemsFuncs.Add(() =>
-                    {
-                        //调用GoodsMovementItemDAL.Save
-                        return gmItemDAL.Save(entity.Items.ToArray());
-                    });
                 }
             }
             //2、执行sql
