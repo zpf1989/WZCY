@@ -66,6 +66,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Accessories\IAccessoriesDAL.cs" />
+    <Compile Include="BuyManage\BaseData\ISupplierDAL.cs" />
+    <Compile Include="BuyManage\BuyOrder\IBOReaderDAL.cs" />
+    <Compile Include="BuyManage\BuyOrder\IBOSecondCheckDAL.cs" />
+    <Compile Include="BuyManage\BuyOrder\IBuyOrderDAL.cs" />
+    <Compile Include="BuyManage\BuyOrder\IBuyOrderItemDAL.cs" />
     <Compile Include="InventoryManage\BaseData\IMaterialsDAL.cs" />
     <Compile Include="InventoryManage\BaseData\IMaterialClassDAL.cs" />
     <Compile Include="InventoryManage\BaseData\IMaterialTypeDAL.cs" />

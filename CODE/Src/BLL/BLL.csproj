@@ -69,6 +69,9 @@
   <ItemGroup>
     <Compile Include="Accessories\AccessoriesBLL.cs" />
     <Compile Include="BaseBLL.cs" />
+    <Compile Include="BuyManage\BaseData\SupplierBLL.cs" />
+    <Compile Include="BuyManage\BuyOrder\BuyOrderBLL.cs" />
+    <Compile Include="BuyManage\BuyOrder\BuyOrderItemBLL.cs" />
     <Compile Include="InventoryManage\BaseData\WareHouseBLL.cs" />
     <Compile Include="InventoryManage\BaseData\MaterialsBLL.cs" />
     <Compile Include="InventoryManage\BaseData\MeasureUnitsBLL.cs" />

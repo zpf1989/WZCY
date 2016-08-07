@@ -212,7 +212,24 @@ var helpInitializer = {
             hidecols: ['WareHouseId', 'WareHouseMan'],
             singleSelect: true
         });
+    },
+    supplier: function (grid) {
+    if (!grid) {
+        return;
     }
+    gFunc.initGridPublic(grid, {
+        title: "供应商帮助",
+        url: gFunc.getRootPath() + '/OA/BuyManage/Supplier/SupplierSvr.asmx/GetListForHelp',
+        columns: [[
+            { field: 'SupplierID' },
+            { field: 'SupplierCode', title: '供应商编号', width: 100, align: 'center' },
+            { field: 'SupplierName', title: '供应商名称', width: 100, align: 'center' },
+            { field: 'Contactor', title: '联系人', width: 100, align: 'center' },
+        ]],
+        hidecols: ['SupplierID'],
+        singleSelect: true
+    });
+},
 };
 
 /*

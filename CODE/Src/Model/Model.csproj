@@ -66,6 +66,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Accessories\Accessories.cs" />
+    <Compile Include="BuyManage\BaseData\Supplier.cs" />
+    <Compile Include="BuyManage\BuyOrder\BOReader.cs" />
+    <Compile Include="BuyManage\BuyOrder\BOSecondCheck.cs" />
+    <Compile Include="BuyManage\BuyOrder\BuyOrder.cs" />
+    <Compile Include="BuyManage\BuyOrder\BuyOrderItem.cs" />
     <Compile Include="InventoryManage\BaseData\MaterialClass.cs" />
     <Compile Include="InventoryManage\BaseData\Materials.cs" />
     <Compile Include="InventoryManage\BaseData\MaterialType.cs" />

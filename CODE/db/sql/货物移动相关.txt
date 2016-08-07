@@ -1,4 +1,4 @@
-/*=========================1、货物移动复审GMSecondCheck========================*/
+﻿/*=========================1、货物移动复审GMSecondCheck========================*/
 if exists (select 1
             from  sysobjects
            where  id = object_id('GMSecondCheck')
@@ -13,7 +13,7 @@ create table GMSecondCheck (
    SecondCheckView      varchar(255)         null,
    SecondCheckTime      datetime             null,
    CheckFlag            char(1)              null,
-   constraint PK_SOSECONDCHECK primary key (GMSecondCheckID)
+   constraint PK_GMSecondCheckID primary key (GMSecondCheckID)
 )
 go
 
@@ -37,7 +37,7 @@ create table GMReader (
    ReaderID             varchar(36)          null,
    ReadTime             datetime             null,
    ReadFlag             char(1)              null,
-   constraint PK_SOREADER primary key (GMReadID)
+   constraint PK_GMReader primary key (GMReadID)
 )
 go
 

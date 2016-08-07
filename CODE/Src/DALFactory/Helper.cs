@@ -612,5 +612,101 @@ namespace OA.DALFactory
         }
         #endregion
 
+        #region 采购管理——供应商
+        public static OA.IDAL.ISupplierDAL GetISupplierDAL()
+        {
+            OA.IDAL.ISupplierDAL idal;
+            switch (dbType)
+            {
+                //case "Oracle":
+                //    iAffix = new Upload.DALORACLE.Affix();
+                //    break;
+                //case "GBase":
+                //    iAffix = new Upload.DALGBase.Affix();
+                //    break;
+                case "SQLServer":
+                default:
+                    idal = new OA.DAL.SupplierDAL();
+                    break;
+            }
+            return idal;
+        }
+        #endregion
+
+        #region 采购管理——采购订单
+        public static OA.IDAL.IBuyOrderDAL GetIBuyOrderDAL()
+        {
+            OA.IDAL.IBuyOrderDAL idal;
+            switch (dbType)
+            {
+                //case "Oracle":
+                //    iAffix = new Upload.DALORACLE.Affix();
+                //    break;
+                //case "GBase":
+                //    iAffix = new Upload.DALGBase.Affix();
+                //    break;
+                case "SQLServer":
+                default:
+                    idal = new OA.DAL.BuyOrderDAL();
+                    break;
+            }
+            return idal;
+        }
+        public static OA.IDAL.IBuyOrderItemDAL GetIBuyOrderItemDAL()
+        {
+            OA.IDAL.IBuyOrderItemDAL idal;
+            switch (dbType)
+            {
+                //case "Oracle":
+                //    iAffix = new Upload.DALORACLE.Affix();
+                //    break;
+                //case "GBase":
+                //    iAffix = new Upload.DALGBase.Affix();
+                //    break;
+                case "SQLServer":
+                default:
+                    idal = new OA.DAL.BuyOrderItemDAL();
+                    break;
+            }
+            return idal;
+        }
+        public static OA.IDAL.IBOReaderDAL GetIBOReaderDAL()
+        {
+            OA.IDAL.IBOReaderDAL idal;
+            switch (dbType)
+            {
+                //case "Oracle":
+                //    iAffix = new Upload.DALORACLE.Affix();
+                //    break;
+                //case "GBase":
+                //    iAffix = new Upload.DALGBase.Affix();
+                //    break;
+                case "SQLServer":
+                default:
+                    idal = new OA.DAL.BOReaderDAL();
+                    break;
+            }
+            return idal;
+        }
+        public static OA.IDAL.IBOSecondCheckDAL GetIBOSecondCheckDAL()
+        {
+            OA.IDAL.IBOSecondCheckDAL idal;
+            switch (dbType)
+            {
+                //case "Oracle":
+                //    iAffix = new Upload.DALORACLE.Affix();
+                //    break;
+                //case "GBase":
+                //    iAffix = new Upload.DALGBase.Affix();
+                //    break;
+                case "SQLServer":
+                default:
+                    idal = new OA.DAL.BOSecondCheckDAL();
+                    break;
+            }
+            return idal;
+        }
+        #endregion
+
     }
 }

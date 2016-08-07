@@ -69,6 +69,11 @@
   <ItemGroup>
     <Compile Include="Accessories\AccessoriesDAL.cs" />
     <Compile Include="BaseDAL.cs" />
+    <Compile Include="BuyManage\BaseData\SupplierDAL.cs" />
+    <Compile Include="BuyManage\BuyOrder\BOReaderDAL.cs" />
+    <Compile Include="BuyManage\BuyOrder\BOSecondCheckDAL.cs" />
+    <Compile Include="BuyManage\BuyOrder\BuyOrderDAL.cs" />
+    <Compile Include="BuyManage\BuyOrder\BuyOrderItemDAL.cs" />
     <Compile Include="InventoryManage\BaseData\MeasureUnitsDAL.cs" />
     <Compile Include="InventoryManage\BaseData\MaterialTypeDAL.cs" />
     <Compile Include="InventoryManage\BaseData\MaterialsDAL.cs" />
