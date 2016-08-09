@@ -153,26 +153,26 @@ public class BuyOrderService : BaseService
 
     #region 流程
     [WebMethod(EnableSession = true)]
-    public void SubmitToFirstChecker(string userId, string soIds)
+    public void SubmitToFirstChecker(string userId, string boIds)
     {
         if (ValidateUtil.isBlank(userId))
         {
             Context.Response.WriteJson(OA.GeneralClass.ResultCode.Failure, "提交失败，请选择初审人", null);
             return;
         }
-        if (ValidateUtil.isBlank(soIds))
+        if (ValidateUtil.isBlank(boIds))
         {
-            Context.Response.WriteJson(OA.GeneralClass.ResultCode.Failure, "提交失败，请选择销售订单", null);
+            Context.Response.WriteJson(OA.GeneralClass.ResultCode.Failure, "提交失败，请选择采购订单", null);
             return;
         }
-        string[] soIdArr = soIds.DeSerializeFromJson<string[]>();
-        if (soIdArr == null || soIdArr.Length < 1)
+        string[] boIdArr = boIds.DeSerializeFromJson<string[]>();
+        if (boIdArr == null || boIdArr.Length < 1)
         {
-            Context.Response.WriteJson(OA.GeneralClass.ResultCode.Failure, "提交失败，销售订单数据格式不正确", null);
+            Context.Response.WriteJson(OA.GeneralClass.ResultCode.Failure, "提交失败，采购订单数据格式不正确", null);
             return;
         }
 
-        bool rst = bll.SubmitToFirstChecker(userId, soIdArr);
+        bool rst = bll.SubmitToFirstChecker(userId, boIdArr);
         if (rst)
         {
             Context.Response.WriteJson(OA.GeneralClass.ResultCode.Success, "提交成功", null);

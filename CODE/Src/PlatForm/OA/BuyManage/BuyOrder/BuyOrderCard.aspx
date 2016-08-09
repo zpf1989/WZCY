@@ -32,6 +32,9 @@
                         <td class="card-table-label">采购日期</td>
                         <td class="card-table-centent">
                             <input type="text" id="txtCardBuyOrderDate" name="BuyOrderDate" class="easyui-datebox" data-options="required:true" editable="false" /></td>
+                        <td class="card-table-label">到货日期</td>
+                        <td class="card-table-centent">
+                            <input type="text" id="txtCardDeliveryDate" name="DeliveryDate" class="easyui-datebox" data-options="required:true" editable="false" /></td>
                     </tr>
                     <tr>
                         <td class="card-table-label">供应商</td>
@@ -42,57 +45,46 @@
                                 <input id="txtCardBOSupplierID" name="SupplierID" hidden="hidden" />
                             </span>
                         </td>
-                        <td class="card-table-label">到货日期</td>
+                        <td class="card-table-label">创建人</td>
                         <td class="card-table-centent">
-                            <input type="text" id="txtCardDeliveryDate" name="DeliveryDate" class="easyui-datebox" data-options="required:true" editable="false" /></td>
+                            <input type="text" id="txtCardCreatorName" disabled="disabled" class="easyui-textbox" readonly="readonly" /></td>
+                        <td class="card-table-label">创建时间</td>
+                        <td class="card-table-centent">
+                            <input type="text" id="txtCardCreateTime" disabled="disabled" class="easyui-textbox" readonly="readonly" /></td>
                     </tr>
                     <tr>
                         <td class="card-table-label">订单状态</td>
                         <td class="card-table-centent">
-                            <input type="text" id="txtCardBOState" name="OrderState" class="easyui-textbox" readonly="readonly" /></td>
-                        <td class="card-table-label"></td>
-                        <td class="card-table-centent"></td>
-                    </tr>
-                    <tr>
-                        <td class="card-table-label">创建人</td>
-                        <td class="card-table-centent">
-                            <input type="text" id="txtCardCreatorName" class="easyui-textbox" readonly="readonly" /></td>
-                        <td class="card-table-label">创建时间</td>
-                        <td class="card-table-centent">
-                            <input type="text" id="txtCardCreateTime" class="easyui-textbox" readonly="readonly" /></td>
-                    </tr>
-                    <tr>
+                            <input type="text" id="txtCardBOState" name="OrderState" disabled="disabled" class="easyui-textbox" readonly="readonly" /></td>
                         <td class="card-table-label">修改人</td>
                         <td class="card-table-centent">
-                            <input type="text" id="txtCardEditorName" class="easyui-textbox" readonly="readonly" /></td>
+                            <input type="text" id="txtCardEditorName" class="easyui-textbox" disabled="disabled" readonly="readonly" /></td>
                         <td class="card-table-label">修改时间</td>
                         <td class="card-table-centent">
-                            <input type="text" id="txtCardEditTime" class="easyui-textbox" readonly="readonly" /></td>
+                            <input type="text" id="txtCardEditTime" class="easyui-textbox" disabled="disabled" readonly="readonly" /></td>
                     </tr>
                     <tr>
                         <td class="card-table-label">初审人</td>
                         <td class="card-table-centent">
-                            <input type="text" id="txtCardFirstCheckerName" class="easyui-textbox" readonly="readonly" /></td>
+                            <input type="text" id="txtCardFirstCheckerName" class="easyui-textbox" disabled="disabled" readonly="readonly" /></td>
                         <td class="card-table-label">初审时间</td>
                         <td class="card-table-centent">
-                            <input type="text" id="txtCardFirstCheckTime" class="easyui-textbox" readonly="readonly" /></td>
+                            <input type="text" id="txtCardFirstCheckTime" class="easyui-textbox" disabled="disabled" readonly="readonly" /></td>
+                        <td class="card-table-label">复核人</td>
+                        <td class="card-table-centent">
+                            <input type="text" id="txtCardSecondCheckerName" class="easyui-textbox" disabled="disabled" readonly="readonly" /></td>
                     </tr>
                     <tr>
                         <td class="card-table-label">初审意见</td>
                         <td colspan="3" class="card-table-centent">
-                            <input type="text" id="txtCardFirstCheckView" class="easyui-textbox" style="width: 480px;" readonly="readonly" /></td>
-                    </tr>
-                    <tr>
-                        <td class="card-table-label">复核人</td>
-                        <td class="card-table-centent">
-                            <input type="text" id="txtCardSecondCheckerName" class="easyui-textbox" readonly="readonly" /></td>
+                            <input type="text" id="txtCardFirstCheckView" class="easyui-textbox" style="width: 480px;" disabled="disabled" readonly="readonly" /></td>
                         <td class="card-table-label">分阅人</td>
                         <td class="card-table-centent">
-                            <input type="text" id="txtCardReaderName" class="easyui-textbox" readonly="readonly" /></td>
+                            <input type="text" id="txtCardReaderName" class="easyui-textbox" disabled="disabled" readonly="readonly" /></td>
                     </tr>
                     <tr>
                         <td class="card-table-label">备注</td>
-                        <td class="card-table-centent" colspan="3">
+                        <td class="card-table-centent" colspan="5">
                             <input type="text" id="txtCardRemark" name="Remark" class="easyui-textbox" style="width: 480px;" data-options="validType:'maxLength[1024]'" /></td>
                     </tr>
                 </table>

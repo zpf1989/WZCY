@@ -368,7 +368,7 @@ var soCard = {
                     }
                 },
                 {
-                    field: 'PlanQty', title: '计划数量', align: 'center', width: 80,
+                    field: 'PlanQty', title: '单价', align: 'center', width: 80,
                     editor: {
                         type: 'numberbox',
                         options: {

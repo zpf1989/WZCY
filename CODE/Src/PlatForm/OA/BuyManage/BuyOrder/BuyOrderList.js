@@ -270,7 +270,7 @@ var buyorder = {
             var ajaxResult = false;
             $.ajax({
                 type: 'post',
-                url: 'SaleOrderService.asmx/SubmitToFirstChecker',
+                url: 'BuyOrderService.asmx/SubmitToFirstChecker',
                 data: 'userId=' + userData.UserID + '&boIds=' + JSON.stringify(boIds),
                 async: false,//同步请求
                 success: function (result) {
